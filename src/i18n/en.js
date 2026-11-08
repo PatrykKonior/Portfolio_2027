@@ -1,0 +1,248 @@
+// Every piece of English copy on the site. pl.js mirrors this shape key for key.
+const en = {
+    meta: {
+        title: "Patryk Konior — Full-stack Developer",
+        description: "Patryk Konior, full-stack developer from Poland (B2B). Web, mobile and desktop apps, real-time APIs and deployments with Elixir & Phoenix, Node.js, .NET, React and Svelte.",
+    },
+    language: {
+        label: "Language",
+        switchTo: "Przełącz na polski",
+    },
+    nav: {
+        role: "Full-stack Dev",
+        links: [
+            { name: "Work", link: "#work" },
+            { name: "Experience", link: "#experience" },
+            { name: "Services", link: "#services" },
+        ],
+        contact: "Contact",
+        cta: "Let's talk",
+        openMenu: "Open menu",
+        closeMenu: "Close menu",
+    },
+    preloader: "Portfolio ©2026",
+    hero: {
+        eyebrow: "Full-stack Developer — Portfolio ©2026",
+        location: "Based in Chorzów, Poland",
+        title: "Building <em>apps</em> from database to&nbsp;pixel.",
+        intro: "Hi, I'm Patryk. I design and build web, mobile and desktop apps with React, Svelte, Elixir, Node.js and .NET, from the first conversation all the way to launch.",
+        availability: "Available for new projects",
+        cta: "See work",
+        cursor: "Explore",
+        cv: "Download CV",
+        scroll: "Scroll",
+    },
+    about: {
+        label: "About",
+        text: "I take features all the way from database schema and real-time APIs to a polished interface, then ship them with Docker and CI/CD. Commercial projects in Node.js, Elixir and .NET, with React and Svelte on the front end, taught me that great software is equal parts clean code and clear conversations with clients.",
+        stats: [
+            { label: "Years of experience", detail: "Commercial projects" },
+            { label: "Backend ecosystems", detail: "Elixir · Node.js · .NET" },
+            { label: "Frontend frameworks", detail: "React · Svelte · LiveView" },
+            { label: "Technologies & tools", detail: "And counting" },
+        ],
+        abilities: [
+            { title: "Full-stack Ownership", desc: "I take features all the way from database design and APIs to a polished, responsive interface." },
+            { title: "Direct Client Communication", desc: "I run meetings, gather requirements and handle support tickets myself, so nothing gets lost between business and code." },
+            { title: "Production-Ready Delivery", desc: "Tested code, Docker deployments and CI/CD pipelines, so new features reach production safely." },
+        ],
+    },
+    work: {
+        label: "Selected work",
+        title: "Selected <em>work</em>",
+        count: (n) => `${String(n).padStart(2, "0")} projects`,
+        more: "More on GitHub",
+        moreTitle: "See all <em>repos</em> ↗",
+        cursor: "Code",
+        projects: [
+            {
+                title: "Design Office Management Suite",
+                type: "Desktop · Web · Mobile",
+                desc: "One system that runs an entire design office: clients, projects, invoices, payments, tasks and time tracking in a single place. The team works wherever it suits them, in a WPF desktop app, in the browser or on the phone, and every app stays in sync through one .NET Core REST API. The web and mobile apps share a single codebase, so new features reach every platform at once.",
+                links: ["API", "Web & Mobile", "Desktop"],
+            },
+            {
+                title: "Pizzeria Management Panel & Storefront",
+                type: "Admin panel · Storefront",
+                desc: "A complete digital back office for a multi-location pizzeria, paired with a modern storefront for its customers. The React admin panel brings sales, stock, staff schedules, documents, recipes and per-location revenue reports into one clear dashboard, all powered by a .NET REST API on SQL Server.",
+                links: ["Admin panel", "API"],
+            },
+            {
+                title: "Pento: Real-time Store on Phoenix LiveView",
+                type: "Real-time store",
+                desc: "A real-time online store built with Phoenix LiveView. Customers find products fast, rate them and share their feedback, while the owner gets an analytics dashboard that turns that data into interactive charts by customer segment. Everything updates live, with no page reloads and no separate JavaScript front end to maintain.",
+                links: ["Code"],
+            },
+        ],
+    },
+    arch: {
+        client: "Client",
+        server: "Server",
+        data: "Data",
+        terms: {},
+    },
+    services: {
+        label: "Services",
+        title: "What I can <em>build</em> for you",
+        items: [
+            {
+                title: "Web Applications",
+                desc: "Custom web apps, CRMs and internal tools built with React, Svelte or Phoenix LiveView, from the first Figma sketch to production.",
+                points: ["Figma to production", "CRMs & internal tools", "Responsive, accessible UI"],
+            },
+            {
+                title: "Backend & Real-time APIs",
+                desc: "REST APIs, microservices and live features over WebSockets, built with Elixir, Node.js or .NET on top of PostgreSQL, SQL Server or MongoDB, plus automation scripts in Python.",
+                points: ["REST & WebSockets", "Auth with JWT / OAuth", "SQL & NoSQL data models", "Python automation"],
+            },
+            {
+                title: "Deployment & DevOps",
+                desc: "Dockerized apps served by Nginx on Linux servers, automated CI/CD pipelines and file storage on Amazon S3.",
+                points: ["Docker & Nginx", "CI/CD pipelines", "Linux servers & S3"],
+            },
+            {
+                title: "Performance & SEO",
+                desc: "Faster pages, better accessibility and a clean structure that search engines understand.",
+                points: ["Core Web Vitals", "Semantic structure", "Accessibility audits"],
+            },
+        ],
+    },
+    experience: {
+        label: "Experience",
+        title: "Where I've <em>worked</em>",
+        aside: "2024 — Now",
+        jobs: [
+            {
+                title: "Full-stack Developer",
+                period: "2026 — Now",
+                date: "January 2026 – Present · Remote",
+                summary: "Developing and maintaining three products in parallel: an EdTech learning platform, a CRM system and an internal company tool.",
+                responsibilities: [
+                    "Building web interfaces in TypeScript, JavaScript and Svelte with Tailwind CSS, on an Elixir / Phoenix LiveView backend.",
+                    "Designing and implementing REST APIs and real-time communication over WebSockets.",
+                    "Containerizing and deploying to production with Docker, Nginx and Linux, with automated CI/CD and file storage on S3.",
+                    "Optimizing applications for SEO: structure, performance and accessibility.",
+                    "Working directly with clients: running meetings, gathering requirements and handling support tickets.",
+                ],
+            },
+            {
+                title: "Junior Fullstack Developer",
+                period: "2025",
+                date: "March 2025 – December 2025 · Hybrid",
+                summary: "Promoted after a year on the frontend to own features across the whole stack and lead three projects.",
+                responsibilities: [
+                    "Leading three projects end to end: running their development, delivering fixes and improvements, and agreeing changes directly with the client.",
+                    "Building and maintaining microservices in Node.js and Express.",
+                    "Building REST APIs secured with JWT and OAuth, backed by Microsoft SQL Server and MongoDB.",
+                    "Writing automation and integration scripts in T-SQL, Python and PowerShell.",
+                    "Refactoring and optimizing existing code and application logic.",
+                ],
+            },
+            {
+                title: "Junior Frontend Developer",
+                period: "2024 — 2025",
+                date: "March 2024 – March 2025 · On-site",
+                summary: "Started my commercial career building web applications for clients in React.",
+                responsibilities: [
+                    "Building and maintaining web applications in React with JavaScript and TypeScript.",
+                    "Gathering requirements with clients and designing new applications from scratch in Figma.",
+                    "Creating responsive interfaces with Tailwind CSS and bundling them with Webpack.",
+                ],
+            },
+        ],
+    },
+    stack: {
+        label: "Toolbox",
+        aria: "Tech stack",
+        count: "45+ technologies",
+    },
+    contact: {
+        label: "Contact",
+        status: "Available for projects & roles",
+        title: "Let's build<br /><em>something</em> great.",
+        writeToMe: "Write to me",
+        emailCursor: "Email",
+        copy: "Copy",
+        copied: "Copied",
+        copyAria: "Copy email address",
+        facts: [
+            { label: "Location", value: "Chorzów, Poland" },
+            { label: "Work mode", value: "Remote or on-site" },
+            { label: "Languages", value: "English B2/C1 · German A2" },
+        ],
+        cv: "Download CV",
+        name: "Your name or company",
+        email: "Email address",
+        message: "Tell me about your project or role",
+        consent: "I'll use your details only to reply to this message.",
+        privacyLink: "Privacy policy",
+        send: "Send",
+        sending: "Sending…",
+        sent: "Message sent. Thanks, I'll get back to you soon.",
+        error: (email) => `The message couldn't be sent. Email me directly at ${email}.`,
+    },
+    footer: {
+        navigation: "Navigation",
+        socials: "Socials",
+        localTime: "Local time",
+        backToTop: "Back to top ↑",
+        privacy: "Privacy policy",
+        cookies: "Cookie settings",
+        nip: "Tax ID (NIP)",
+    },
+    privacy: {
+        title: "Privacy policy",
+        close: "Close",
+        updated: "Last updated: November 2026",
+        sections: [
+            {
+                heading: "Who is responsible for your data",
+                body: "The controller of your personal data is Patryk Konior, running a business as {company} (NIP {nip}). You can reach me at {email}.",
+            },
+            {
+                heading: "What I collect and why",
+                body: "When you use the contact form I receive your name or company name, your email address and the content of your message. I use them only to reply to you and, if you ask, to discuss a possible collaboration (Art. 6(1)(b) and (f) GDPR). Providing them is voluntary, but without them I can't reply.",
+            },
+            {
+                heading: "Who else processes it",
+                body: "Messages from the form are delivered to my mailbox through EmailJS and stored in my email account. The site is served by a hosting provider that keeps standard technical server logs (such as IP addresses) for security. I don't sell or share your data with anyone else.",
+            },
+            {
+                heading: "How long I keep it",
+                body: "For as long as our conversation lasts, and afterwards only as long as needed to handle any claims, or until you ask me to delete it.",
+            },
+            {
+                heading: "Your rights",
+                body: "You can ask for access to your data, its correction, deletion, restriction of processing or a copy of it, and you can object to its processing. You also have the right to lodge a complaint with the Polish data protection authority (Prezes UODO).",
+            },
+            {
+                heading: "Cookies and storage",
+                body: "The site doesn't use any cookies. It only stores your language choice in your browser so the site remembers it. Fonts and all other assets are served from this site, not from third parties.",
+            },
+        ],
+        // Replaces the last section once Google Analytics is switched on in site.config.js.
+        analyticsCookies: {
+            heading: "Cookies and analytics",
+            body: "Your browser stores your language and your cookie choice; these are needed for the site to work. Only if you accept analytics in the cookie banner does Google Analytics 4 (provided by Google Ireland Ltd.) set its cookies (_ga, _ga_*), for up to two years, to measure visits; this data may also be processed by Google outside the EEA. The legal basis is your consent (Art. 6(1)(a) GDPR), which you can change or withdraw at any time under \u201cCookie settings\u201d in the footer. Fonts and all other assets are served from this site.",
+        },
+    },
+    cookies: {
+        label: "Cookies",
+        title: "A quick word on <em>cookies</em>",
+        description: "I use analytics cookies only if you agree, to see how visitors find and use this site. Nothing for ads, nothing sold.",
+        privacy: "Privacy policy",
+        acceptAll: "Accept",
+        rejectAll: "Reject",
+        manage: "Customize",
+        less: "Hide settings",
+        alwaysOn: "Always on",
+        save: "Save choices",
+        necessaryTitle: "Strictly necessary",
+        necessaryDesc: "Remembers your cookie choice and language.",
+        analyticsTitle: "Analytics",
+        analyticsDesc: "Google Analytics, with anonymised visit statistics: pages viewed, time on site and where visitors come from.",
+    },
+    switching: "Switching to Polish",
+};
+
+export default en;
