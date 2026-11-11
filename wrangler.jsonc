@@ -1,0 +1,27 @@
+// Cloudflare Worker: serves the built site from dist/ and handles the contact form at /api/contact.
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "portfolio",
+	"compatibility_date": "2026-11-11",
+	"main": "./worker/index.js",
+	"assets": {
+		"directory": "./dist/",
+		// Only API requests reach the Worker; everything else is a static file.
+		"run_worker_first": ["/api/*"]
+	},
+	"routes": [
+		{ "pattern": "patrykkonior.com", "custom_domain": true },
+		{ "pattern": "www.patrykkonior.com", "custom_domain": true }
+	],
+	"workers_dev": true,
+	"preview_urls": true,
+	"observability": { "enabled": true },
+	// The binding can only ever send to this one verified address.
+	"send_email": [{ "name": "EMAIL", "destination_address": "patrykkonior4@gmail.com" }],
+	"vars": { "MAIL_FROM": "formularz@patrykkonior.com", "MAIL_TO": "patrykkonior4@gmail.com" },
+	// Previews (the dev branch) get the same mail setup; TURNSTILE_SECRET_KEY is set as a secret.
+	"previews": {
+		"send_email": [{ "name": "EMAIL", "destination_address": "patrykkonior4@gmail.com" }],
+		"vars": { "MAIL_FROM": "formularz@patrykkonior.com", "MAIL_TO": "patrykkonior4@gmail.com" }
+	}
+}

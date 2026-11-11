@@ -342,6 +342,20 @@ a:hover .roll::after {
     gap: 0.6rem;
 }
 
+/* Hidden from people; only bots fill it in. */
+.honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Turnstile only takes space when it needs the visitor to interact. */
+.turnstile:empty {
+    display: none;
+}
+
 .consent-note {
     font-size: 0.85rem;
     line-height: 1.5;

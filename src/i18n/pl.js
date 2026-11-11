@@ -186,6 +186,7 @@ const pl = {
         send: "Wyślij",
         sending: "Wysyłanie…",
         sent: "Wiadomość wysłana. Dzięki, odezwę się wkrótce.",
+        captcha: "Chwileczkę, zabezpieczenie przed spamem jeszcze sprawdza. Spróbuj ponownie za sekundę.",
         error: (email) => `Nie udało się wysłać wiadomości. Napisz do mnie bezpośrednio na ${email}.`,
     },
     footer: {
@@ -212,7 +213,7 @@ const pl = {
             },
             {
                 heading: "Kto jeszcze je przetwarza",
-                body: "Wiadomości z formularza trafiają do mojej skrzynki za pośrednictwem usługi EmailJS i są przechowywane na moim koncie pocztowym. Strona jest udostępniana przez dostawcę hostingu, który prowadzi standardowe logi serwera (np. adresy IP) w celach bezpieczeństwa. Nie sprzedaję ani nie udostępniam Twoich danych nikomu innemu.",
+                body: "Wiadomości z formularza trafiają do mojej skrzynki za pośrednictwem Cloudflare i są przechowywane na moim koncie pocztowym. Aby chronić się przed spamem, formularz korzysta z Cloudflare Turnstile, które w tle sprawdza, czy wysyła go człowiek. Strona jest hostowana w Cloudflare, który prowadzi standardowe logi techniczne (np. adresy IP) w celach bezpieczeństwa. Nie sprzedaję ani nie udostępniam Twoich danych nikomu innemu.",
             },
             {
                 heading: "Jak długo je przechowuję",

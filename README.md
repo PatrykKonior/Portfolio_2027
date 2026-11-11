@@ -28,12 +28,12 @@ A dark, cinematic one-pager in English and Polish, built around a single WebGL s
 
 ## Stack
 
-React 19 · Vite · Three.js / React Three Fiber · custom GLSL shaders · GSAP (ScrollTrigger, SplitText, ScrambleText) · Lenis · Tailwind CSS 4 · EmailJS
+React 19 · Vite · Three.js / React Three Fiber · custom GLSL shaders · GSAP (ScrollTrigger, SplitText, ScrambleText) · Lenis · Tailwind CSS 4 · Cloudflare Workers (static assets + contact API, Email Service, Turnstile)
 
 ## Branches
 
-- **`main`** — production. What is deployed.
-- **`dev`** — day-to-day work. Merge into `main` when a change is ready to go live.
+- **`main`** — production, deployed to [patrykkonior.com](https://patrykkonior.com) by Workers Builds.
+- **`dev`** — day-to-day work, deployed as a Worker Preview. Merge into `main` when a change is ready to go live; CI lints and builds every pull request.
 
 ## Run it
 
@@ -42,13 +42,15 @@ npm install
 npm run dev      # local dev server
 npm run build    # production build in dist/
 npm run lint
+npm run worker:dev   # build, then run the site and the contact API on Cloudflare's local runtime
 ```
 
 ## Configuration
 
-- **`.env`** — copy `.env.example` and fill in the `VITE_APP_EMAILJS_*` keys for the contact form.
+- **Contact form** — `worker/index.js` handles `POST /api/contact`: it validates the input, checks Cloudflare Turnstile and emails the message through the Email Service binding (configured in `wrangler.jsonc`). The Turnstile secret is the Worker secret `TURNSTILE_SECRET_KEY`; for local runs copy `.dev.vars.example` to `.dev.vars` (Cloudflare's always-pass test key).
 - **`site.config.js`**
   - `url` — the domain (e.g. `https://patrykkonior.dev`). Turns on canonical and hreflang tags, absolute social-preview URLs and `sitemap.xml`.
+  - `turnstileSiteKey` — the public Turnstile key for the contact form.
   - `gaMeasurementId` — a Google Analytics 4 ID. Turns on the cookie banner; GA only loads after consent. Empty means no analytics, no cookies, no banner.
   - `preview` — shows the cookie banner and the CV buttons before a GA ID or CV files exist. Keep both `false` in production.
 - **CV** — put `Patryk-Konior-CV-EN.pdf` and/or `Patryk-Konior-CV-PL.pdf` in `public/`. The *Download CV* buttons appear automatically for the language whose file exists.

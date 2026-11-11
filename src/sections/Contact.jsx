@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 
 import { gsap, SplitText, useGSAP, motionOK } from "../lib/motion.js";
 import { contactInfo } from "../constants";
@@ -8,17 +7,20 @@ import useCvUrl from "../hooks/useCvUrl.js";
 import CvButton from "../components/CvButton.jsx";
 import { openPrivacy } from "../lib/privacy.js";
 import Magnetic from "../components/Magnetic.jsx";
+import Turnstile from "../components/Turnstile.jsx";
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "../components/Icons";
 
 const Contact = () => {
   const sectionRef = useRef(null);
   const formRef = useRef(null);
+  const turnstileRef = useRef(null);
+  const [token, setToken] = useState("");
   const { lang, t } = useLanguage();
   const copy = t.contact;
   const cvUrl = useCvUrl(lang);
   const [status, setStatus] = useState("idle");
   const [copied, setCopied] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
 
   useGSAP(() => {
     if (!motionOK()) return;
@@ -58,21 +60,29 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!token) {
+      setStatus("captcha");
+      return;
+    }
     setStatus("sending");
 
     try {
-      await emailjs.sendForm(
-        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-      );
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...form, token, lang }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.error ?? response.status);
 
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", message: "", website: "" });
       setStatus("sent");
     } catch (error) {
-      console.error("EmailJS Error:", error);
-      setStatus("error");
+      console.error("Contact form error:", error);
+      setStatus(String(error.message) === "captcha" ? "captcha" : "error");
+    } finally {
+      // Turnstile tokens are single-use.
+      turnstileRef.current?.reset();
     }
   };
 
@@ -143,6 +153,14 @@ const Contact = () => {
             <label htmlFor="message">{copy.message}</label>
           </div>
 
+          {/* Honeypot for bots: hidden from people and screen readers. */}
+          <div className="honeypot" aria-hidden="true">
+            <label htmlFor="website">Website</label>
+            <input type="text" id="website" name="website" value={form.website} onChange={handleChange} tabIndex={-1} autoComplete="off" />
+          </div>
+
+          <Turnstile ref={turnstileRef} lang={lang} onToken={setToken} />
+
           <p className="consent-note contact-reveal">
             {copy.consent}{" "}
             <button type="button" className="text-link" onClick={openPrivacy}>{copy.privacyLink}</button>
@@ -151,6 +169,7 @@ const Contact = () => {
           <div className="contact-submit contact-reveal">
             <p role="status" aria-live="polite" className="text-sm">
               {status === "sent" && <span className="text-accent">{copy.sent}</span>}
+              {status === "captcha" && <span className="text-rose-400">{copy.captcha}</span>}
               {status === "error" && (
                 <span className="text-rose-400">{copy.error(contactInfo.email)}</span>
               )}

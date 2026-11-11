@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `npm run worker:dev`. This is Cloudflare's Turnstile test secret that always
+# passes, matching the test site key the site uses on localhost. The real secret lives only in
+# Cloudflare (Worker → Settings → Variables and Secrets).
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA

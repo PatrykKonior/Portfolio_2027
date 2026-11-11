@@ -9,6 +9,10 @@ export default {
     // and no cookie banner (the site sets no tracking cookies, so none is needed).
     gaMeasurementId: "",
 
+    // Cloudflare Turnstile site key (public) for the contact form's bot check. The matching secret
+    // key is stored as the Worker secret TURNSTILE_SECRET_KEY, never in the code.
+    turnstileSiteKey: "0x4AAAAAAF9LfOn1qwx_5bZt",
+
     // Shows the cookie banner and the Download CV buttons before there is a GA ID or a CV file,
     // to review the full page. Set both to false before going live.
     preview: {

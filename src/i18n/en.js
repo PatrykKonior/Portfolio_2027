@@ -179,6 +179,7 @@ const en = {
         send: "Send",
         sending: "Sending…",
         sent: "Message sent. Thanks, I'll get back to you soon.",
+        captcha: "Just a moment, the spam check is still running. Please try again in a second.",
         error: (email) => `The message couldn't be sent. Email me directly at ${email}.`,
     },
     footer: {
@@ -205,7 +206,7 @@ const en = {
             },
             {
                 heading: "Who else processes it",
-                body: "Messages from the form are delivered to my mailbox through EmailJS and stored in my email account. The site is served by a hosting provider that keeps standard technical server logs (such as IP addresses) for security. I don't sell or share your data with anyone else.",
+                body: "Messages from the form are delivered to my mailbox through Cloudflare and stored in my email account. To keep out spam, the form uses Cloudflare Turnstile, which checks in the background that a person is sending it. The site is hosted on Cloudflare, which keeps standard technical logs (such as IP addresses) for security. I don't sell or share your data with anyone else.",
             },
             {
                 heading: "How long I keep it",
