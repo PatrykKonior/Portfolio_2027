@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0a0a0b" />
+<title>404 — Patryk Konior</title>
+<link rel="icon" type="image/png" href="/images/fav.png" />
+<style>
+  :root { --bg: #0a0a0b; --fg: #ecebe6; --muted: #8b8a85; --accent: #4d7cff; --line: rgba(236, 235, 230, 0.12); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    display: grid; place-items: center; padding: 1.5rem; overflow: hidden;
+    background: var(--bg); color: var(--fg);
+    font-family: "Inter Tight", system-ui, -apple-system, sans-serif;
+  }
+  .blob {
+    position: fixed; top: 50%; left: 50%; width: min(70vmin, 560px); translate: -50% -55%;
+    opacity: 0.55; filter: blur(2px); animation: spin 40s linear infinite; pointer-events: none;
+  }
+  @keyframes spin { to { rotate: 360deg; } }
+  main { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
+  .mono { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: clamp(6rem, 26vw, 16rem); font-weight: 600; line-height: 0.85; letter-spacing: -0.06em; }
+  p { max-width: 26rem; color: var(--muted); line-height: 1.55; }
+  a {
+    display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.4rem;
+    border-radius: 999px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 500;
+    transition: background-color 0.4s, color 0.4s;
+  }
+  a:hover { background: var(--fg); color: var(--bg); }
+  @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+</style>
+</head>
+<body>
+<img class="blob" src="/images/blob.webp" alt="" />
+<main>
+  <span class="mono" id="label">Page not found</span>
+  <h1>404</h1>
+  <p id="text">This page doesn't exist or has moved.</p>
+  <a href="/" id="home">Back to patrykkonior.com <span aria-hidden="true">→</span></a>
+</main>
+<script>
+  // Polish copy for visitors who chose Polish on the site or browse in Polish.
+  var lang = null;
+  try { lang = localStorage.getItem("lang"); } catch (e) {}
+  if (lang === "pl" || (!lang && (navigator.language || "").toLowerCase().indexOf("pl") === 0)) {
+    document.documentElement.lang = "pl";
+    document.getElementById("label").textContent = "Nie znaleziono strony";
+    document.getElementById("text").textContent = "Ta strona nie istnieje albo została przeniesiona.";
+    document.getElementById("home").firstChild.textContent = "Wróć na patrykkonior.com ";
+  }
+</script>
+</body>
+</html>
