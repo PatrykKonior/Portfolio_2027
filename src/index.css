@@ -351,9 +351,10 @@ a:hover .roll::after {
     overflow: hidden;
 }
 
-/* Turnstile only takes space when it needs the visitor to interact. */
-.turnstile:empty {
-    display: none;
+/* Turnstile sizes itself; it only takes visible space when a visitor has to interact. Not
+   display:none, so the IntersectionObserver that loads it can see it. */
+.turnstile {
+    min-height: 1px;
 }
 
 .consent-note {

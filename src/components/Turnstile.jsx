@@ -29,6 +29,16 @@ const Turnstile = forwardRef(({ lang, onToken }, ref) => {
     onTokenRef.current = onToken;
 
     useImperativeHandle(ref, () => ({
+        // The current token, waiting up to a few seconds if the check is still running.
+        async getToken(timeout = 8000) {
+            const started = Date.now();
+            while (Date.now() - started < timeout) {
+                const token = widgetRef.current != null ? window.turnstile?.getResponse(widgetRef.current) : "";
+                if (token) return token;
+                await new Promise((resolve) => setTimeout(resolve, 250));
+            }
+            return "";
+        },
         reset() {
             if (widgetRef.current != null) window.turnstile?.reset(widgetRef.current);
             onTokenRef.current("");

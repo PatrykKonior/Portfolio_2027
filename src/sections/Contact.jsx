@@ -60,17 +60,19 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!token) {
+    setStatus("sending");
+    // If the background check hasn't finished yet, give it a few seconds instead of failing.
+    const verified = token || (await turnstileRef.current?.getToken()) || "";
+    if (!verified) {
       setStatus("captcha");
       return;
     }
-    setStatus("sending");
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...form, token, lang }),
+        body: JSON.stringify({ ...form, token: verified, lang }),
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.ok) throw new Error(result.error ?? response.status);
