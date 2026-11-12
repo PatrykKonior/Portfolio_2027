@@ -12,16 +12,18 @@ const StaticBlob = () => {
         let frame = 0;
 
         const render = () => {
-            const { blob, pointer, intro, takeover } = sceneState;
+            const { blob, pointer, intro, takeover, logo } = sceneState;
             const width = window.innerWidth;
             const height = window.innerHeight;
             const mix = (from, to) => from + (to - from) * takeover;
+            const hover = logo.active * (1 - takeover);
+            const toLogo = (from, to) => from + (to - from) * hover;
             const target = {
-                x: mix(blob.x * width * 0.5 + pointer.x * 30, 0),
-                y: mix(-blob.y * height * 0.5 - pointer.y * 24, 0),
+                x: mix(toLogo(blob.x * width * 0.5 + pointer.x * 30, logo.x - width / 2), 0),
+                y: mix(toLogo(-blob.y * height * 0.5 - pointer.y * 24, logo.y - height / 2), 0),
                 // Matches the WebGL blob's on-screen size, plus room for its glow; during a
                 // language switch it swells past the screen edges like the real one.
-                size: mix(blob.scale * Math.min(width, height) * 0.26 * 2 * 1.45 * (0.2 + 0.8 * intro), Math.max(width, height) * 2.8),
+                size: mix(toLogo(blob.scale * Math.min(width, height) * 0.26 * 2 * 1.45 * (0.2 + 0.8 * intro), logo.size * 3.1), Math.max(width, height) * 2.8),
             };
             const follow = takeover > 0.001 ? 0.35 : 0.08;
             current.x += (target.x - current.x) * follow;

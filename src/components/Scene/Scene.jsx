@@ -18,6 +18,7 @@ const TAKEOVER_RADIUS = 4.8;
 const Blob = ({ detail, still }) => {
     const mesh = useRef(null);
     const viewport = useThree((state) => state.viewport);
+    const size = useThree((state) => state.size);
 
     const uniforms = useMemo(() => ({
         uTime: { value: 0 },
@@ -30,28 +31,34 @@ const Blob = ({ detail, still }) => {
 
     useFrame((_, rawDelta) => {
         const delta = Math.min(rawDelta, 0.05);
-        const { blob, pointer, velocity, intro, takeover } = sceneState;
+        const { blob, pointer, velocity, intro, takeover, logo } = sceneState;
         const speed = Math.min(Math.abs(velocity) * 0.02, 1.4) * (1 - takeover);
-        // During a takeover the blob follows the tween tightly instead of easing behind it.
-        const follow = takeover > 0.001 ? 14 : 1;
+        const hover = still ? 0 : logo.active * (1 - takeover);
+        // During a takeover or a logo hover the blob follows tightly instead of easing behind.
+        const follow = takeover > 0.001 ? 14 : hover > 0.001 ? 4 : 1;
 
         // With reduced motion the blob keeps its shape and only follows the scroll.
-        if (!still) uniforms.uTime.value += delta * (0.4 + speed + takeover * 1.2);
-        uniforms.uDistort.value = damp(uniforms.uDistort.value, lerp(blob.distort + speed * 0.18, 0.08, takeover), 4 * follow, delta);
-        uniforms.uAccent.value = damp(uniforms.uAccent.value, lerp(blob.accent, 1, takeover), 3, delta);
+        if (!still) uniforms.uTime.value += delta * (0.4 + speed + takeover * 1.2 + hover * 1.6);
+        uniforms.uDistort.value = damp(uniforms.uDistort.value, lerp(blob.distort + speed * 0.18 + hover * 0.22, 0.08, takeover), 4 * follow, delta);
+        uniforms.uAccent.value = damp(uniforms.uAccent.value, lerp(lerp(blob.accent, 0.9, hover), 1, takeover), 3, delta);
         uniforms.uFlood.value = takeover;
 
         const target = mesh.current;
-        const x = blob.x * viewport.width * 0.5 + pointer.x * 0.25;
-        const y = blob.y * viewport.height * 0.5 + pointer.y * 0.2;
+        // Logo position and size, from CSS pixels to world units at the blob's depth.
+        const unit = viewport.width / size.width;
+        const logoX = (logo.x - size.width / 2) * unit;
+        const logoY = (size.height / 2 - logo.y) * unit;
+        const x = lerp(blob.x * viewport.width * 0.5 + pointer.x * 0.25, logoX, hover);
+        const y = lerp(blob.y * viewport.height * 0.5 + pointer.y * 0.2, logoY, hover);
         target.position.x = damp(target.position.x, lerp(x, 0, takeover), 2.5 * follow, delta);
         target.position.y = damp(target.position.y, lerp(y, 0, takeover), 2.5 * follow, delta);
 
         const fit = Math.min(viewport.width, viewport.height) * 0.26;
-        const scale = lerp(blob.scale * fit * (0.2 + 0.8 * intro), TAKEOVER_RADIUS, takeover);
+        const resting = lerp(blob.scale * fit * (0.2 + 0.8 * intro), logo.size * 1.05 * unit, hover);
+        const scale = lerp(resting, TAKEOVER_RADIUS, takeover);
         target.scale.setScalar(damp(target.scale.x, scale, 3 * follow, delta));
 
-        if (!still) target.rotation.y += delta * 0.12;
+        if (!still) target.rotation.y += delta * (0.12 + hover * 2.2);
         target.rotation.x = damp(target.rotation.x, -pointer.y * 0.5, 2, delta);
         target.rotation.z = damp(target.rotation.z, pointer.x * 0.3, 2, delta);
     });

@@ -5,6 +5,7 @@ import { useLanguage } from "../i18n/index.js";
 import useLocalTime from "../hooks/useLocalTime.js";
 import Magnetic from "./Magnetic.jsx";
 import LanguageSwitch from "./LanguageSwitch.jsx";
+import { sceneState } from "../lib/sceneState.js";
 
 const RollText = ({ children }) => (
     <span className="roll" data-text={children}>
@@ -54,11 +55,45 @@ const NavBar = ({ ready }) => {
 
     const closeMenu = () => setMenuOpen(false);
 
+    // Hovering the logo pulls the 3D blob in behind it, and the glass icon tilts toward the pointer.
+    const logoRef = useRef(null);
+    const pullBlob = (active) => {
+        if (!motionOK()) return;
+        const rect = logoRef.current.getBoundingClientRect();
+        Object.assign(sceneState.logo, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, size: rect.width });
+        gsap.to(sceneState.logo, { active: active ? 1 : 0, duration: active ? 1.1 : 1.3, ease: active ? "expo.out" : "expo.inOut", overwrite: true });
+    };
+    const tiltLogo = (event) => {
+        const icon = logoRef.current;
+        const rect = icon.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        icon.style.setProperty("--rx", `${-y * 28}deg`);
+        icon.style.setProperty("--ry", `${x * 28}deg`);
+        icon.style.setProperty("--shine", `${(x + 0.5) * 100}%`);
+    };
+    const resetLogo = () => {
+        const icon = logoRef.current;
+        icon.style.setProperty("--rx", "0deg");
+        icon.style.setProperty("--ry", "0deg");
+    };
+
     return (
         <header ref={headerRef} className="navbar">
             <div className="nav-inner">
-                <a href="#top" className="nav-item nav-logo" onClick={closeMenu}>
-                    <span className="nav-logo-mark">PK</span>
+                <a
+                    href="#top"
+                    className="nav-item nav-logo"
+                    onClick={closeMenu}
+                    onPointerEnter={() => pullBlob(true)}
+                    onPointerLeave={() => { pullBlob(false); resetLogo(); }}
+                    onPointerMove={tiltLogo}
+                    onFocus={() => pullBlob(true)}
+                    onBlur={() => pullBlob(false)}
+                >
+                    <span ref={logoRef} className="nav-logo-mark" aria-hidden="true">
+                        <img src="/favicon-96.png" alt="" width="40" height="40" />
+                    </span>
                     <span className="nav-logo-text">
                         Patryk Konior<span className="text-muted"> — {t.nav.role}</span>
                     </span>
