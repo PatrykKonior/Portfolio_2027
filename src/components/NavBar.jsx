@@ -55,13 +55,22 @@ const NavBar = ({ ready }) => {
 
     const closeMenu = () => setMenuOpen(false);
 
-    // Hovering the logo pulls the 3D blob in behind it, and the glass icon tilts toward the pointer.
+    // Hovering the logo grows a small 3D blob out of it; leaving draws it back in.
+    // The glass icon also tilts toward the pointer.
     const logoRef = useRef(null);
     const pullBlob = (active) => {
         if (!motionOK()) return;
         const rect = logoRef.current.getBoundingClientRect();
         Object.assign(sceneState.logo, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, size: rect.width });
-        gsap.to(sceneState.logo, { active: active ? 1 : 0, duration: active ? 1.1 : 1.3, ease: active ? "expo.out" : "expo.inOut", overwrite: true });
+        const logo = sceneState.logo;
+        gsap.killTweensOf(logo);
+        if (active) {
+            gsap.to(logo, { grow: 1, duration: 1.6, ease: "elastic.out(1, 0.55)" });
+            gsap.fromTo(logo, { wobble: 1 }, { wobble: 0, duration: 2.2, ease: "power2.out" });
+        } else {
+            gsap.to(logo, { grow: 0, duration: 0.7, ease: "back.in(1.7)" });
+            gsap.to(logo, { wobble: 0.6, duration: 0.35, ease: "power2.out" });
+        }
     };
     const tiltLogo = (event) => {
         const icon = logoRef.current;

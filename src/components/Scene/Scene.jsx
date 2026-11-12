@@ -18,7 +18,6 @@ const TAKEOVER_RADIUS = 4.8;
 const Blob = ({ detail, still }) => {
     const mesh = useRef(null);
     const viewport = useThree((state) => state.viewport);
-    const size = useThree((state) => state.size);
 
     const uniforms = useMemo(() => ({
         uTime: { value: 0 },
@@ -31,40 +30,75 @@ const Blob = ({ detail, still }) => {
 
     useFrame((_, rawDelta) => {
         const delta = Math.min(rawDelta, 0.05);
-        const { blob, pointer, velocity, intro, takeover, logo } = sceneState;
+        const { blob, pointer, velocity, intro, takeover } = sceneState;
         const speed = Math.min(Math.abs(velocity) * 0.02, 1.4) * (1 - takeover);
-        const hover = still ? 0 : logo.active * (1 - takeover);
-        // During a takeover or a logo hover the blob follows tightly instead of easing behind.
-        const follow = takeover > 0.001 ? 14 : hover > 0.001 ? 4 : 1;
+        // During a takeover the blob follows the tween tightly instead of easing behind it.
+        const follow = takeover > 0.001 ? 14 : 1;
 
         // With reduced motion the blob keeps its shape and only follows the scroll.
-        if (!still) uniforms.uTime.value += delta * (0.4 + speed + takeover * 1.2 + hover * 1.6);
-        uniforms.uDistort.value = damp(uniforms.uDistort.value, lerp(blob.distort + speed * 0.18 + hover * 0.22, 0.08, takeover), 4 * follow, delta);
-        uniforms.uAccent.value = damp(uniforms.uAccent.value, lerp(lerp(blob.accent, 0.9, hover), 1, takeover), 3, delta);
+        if (!still) uniforms.uTime.value += delta * (0.4 + speed + takeover * 1.2);
+        uniforms.uDistort.value = damp(uniforms.uDistort.value, lerp(blob.distort + speed * 0.18, 0.08, takeover), 4 * follow, delta);
+        uniforms.uAccent.value = damp(uniforms.uAccent.value, lerp(blob.accent, 1, takeover), 3, delta);
         uniforms.uFlood.value = takeover;
 
         const target = mesh.current;
-        // Logo position and size, from CSS pixels to world units at the blob's depth.
-        const unit = viewport.width / size.width;
-        const logoX = (logo.x - size.width / 2) * unit;
-        const logoY = (size.height / 2 - logo.y) * unit;
-        const x = lerp(blob.x * viewport.width * 0.5 + pointer.x * 0.25, logoX, hover);
-        const y = lerp(blob.y * viewport.height * 0.5 + pointer.y * 0.2, logoY, hover);
+        const x = blob.x * viewport.width * 0.5 + pointer.x * 0.25;
+        const y = blob.y * viewport.height * 0.5 + pointer.y * 0.2;
         target.position.x = damp(target.position.x, lerp(x, 0, takeover), 2.5 * follow, delta);
         target.position.y = damp(target.position.y, lerp(y, 0, takeover), 2.5 * follow, delta);
 
         const fit = Math.min(viewport.width, viewport.height) * 0.26;
-        const resting = lerp(blob.scale * fit * (0.2 + 0.8 * intro), logo.size * 1.05 * unit, hover);
-        const scale = lerp(resting, TAKEOVER_RADIUS, takeover);
+        const scale = lerp(blob.scale * fit * (0.2 + 0.8 * intro), TAKEOVER_RADIUS, takeover);
         target.scale.setScalar(damp(target.scale.x, scale, 3 * follow, delta));
 
-        if (!still) target.rotation.y += delta * (0.12 + hover * 2.2);
+        if (!still) target.rotation.y += delta * 0.12;
         target.rotation.x = damp(target.rotation.x, -pointer.y * 0.5, 2, delta);
         target.rotation.z = damp(target.rotation.z, pointer.x * 0.3, 2, delta);
     });
 
     return (
         <mesh ref={mesh} scale={0.01}>
+            <icosahedronGeometry args={[1, detail]} />
+            <shaderMaterial vertexShader={blobVertex} fragmentShader={blobFragment} uniforms={uniforms} />
+        </mesh>
+    );
+};
+
+// A small blob that grows out of the navbar logo on hover: it swells from a point at the icon's
+// centre, ripples hard and settles into a breathing halo, then gets drawn back in on leave.
+const LogoBlob = ({ detail }) => {
+    const mesh = useRef(null);
+    const viewport = useThree((state) => state.viewport);
+    const size = useThree((state) => state.size);
+
+    const uniforms = useMemo(() => ({
+        uTime: { value: 0 },
+        uDistort: { value: 0.2 },
+        uFrequency: { value: 1.6 },
+        uAccent: { value: 0.75 },
+        uFlood: { value: 0 },
+        uAccentColor: { value: new THREE.Color("#4d7cff") },
+    }), []);
+
+    useFrame((_, rawDelta) => {
+        const delta = Math.min(rawDelta, 0.05);
+        const { logo } = sceneState;
+        const target = mesh.current;
+        target.visible = logo.grow > 0.002;
+        if (!target.visible) return;
+
+        uniforms.uTime.value += delta * (0.7 + logo.wobble * 2.5);
+        uniforms.uDistort.value = 0.16 + logo.wobble * 0.38;
+
+        // CSS pixels to world units at the blob's depth.
+        const unit = viewport.width / size.width;
+        target.position.set((logo.x - size.width / 2) * unit, (size.height / 2 - logo.y) * unit, 0);
+        target.scale.setScalar(Math.max(logo.size * 0.95 * unit * logo.grow, 0.0001));
+        target.rotation.y += delta * 0.25;
+    });
+
+    return (
+        <mesh ref={mesh} visible={false}>
             <icosahedronGeometry args={[1, detail]} />
             <shaderMaterial vertexShader={blobVertex} fragmentShader={blobFragment} uniforms={uniforms} />
         </mesh>
@@ -216,6 +250,7 @@ const Scene = () => {
             >
                 <Blob detail={lite ? 32 : isDesktop ? 96 : 40} still={still} />
                 <Dust count={lite ? 400 : isDesktop ? 1400 : 500} />
+                {!still && <LogoBlob detail={lite ? 24 : 48} />}
                 {probing && quality !== "static" && <FrameRateProbe key={quality} onMeasured={handleFrameRate} />}
                 {isDesktop && !lite && (
                     <EffectComposer multisampling={0}>

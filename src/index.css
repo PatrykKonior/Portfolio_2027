@@ -823,6 +823,10 @@ a:hover .roll::after {
     will-change: transform, width;
 }
 
+.static-logo-blob {
+    opacity: 0;
+}
+
 .scene {
     position: fixed;
     inset: 0;
@@ -1032,8 +1036,10 @@ a:hover .roll::after {
 }
 
 .nav-logo:hover .nav-logo-mark {
-    transition: transform 0.15s linear, box-shadow 0.5s var(--ease-out);
+    transition: transform 0.15s linear, box-shadow 0.5s var(--ease-out), filter 0.6s var(--ease-out);
     box-shadow: 0 8px 26px rgba(77, 124, 255, 0.45);
+    /* The glass lights up as the blob is born from it. */
+    filter: brightness(1.18) saturate(1.15);
 }
 
 .nav-logo:hover .nav-logo-mark::after {
