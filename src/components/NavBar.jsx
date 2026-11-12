@@ -5,7 +5,6 @@ import { useLanguage } from "../i18n/index.js";
 import useLocalTime from "../hooks/useLocalTime.js";
 import Magnetic from "./Magnetic.jsx";
 import LanguageSwitch from "./LanguageSwitch.jsx";
-import { sceneState } from "../lib/sceneState.js";
 
 const RollText = ({ children }) => (
     <span className="roll" data-text={children}>
@@ -55,30 +54,35 @@ const NavBar = ({ ready }) => {
 
     const closeMenu = () => setMenuOpen(false);
 
-    // Hovering the logo grows a small 3D blob out of it; leaving draws it back in.
-    // The glass icon also tilts toward the pointer.
+    // Hovering the logo brings its blob to life inside the icon (see logoLive.js),
+    // and the glass tile tilts gently toward the pointer.
     const logoRef = useRef(null);
-    const pullBlob = (active) => {
+    const liveCanvasRef = useRef(null);
+    const live = useRef(null);
+    const hovering = useRef(false);
+    const wakeLogo = (active) => {
+        hovering.current = active;
         if (!motionOK()) return;
-        const rect = logoRef.current.getBoundingClientRect();
-        Object.assign(sceneState.logo, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, size: rect.width });
-        const logo = sceneState.logo;
-        gsap.killTweensOf(logo);
-        if (active) {
-            gsap.to(logo, { grow: 1, duration: 1.6, ease: "elastic.out(1, 0.55)" });
-            gsap.fromTo(logo, { wobble: 1 }, { wobble: 0, duration: 2.2, ease: "power2.out" });
-        } else {
-            gsap.to(logo, { grow: 0, duration: 0.7, ease: "back.in(1.7)" });
-            gsap.to(logo, { wobble: 0.6, duration: 0.35, ease: "power2.out" });
-        }
+        logoRef.current.classList.toggle("alive", active);
+        if (live.current) return live.current.setActive(active);
+        if (!active || live.current === false) return;
+        live.current = false;
+        import("./logoLive.js")
+            .then(({ createLogoLive }) => {
+                live.current = createLogoLive(liveCanvasRef.current);
+                live.current.setActive(hovering.current);
+            })
+            .catch(() => { live.current = null; });
     };
+    useEffect(() => () => live.current?.dispose?.(), []);
     const tiltLogo = (event) => {
         const icon = logoRef.current;
         const rect = icon.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width - 0.5;
         const y = (event.clientY - rect.top) / rect.height - 0.5;
-        icon.style.setProperty("--rx", `${-y * 28}deg`);
-        icon.style.setProperty("--ry", `${x * 28}deg`);
+        icon.style.setProperty("--rx", `${-y * 14}deg`);
+        icon.style.setProperty("--ry", `${x * 14}deg`);
+        live.current?.setPointer?.(x, y);
         icon.style.setProperty("--shine", `${(x + 0.5) * 100}%`);
     };
     const resetLogo = () => {
@@ -94,14 +98,17 @@ const NavBar = ({ ready }) => {
                     href="#top"
                     className="nav-item nav-logo"
                     onClick={closeMenu}
-                    onPointerEnter={() => pullBlob(true)}
-                    onPointerLeave={() => { pullBlob(false); resetLogo(); }}
+                    onPointerEnter={() => wakeLogo(true)}
+                    onPointerLeave={() => { wakeLogo(false); resetLogo(); }}
                     onPointerMove={tiltLogo}
-                    onFocus={() => pullBlob(true)}
-                    onBlur={() => pullBlob(false)}
+                    onFocus={() => wakeLogo(true)}
+                    onBlur={() => wakeLogo(false)}
                 >
                     <span ref={logoRef} className="nav-logo-mark" aria-hidden="true">
-                        <img src="/favicon-96.png" alt="" width="40" height="40" />
+                        <img src="/images/blob.webp" alt="" className="logo-blob-still" />
+                        <canvas ref={liveCanvasRef} className="logo-blob-live" />
+                        <span className="logo-glass" />
+                        <span className="logo-letters">PK</span>
                     </span>
                     <span className="nav-logo-text">
                         Patryk Konior<span className="text-muted"> — {t.nav.role}</span>

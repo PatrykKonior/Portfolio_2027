@@ -5,7 +5,6 @@ import { sceneState } from "../../lib/sceneState.js";
 // It follows the same scroll stages and pointer as the real one, just as a flat image.
 const StaticBlob = () => {
     const ref = useRef(null);
-    const logoRef = useRef(null);
 
     useEffect(() => {
         const image = ref.current;
@@ -13,11 +12,7 @@ const StaticBlob = () => {
         let frame = 0;
 
         const render = () => {
-            const { blob, pointer, intro, takeover, logo } = sceneState;
-            const small = logoRef.current;
-            small.style.width = `${logo.size * 2.75 * logo.grow}px`;
-            small.style.opacity = logo.grow > 0.002 ? "1" : "0";
-            small.style.transform = `translate(-50%, -50%) translate(${logo.x - window.innerWidth / 2}px, ${logo.y - window.innerHeight / 2}px) rotate(${logo.wobble * 18}deg)`;
+            const { blob, pointer, intro, takeover } = sceneState;
             const width = window.innerWidth;
             const height = window.innerHeight;
             const mix = (from, to) => from + (to - from) * takeover;
@@ -44,7 +39,6 @@ const StaticBlob = () => {
     return (
         <div className="scene scene-static" aria-hidden="true">
             <img ref={ref} src="/images/blob.webp" alt="" className="static-blob" />
-            <img ref={logoRef} src="/images/blob.webp" alt="" className="static-blob static-logo-blob" />
         </div>
     );
 };
