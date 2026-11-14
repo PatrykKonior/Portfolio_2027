@@ -24,8 +24,9 @@ const en = {
     hero: {
         eyebrow: "Full-stack Developer — Portfolio ©2026",
         location: "Based in Chorzów, Poland",
-        title: "Building <em>apps</em> from database to&nbsp;pixel.",
-        intro: "Hi, I'm Patryk. I design and build web, mobile and desktop apps with React, Svelte, Elixir, Node.js and .NET, from the first conversation all the way to launch.",
+        title: "From idea to <em>working</em> product.",
+        subtitle: "I help companies design, build and grow software.",
+        intro: "Hi, I'm Patryk. I work with React, Svelte, Elixir, Node.js and .NET, and besides web projects I also build mobile and desktop apps. I'm with my clients at every stage: from the first conversation, through design and launch, to further development.",
         availability: "Available for new projects",
         cta: "See work",
         cursor: "Explore",
@@ -34,7 +35,7 @@ const en = {
     },
     about: {
         label: "About",
-        text: "I take features all the way from database schema and real-time APIs to a polished interface, then ship them with Docker and CI/CD. Commercial projects in Node.js, Elixir and .NET, with React and Svelte on the front end, taught me that great software is equal parts clean code and clear conversations with clients.",
+        text: "For over three years I've been building commercial software in Node.js, Elixir and .NET, with React and Svelte on the front end. I handle every stage of the work: from database design and APIs, through the interface, to deployment with Docker and CI/CD. I believe good software is equal parts clean code and good collaboration with the client.",
         stats: [
             { label: "Years of experience", detail: "Commercial projects" },
             { label: "Backend ecosystems", detail: "Elixir · Node.js · .NET" },
@@ -42,9 +43,9 @@ const en = {
             { label: "Technologies & tools", detail: "And counting" },
         ],
         abilities: [
-            { title: "Full-stack Ownership", desc: "I take features all the way from database design and APIs to a polished, responsive interface." },
-            { title: "Direct Client Communication", desc: "I run meetings, gather requirements and handle support tickets myself, so nothing gets lost between business and code." },
-            { title: "Production-Ready Delivery", desc: "Tested code, Docker deployments and CI/CD pipelines, so new features reach production safely." },
+            { title: "End-to-end Ownership", desc: "A single point of ownership, from database to interface. That means faster decisions, consistent solutions and clear accountability for the result." },
+            { title: "Direct Client Communication", desc: "I run meetings, gather requirements and handle support tickets myself, so I understand what the business needs and can respond quickly." },
+            { title: "Production-Ready Code", desc: "Every change goes through tests and an automated Docker and CI/CD pipeline, so new features reach users safely and predictably." },
         ],
     },
     work: {
@@ -57,19 +58,19 @@ const en = {
         projects: [
             {
                 title: "Design Office Management Suite",
-                type: "Desktop · Web · Mobile",
+                type: "Business software · Desktop · Web · Mobile",
                 desc: "One system that runs an entire design office: clients, projects, invoices, payments, tasks and time tracking in a single place. The team works wherever it suits them, in a WPF desktop app, in the browser or on the phone, and every app stays in sync through one .NET Core REST API. The web and mobile apps share a single codebase, so new features reach every platform at once.",
                 links: ["API", "Web & Mobile", "Desktop"],
             },
             {
                 title: "Pizzeria Management Panel & Storefront",
-                type: "Admin panel · Storefront",
+                type: "Food service · Admin panel · Online store",
                 desc: "A complete digital back office for a multi-location pizzeria, paired with a modern storefront for its customers. The React admin panel brings sales, stock, staff schedules, documents, recipes and per-location revenue reports into one clear dashboard, all powered by a .NET REST API on SQL Server.",
                 links: ["Admin panel", "API"],
             },
             {
                 title: "Pento: Real-time Store on Phoenix LiveView",
-                type: "Real-time store",
+                type: "E-commerce · Real-time",
                 desc: "A real-time online store built with Phoenix LiveView. Customers find products fast, rate them and share their feedback, while the owner gets an analytics dashboard that turns that data into interactive charts by customer segment. Everything updates live, with no page reloads and no separate JavaScript front end to maintain.",
                 links: ["Code"],
             },
@@ -159,7 +160,7 @@ const en = {
     contact: {
         label: "Contact",
         status: "Available for projects & roles",
-        title: "Let's build<br /><em>something</em> great.",
+        title: "Let's build<br /><em>something</em> together.",
         writeToMe: "Write to me",
         emailCursor: "Email",
         copy: "Copy",

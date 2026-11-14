@@ -23,9 +23,10 @@ const pl = {
     preloader: "Portfolio ©2026",
     hero: {
         eyebrow: "Full-stack Developer — Portfolio ©2026",
-        location: "Chorzów, Polska",
-        title: "Tworzę <em>aplikacje</em> od bazy danych po&nbsp;piksel.",
-        intro: "Cześć, jestem Patryk. Projektuję i tworzę aplikacje webowe, mobilne i desktopowe w React, Svelte, Elixir, Node.js i .NET, od pierwszej rozmowy aż po wdrożenie.",
+        location: "Chorzów, Śląsk",
+        title: "Od pomysłu do <em>działającej</em> aplikacji.",
+        subtitle: "Pomagam firmom projektować, budować i rozwijać oprogramowanie.",
+        intro: "Cześć, jestem Patryk. Pracuję w React, Svelte, Elixir, Node.js i .NET, a oprócz projektów webowych tworzę też aplikacje mobilne i desktopowe. Jestem z klientem na każdym etapie: od pierwszej rozmowy, przez projekt i wdrożenie, aż po dalszy rozwój.",
         availability: "Dostępny na nowe projekty",
         cta: "Zobacz projekty",
         cursor: "Odkryj",
@@ -34,7 +35,7 @@ const pl = {
     },
     about: {
         label: "O mnie",
-        text: "Prowadzę funkcjonalności od schematu bazy danych i API czasu rzeczywistego aż po dopracowany interfejs, a potem wdrażam je z Dockerem i CI/CD. Komercyjne projekty w Node.js, Elixirze i .NET, z Reactem i Svelte na froncie, nauczyły mnie, że świetne oprogramowanie to w równym stopniu czysty kod i jasna komunikacja z klientem.",
+        text: "Od ponad trzech lat tworzę komercyjne oprogramowanie w Node.js, Elixirze i .NET, z Reactem i Svelte na froncie. Zajmuję się każdym etapem pracy: od projektu bazy danych i API, przez interfejs, po wdrożenie z Dockerem i CI/CD. Wierzę, że dobre oprogramowanie to w równym stopniu czysty kod, co dobra współpraca z klientem.",
         stats: [
             { label: "Lata doświadczenia", detail: "Projekty komercyjne" },
             { label: "Ekosystemy backendowe", detail: "Elixir · Node.js · .NET" },
@@ -42,9 +43,9 @@ const pl = {
             { label: "Technologie i narzędzia", detail: "I wciąż przybywa" },
         ],
         abilities: [
-            { title: "Odpowiedzialność za całość", desc: "Prowadzę funkcjonalności od projektu bazy danych i API po dopracowany, responsywny interfejs." },
-            { title: "Bezpośredni kontakt z klientem", desc: "Sam prowadzę spotkania, zbieram wymagania i obsługuję zgłoszenia, więc nic nie ginie między biznesem a kodem." },
-            { title: "Gotowe na produkcję", desc: "Przetestowany kod, wdrożenia w Dockerze i pipeline'y CI/CD, dzięki którym nowe funkcje bezpiecznie trafiają na produkcję." },
+            { title: "Całość w jednych rękach", desc: "Jedna osoba odpowiada za projekt od bazy danych po interfejs. To szybsze decyzje, spójne rozwiązania i jasna odpowiedzialność za efekt." },
+            { title: "Bezpośredni kontakt z klientem", desc: "Sam prowadzę spotkania, zbieram wymagania i obsługuję zgłoszenia. Dzięki temu dobrze rozumiem potrzeby firmy i szybko na nie reaguję." },
+            { title: "Kod gotowy na produkcję", desc: "Każda zmiana przechodzi testy i automatyczne wdrożenie w Dockerze z CI/CD, więc nowe funkcje trafiają do użytkowników bezpiecznie i przewidywalnie." },
         ],
     },
     work: {
@@ -57,19 +58,19 @@ const pl = {
         projects: [
             {
                 title: "System do zarządzania biurem projektowym",
-                type: "Desktop · Web · Mobile",
+                type: "Oprogramowanie dla firmy · Desktop · Web · Mobile",
                 desc: "Jeden system, który prowadzi całe biuro projektowe: klienci, projekty, faktury, płatności, zadania i ewidencja czasu pracy w jednym miejscu. Zespół pracuje tam, gdzie mu wygodnie: w aplikacji desktopowej (WPF), w przeglądarce lub na telefonie, a wszystkie aplikacje są zsynchronizowane przez jedno REST API w .NET Core. Wersja webowa i mobilna mają wspólną bazę kodu, więc nowe funkcje trafiają od razu na każdą platformę.",
                 links: ["API", "Web i mobile", "Desktop"],
             },
             {
                 title: "Panel zarządzania pizzerią i strona sprzedażowa",
-                type: "Panel admina · Sklep",
+                type: "Gastronomia · Panel admina · Sklep online",
                 desc: "Kompletne cyfrowe zaplecze dla pizzerii z kilkoma lokalami, połączone z nowoczesną stroną sprzedażową dla klientów. Panel administracyjny w React zbiera w jednym czytelnym miejscu sprzedaż, magazyn, grafiki pracowników, dokumenty i receptury oraz raporty przychodów dla każdego lokalu, a całość napędza REST API w .NET z SQL Server.",
                 links: ["Panel admina", "API"],
             },
             {
                 title: "Pento: sklep w czasie rzeczywistym w Phoenix LiveView",
-                type: "Sklep w czasie rzeczywistym",
+                type: "E-commerce · Czas rzeczywisty",
                 desc: "Sklep internetowy działający w czasie rzeczywistym, zbudowany w Phoenix LiveView. Klienci szybko znajdują produkty, oceniają je i dzielą się opinią, a właściciel dostaje panel analityczny, który zamienia te dane w interaktywne wykresy według grup klientów. Wszystko aktualizuje się na żywo, bez przeładowania strony i bez osobnego frontendu w JavaScripcie do utrzymania.",
                 links: ["Kod"],
             },
@@ -166,14 +167,14 @@ const pl = {
     contact: {
         label: "Kontakt",
         status: "Dostępny na projekty i oferty pracy",
-        title: "Zbudujmy<br /><em>coś</em> świetnego.",
+        title: "Zbudujmy<br /><em>coś</em> razem.",
         writeToMe: "Napisz do mnie",
         emailCursor: "Napisz",
         copy: "Kopiuj",
         copied: "Skopiowano",
         copyAria: "Kopiuj adres e-mail",
         facts: [
-            { label: "Lokalizacja", value: "Chorzów, Polska" },
+            { label: "Lokalizacja", value: "Chorzów, Śląsk" },
             { label: "Tryb pracy", value: "Zdalnie lub na miejscu" },
             { label: "Języki", value: "Angielski B2/C1 · Niemiecki A2" },
         ],

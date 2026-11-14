@@ -48,7 +48,10 @@ const Hero = ({ ready }) => {
                     <span className="mono text-muted">{heroCopy.location}</span>
                 </div>
 
-                <h1 className="hero-title" dangerouslySetInnerHTML={{ __html: heroCopy.title }} />
+                <div className="hero-heading">
+                    <h1 className="hero-title" dangerouslySetInnerHTML={{ __html: heroCopy.title }} />
+                    <p className="hero-subtitle hero-reveal">{heroCopy.subtitle}</p>
+                </div>
 
                 <div className="hero-line" />
 
