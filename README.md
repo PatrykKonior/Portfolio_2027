@@ -48,6 +48,7 @@ npm run worker:dev   # build, then run the site and the contact API on Cloudflar
 ## Configuration
 
 - **Contact form** — `worker/index.js` handles `POST /api/contact`: it validates the input, checks Cloudflare Turnstile and emails the message through the Email Service binding (configured in `wrangler.jsonc`). The Turnstile secret is the Worker secret `TURNSTILE_SECRET_KEY`; for local runs copy `.dev.vars.example` to `.dev.vars` (Cloudflare's always-pass test key).
+- **Home page in the Worker** — the Worker also redirects `www` and its `workers.dev` address to the main domain, and serves `/?lang=pl` with Polish meta tags and `og-image-pl.jpg`, since social sites don't run JavaScript. Link-preview images are `public/og-image-en.jpg` and `public/og-image-pl.jpg` (1200×630).
 - **`site.config.js`**
   - `url` — the domain (e.g. `https://patrykkonior.dev`). Turns on canonical and hreflang tags, absolute social-preview URLs and `sitemap.xml`.
   - `turnstileSiteKey` — the public Turnstile key for the contact form.

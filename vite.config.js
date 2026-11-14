@@ -27,7 +27,7 @@ const structuredData = () => ({
             name: 'Patryk Konior Programming Services',
             taxID: '6272804661',
             founder: { '@id': `${site.url}/#person` },
-            ...(site.url && { url: site.url, image: `${site.url}/og-image.jpg` }),
+            ...(site.url && { url: site.url, image: `${site.url}/og-image-en.jpg` }),
             areaServed: ['PL', 'EU'],
             address: { '@type': 'PostalAddress', addressLocality: 'Chorzów', addressCountry: 'PL' },
         },
@@ -46,12 +46,12 @@ const seo = () => ({
             const link = (attrs) => ({ tag: 'link', attrs, injectTo: 'head' })
             tags.push(
                 link({ rel: 'canonical', href: `${site.url}/` }),
-                link({ rel: 'alternate', hreflang: 'en', href: `${site.url}/?lang=en` }),
+                link({ rel: 'alternate', hreflang: 'en', href: `${site.url}/` }),
                 link({ rel: 'alternate', hreflang: 'pl', href: `${site.url}/?lang=pl` }),
                 link({ rel: 'alternate', hreflang: 'x-default', href: `${site.url}/` }),
                 { tag: 'meta', attrs: { property: 'og:url', content: `${site.url}/` }, injectTo: 'head' },
             )
-            html = html.replaceAll('content="/og-image.jpg"', `content="${site.url}/og-image.jpg"`)
+            html = html.replaceAll('content="/og-image-', `content="${site.url}/og-image-`)
         }
         return { html, tags }
     },
@@ -60,16 +60,17 @@ const seo = () => ({
         this.emitFile({ type: 'asset', fileName: 'robots.txt', source: `${robots}\n` })
         if (!site.url) return
         const today = new Date().toISOString().slice(0, 10)
-        const alternates = ['en', 'pl']
-            .map((lang) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${site.url}/?lang=${lang}"/>`)
+        // English lives at /, Polish at /?lang=pl (the Worker serves it with Polish meta tags).
+        const pages = [`${site.url}/`, `${site.url}/?lang=pl`]
+        const alternates = [['en', pages[0]], ['pl', pages[1]], ['x-default', pages[0]]]
+            .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+            .join('\n')
+        const urls = pages
+            .map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n${alternates}\n  </url>`)
             .join('\n')
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>${site.url}/</loc>
-    <lastmod>${today}</lastmod>
-${alternates}
-  </url>
+${urls}
 </urlset>
 `
         this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap })

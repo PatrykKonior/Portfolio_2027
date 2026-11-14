@@ -1,4 +1,8 @@
-// Contact form backend. Static files are served by Workers Assets; only /api/* runs here.
+/* global HTMLRewriter */
+// Static files are served by Workers Assets. Only the home page and /api/* run here:
+// - www and the main workers.dev address redirect to the domain,
+// - /?lang=pl gets Polish link-preview tags (social sites don't run JavaScript),
+// - /api/contact is the contact form backend.
 
 const LIMITS = { name: 120, email: 254, message: 5000 };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -101,10 +105,48 @@ Site language: ${form.lang} · Sent: ${sent}
     return json({ ok: true });
 };
 
+const SITE = "https://patrykkonior.com";
+
+// Hosts that only mirror the site: www, and the Worker's own workers.dev address. Preview URLs
+// (<alias>-portfolio.….workers.dev) don't start with "portfolio." and are left alone.
+const isMirror = (hostname) =>
+    hostname === "www.patrykkonior.com" || (hostname.startsWith("portfolio.") && hostname.endsWith(".workers.dev"));
+
+const PL = {
+    description: "Patryk Konior, full-stack developer z Polski (B2B). Aplikacje webowe, mobilne i desktopowe, API czasu rzeczywistego i wdrożenia w Elixir & Phoenix, Node.js, .NET, React i Svelte.",
+    ogDescription: "Aplikacje webowe, mobilne i desktopowe, API czasu rzeczywistego i wdrożenia w Elixir & Phoenix, Node.js, .NET, React i Svelte. Dostępny do projektów B2B.",
+    image: `${SITE}/og-image-pl.jpg`,
+    url: `${SITE}/?lang=pl`,
+};
+
+const setAttribute = (name, value) => ({ element: (element) => element.setAttribute(name, value) });
+
+// Rewrites the English meta tags of index.html into Polish ones.
+const polishHome = (response) =>
+    new HTMLRewriter()
+        .on("html", setAttribute("lang", "pl"))
+        .on('meta[name="description"]', setAttribute("content", PL.description))
+        .on('meta[property="og:description"], meta[name="twitter:description"]', setAttribute("content", PL.ogDescription))
+        .on('meta[property="og:image"], meta[name="twitter:image"]', setAttribute("content", PL.image))
+        .on('meta[property="og:url"]', setAttribute("content", PL.url))
+        .on('meta[property="og:locale"]', setAttribute("content", "pl_PL"))
+        .on('meta[property="og:locale:alternate"]', setAttribute("content", "en_US"))
+        .on('link[rel="canonical"]', setAttribute("href", PL.url))
+        .transform(response);
+
 export default {
     async fetch(request, env) {
-        const { pathname } = new URL(request.url);
-        if (pathname === "/api/contact") return handleContact(request, env);
-        return json({ ok: false, error: "not_found" }, 404);
+        const url = new URL(request.url);
+
+        if (isMirror(url.hostname) && (request.method === "GET" || request.method === "HEAD")) {
+            return Response.redirect(`${SITE}${url.pathname}${url.search}`, 301);
+        }
+
+        if (url.pathname === "/api/contact") return handleContact(request, env);
+        if (url.pathname.startsWith("/api/")) return json({ ok: false, error: "not_found" }, 404);
+
+        const response = await env.ASSETS.fetch(request);
+        const isHtml = response.headers.get("content-type")?.includes("text/html");
+        return isHtml && url.searchParams.get("lang") === "pl" ? polishHome(response) : response;
     },
 };
