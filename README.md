@@ -56,6 +56,7 @@ npm run worker:dev   # build, then run the site and the contact API on Cloudflar
   - `preview` — shows the cookie banner and the CV buttons before a GA ID or CV files exist. Keep both `false` in production.
 - **CV** — put `Patryk-Konior-CV-EN.pdf` and/or `Patryk-Konior-CV-PL.pdf` in `public/`. The *Download CV* buttons appear automatically for the language whose file exists.
 - **Copy** — every text on the site lives in `src/i18n/en.js` and `src/i18n/pl.js`; links, stack and icons are in `src/constants/index.js`.
+- **After changing copy or the look of the hero** — social sites cache link previews. If the change touches the title, the description (`index.html` for English, `PL` in `worker/index.js` for Polish) or what the hero looks like, re-shoot `public/og-image-en.jpg` / `og-image-pl.jpg` at 1200×630 under a new file name. Then, once it's live, run both `https://patrykkonior.com` and `https://patrykkonior.com/?lang=pl` through the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) (*Scrape Again*) and the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/).
 - **Testing the 3D fallback** — `?lite` forces the pre-rendered image, `?full` skips the performance checks.
 
 ## Contact
