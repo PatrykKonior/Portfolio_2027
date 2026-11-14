@@ -1,6 +1,28 @@
 import { createContext, useContext } from "react";
-import en from "./en.js";
-import pl from "./pl.js";
+import enCopy from "./en.js";
+import plCopy from "./pl.js";
+
+// One-letter words that shouldn't be left hanging at the end of a line ("i", "w", "z" in Polish,
+// "a" and "I" in English). Gluing them to the next word with a non-breaking space moves them to
+// the next line together.
+const SHORT_WORDS = { pl: "aAiIoOuUwWzZ", en: "aAI" };
+
+const typeset = (copy, letters) => {
+    const pattern = new RegExp(`(^|[\\s(„"])([${letters}]) +`, "g");
+    // Twice, so runs like "i w React" are glued all the way through.
+    const glue = (text) => text.replace(pattern, "$1$2\u00A0").replace(pattern, "$1$2\u00A0");
+    const walk = (value) => {
+        if (typeof value === "string") return glue(value);
+        if (typeof value === "function") return (...args) => walk(value(...args));
+        if (Array.isArray(value)) return value.map(walk);
+        if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, walk(item)]));
+        return value;
+    };
+    return walk(copy);
+};
+
+const en = typeset(enCopy, SHORT_WORDS.en);
+const pl = typeset(plCopy, SHORT_WORDS.pl);
 
 export const dictionaries = { en, pl };
 export const LANGUAGES = ["en", "pl"];
