@@ -111,19 +111,19 @@ const Card = ({ expandedAtStart, onDone }) => {
                 {expanded ? (
                     <>
                         <Magnetic strength={0.2}>
-                            <button type="button" className="consent-btn consent-btn-primary" onClick={() => finish(analytics)}>{c.save}</button>
+                            <button type="button" data-cursor-contrast className="consent-btn consent-btn-primary" onClick={() => finish(analytics)}>{c.save}</button>
                         </Magnetic>
                         <Magnetic strength={0.2}>
-                            <button type="button" className="consent-btn" onClick={() => finish(true)}>{c.acceptAll}</button>
+                            <button type="button" data-cursor-contrast className="consent-btn" onClick={() => finish(true)}>{c.acceptAll}</button>
                         </Magnetic>
                     </>
                 ) : (
                     <>
                         <Magnetic strength={0.2}>
-                            <button type="button" className="consent-btn consent-btn-primary" onClick={() => finish(true)}>{c.acceptAll}</button>
+                            <button type="button" data-cursor-contrast className="consent-btn consent-btn-primary" onClick={() => finish(true)}>{c.acceptAll}</button>
                         </Magnetic>
                         <Magnetic strength={0.2}>
-                            <button type="button" className="consent-btn" onClick={() => finish(false)}>{c.rejectAll}</button>
+                            <button type="button" data-cursor-contrast className="consent-btn" onClick={() => finish(false)}>{c.rejectAll}</button>
                         </Magnetic>
                     </>
                 )}

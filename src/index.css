@@ -919,6 +919,15 @@ a:hover .roll::after {
     border-color: #fff;
 }
 
+/* A labelled ring on an accent surface: white disc with dark text. */
+.cursor-ring[data-state="label"][data-contrast="on"] {
+    background: #fff;
+}
+
+.cursor-ring[data-state="label"][data-contrast="on"] span {
+    color: #0a0a0b;
+}
+
 /* ---------- Preloader ---------- */
 
 .preloader {

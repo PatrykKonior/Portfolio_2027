@@ -110,7 +110,7 @@ const Work = () => {
                     {projects.map((project, index) => (
                         <ProjectCard key={project.links[0].url} project={project} text={t.work.projects[index]} cursor={t.work.cursor} index={index} />
                     ))}
-                    <a href={contactInfo.github} target="_blank" rel="noopener noreferrer" className="work-more" data-cursor="GitHub">
+                    <a href={contactInfo.github} target="_blank" rel="noopener noreferrer" className="work-more" data-cursor="GitHub" data-cursor-contrast>
                         <span className="mono text-muted">{t.work.more}</span>
                         <span className="work-more-title" dangerouslySetInnerHTML={{ __html: t.work.moreTitle }} />
                     </a>
