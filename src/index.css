@@ -915,6 +915,10 @@ a:hover .roll::after {
     opacity: 1;
 }
 
+.cursor-ring[data-contrast="on"] {
+    border-color: #fff;
+}
+
 /* ---------- Preloader ---------- */
 
 .preloader {

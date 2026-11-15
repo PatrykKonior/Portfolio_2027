@@ -46,6 +46,7 @@ const ExperienceRow = ({ job, open, onToggle, id }) => {
             <button
                 type="button"
                 className="exp-row-head"
+                data-cursor-contrast
                 onClick={onToggle}
                 aria-expanded={open}
                 aria-controls={id}

@@ -13,6 +13,8 @@ const About = () => {
         // Words light up one by one as the paragraph scrolls through the viewport.
         SplitText.create(".about-text", {
             type: "words",
+            // Keep non-breaking spaces, so one-letter words stay glued to the next one.
+            reduceWhiteSpace: false,
             autoSplit: true,
             onSplit: (split) => gsap.fromTo(split.words, { opacity: 0.12 }, {
                 opacity: 1,

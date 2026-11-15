@@ -16,6 +16,8 @@ const Hero = ({ ready }) => {
 
         SplitText.create(".hero-title", {
             type: "lines,words",
+            // Keep non-breaking spaces, so one-letter words stay glued to the next one.
+            reduceWhiteSpace: false,
             mask: "lines",
             linesClass: "sline",
             autoSplit: true,

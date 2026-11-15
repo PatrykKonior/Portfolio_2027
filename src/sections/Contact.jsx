@@ -27,6 +27,8 @@ const Contact = () => {
 
     SplitText.create(".contact-title", {
       type: "lines,chars",
+      // Keep non-breaking spaces, so one-letter words stay glued to the next one.
+      reduceWhiteSpace: false,
       mask: "lines",
       linesClass: "sline",
       autoSplit: true,
@@ -177,7 +179,7 @@ const Contact = () => {
               )}
             </p>
             <Magnetic strength={0.4}>
-              <button type="submit" className="round-button round-button-accent" disabled={status === "sending"}>
+              <button type="submit" className="round-button round-button-accent" data-cursor-contrast disabled={status === "sending"}>
                 <span>{status === "sending" ? copy.sending : copy.send}</span>
                 <ArrowUpRightIcon className="size-6" />
               </button>

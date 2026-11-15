@@ -9,16 +9,23 @@ const Magnetic = ({ children, strength = 0.35, className = "" }) => {
         const element = ref.current;
         if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-        const xTo = gsap.quickTo(element, "x", { duration: 0.6, ease: "power3" });
-        const yTo = gsap.quickTo(element, "y", { duration: 0.6, ease: "power3" });
+        // The spring-back tween replaces the quickTo tweens, so they're rebuilt on the next hover.
+        let xTo = null;
+        let yTo = null;
 
         const handleMove = (event) => {
+            if (!xTo) {
+                xTo = gsap.quickTo(element, "x", { duration: 0.6, ease: "power3" });
+                yTo = gsap.quickTo(element, "y", { duration: 0.6, ease: "power3" });
+            }
             const rect = element.getBoundingClientRect();
             xTo((event.clientX - rect.left - rect.width / 2) * strength);
             yTo((event.clientY - rect.top - rect.height / 2) * strength);
         };
         const handleLeave = () => {
             gsap.to(element, { x: 0, y: 0, duration: 1, ease: "elastic.out(1, 0.35)", overwrite: true });
+            xTo = null;
+            yTo = null;
         };
 
         element.addEventListener("pointermove", handleMove);

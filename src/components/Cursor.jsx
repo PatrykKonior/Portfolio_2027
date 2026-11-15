@@ -36,6 +36,8 @@ const Cursor = () => {
             const interactive = event.target.closest("a, button, input, textarea, label, [role='button']");
             setLabel(labelled?.dataset.cursor ?? "");
             ringRef.current.dataset.state = labelled ? "label" : interactive ? "hover" : "";
+            // Over accent-coloured surfaces the accent ring would vanish, so it turns white there.
+            ringRef.current.dataset.contrast = event.target.closest("[data-cursor-contrast]") ? "on" : "";
         };
 
         const handleLeave = () => gsap.to([dotRef.current, ringRef.current], { opacity: 0, duration: 0.3 });

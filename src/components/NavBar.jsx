@@ -130,7 +130,7 @@ const NavBar = ({ ready }) => {
                     </span>
                     <LanguageSwitch className="nav-item" />
                     <Magnetic className="nav-item">
-                        <a href="#contact" className="pill pill-accent nav-cta" onClick={closeMenu}>
+                        <a href="#contact" className="pill pill-accent nav-cta" data-cursor-contrast onClick={closeMenu}>
                             <RollText>{t.nav.cta}</RollText>
                         </a>
                     </Magnetic>
