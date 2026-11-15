@@ -15,6 +15,8 @@ const About = () => {
             type: "words",
             // Keep non-breaking spaces, so one-letter words stay glued to the next one.
             reduceWhiteSpace: false,
+            // The paragraph stays readable as plain text; an aria-label isn't allowed on a <p>.
+            aria: "none",
             autoSplit: true,
             onSplit: (split) => gsap.fromTo(split.words, { opacity: 0.12 }, {
                 opacity: 1,
@@ -48,7 +50,8 @@ const About = () => {
         <section id="about" ref={ref} className="about container-x section-space">
             <div className="section-meta">
                 <span className="mono">(01)</span>
-                <span className="mono">{t.about.label}</span>
+                {/* The section's heading, so the principles' h3s follow an h2. */}
+                <h2 className="mono">{t.about.label}</h2>
             </div>
 
             <p className="about-text">{t.about.text}</p>

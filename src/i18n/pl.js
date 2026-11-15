@@ -58,13 +58,13 @@ const pl = {
         projects: [
             {
                 title: "System do zarządzania biurem projektowym",
-                type: "Oprogramowanie dla firmy · Desktop · Web · Mobile",
+                type: "CRM · Desktop · Web · Mobile",
                 desc: "Jeden system, który prowadzi całe biuro projektowe: klienci, projekty, faktury, płatności, zadania i ewidencja czasu pracy w jednym miejscu. Zespół pracuje tam, gdzie mu wygodnie: w aplikacji desktopowej (WPF), w przeglądarce lub na telefonie, a wszystkie aplikacje są zsynchronizowane przez jedno REST API w .NET Core. Wersja webowa i mobilna mają wspólną bazę kodu, więc nowe funkcje trafiają od razu na każdą platformę.",
                 links: ["API", "Web i mobile", "Desktop"],
             },
             {
                 title: "Panel zarządzania pizzerią i strona sprzedażowa",
-                type: "Gastronomia · Panel admina · Sklep online",
+                type: "E-commerce · Panel admina · Sklep online",
                 desc: "Kompletne cyfrowe zaplecze dla pizzerii z kilkoma lokalami, połączone z nowoczesną stroną sprzedażową dla klientów. Panel administracyjny w React zbiera w jednym czytelnym miejscu sprzedaż, magazyn, grafiki pracowników, dokumenty i receptury oraz raporty przychodów dla każdego lokalu, a całość napędza REST API w .NET z SQL Server.",
                 links: ["Panel admina", "API"],
             },

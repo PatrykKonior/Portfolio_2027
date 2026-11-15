@@ -58,13 +58,13 @@ const en = {
         projects: [
             {
                 title: "Design Office Management Suite",
-                type: "Business software · Desktop · Web · Mobile",
+                type: "CRM · Desktop · Web · Mobile",
                 desc: "One system that runs an entire design office: clients, projects, invoices, payments, tasks and time tracking in a single place. The team works wherever it suits them, in a WPF desktop app, in the browser or on the phone, and every app stays in sync through one .NET Core REST API. The web and mobile apps share a single codebase, so new features reach every platform at once.",
                 links: ["API", "Web & Mobile", "Desktop"],
             },
             {
                 title: "Pizzeria Management Panel & Storefront",
-                type: "Food service · Admin panel · Online store",
+                type: "E-commerce · Admin panel · Online store",
                 desc: "A complete digital back office for a multi-location pizzeria, paired with a modern storefront for its customers. The React admin panel brings sales, stock, staff schedules, documents, recipes and per-location revenue reports into one clear dashboard, all powered by a .NET REST API on SQL Server.",
                 links: ["Admin panel", "API"],
             },
