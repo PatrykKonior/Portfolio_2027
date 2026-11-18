@@ -12,18 +12,42 @@ const MAX_AGE = 182 * 24 * 60 * 60 * 1000;
 
 let gaLoaded = false;
 
-const gtag = (...args) => {
+// gtag.js only understands commands pushed as an `arguments` object, not as a plain array.
+function gtag() {
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(args);
+    window.dataLayer.push(arguments);
+}
+
+let analyticsOn = false;
+
+// Sends a GA4 event, but only while analytics is accepted; otherwise it does nothing.
+export const trackEvent = (name, params = {}) => {
+    if (analyticsOn) gtag("event", name, params);
+};
+
+// Clicks worth knowing about, caught in one place: e-mail links, links to the contact section
+// and anything marked with data-track="event_name". Outbound links and file downloads (CV)
+// are already measured by GA4's enhanced measurement.
+const trackClicks = () => {
+    document.addEventListener("click", (event) => {
+        const target = event.target.closest?.('a[href^="mailto:"], a[href="#contact"], [data-track]');
+        if (!target) return;
+        const location = target.closest("header, footer, section")?.id || target.closest("header, footer")?.tagName.toLowerCase() || "page";
+        if (target.dataset.track) trackEvent(target.dataset.track, { link_location: location });
+        else if (target.getAttribute("href").startsWith("mailto:")) trackEvent("email_click", { link_location: location });
+        else trackEvent("contact_cta_click", { link_location: location });
+    }, { capture: true });
 };
 
 // Google Consent Mode v2: everything starts denied and GA is only fetched once analytics is accepted.
 const loadAnalytics = () => {
+    analyticsOn = true;
     if (gaLoaded) {
         gtag("consent", "update", { analytics_storage: "granted" });
         return;
     }
     gaLoaded = true;
+    trackClicks();
     gtag("consent", "default", {
         ad_storage: "denied",
         ad_user_data: "denied",
@@ -53,6 +77,7 @@ const applyConsent = (choice) => {
     if (choice?.analytics) {
         loadAnalytics();
     } else {
+        analyticsOn = false;
         if (gaLoaded) gtag("consent", "update", { analytics_storage: "denied" });
         clearAnalyticsCookies();
     }

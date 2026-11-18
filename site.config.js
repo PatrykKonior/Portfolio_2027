@@ -7,7 +7,7 @@ export default {
 
     // Google Analytics 4 measurement ID, e.g. "G-XXXXXXXXXX". While empty, no analytics
     // and no cookie banner (the site sets no tracking cookies, so none is needed).
-    gaMeasurementId: "",
+    gaMeasurementId: "G-127CRF75PW",
 
     // Cloudflare Turnstile site key (public) for the contact form's bot check. The matching secret
     // key is stored as the Worker secret TURNSTILE_SECRET_KEY, never in the code.

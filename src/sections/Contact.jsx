@@ -9,6 +9,7 @@ import { openPrivacy } from "../lib/privacy.js";
 import Magnetic from "../components/Magnetic.jsx";
 import Turnstile from "../components/Turnstile.jsx";
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "../components/Icons";
+import { trackEvent } from "../lib/consent.js";
 
 const Contact = () => {
   const sectionRef = useRef(null);
@@ -81,6 +82,7 @@ const Contact = () => {
 
       setForm({ name: "", email: "", message: "", website: "" });
       setStatus("sent");
+      trackEvent("generate_lead", { form_language: lang });
     } catch (error) {
       console.error("Contact form error:", error);
       setStatus(String(error.message) === "captcha" ? "captcha" : "error");
@@ -108,7 +110,7 @@ const Contact = () => {
               <a href={`mailto:${contactInfo.email}`} className="contact-email" data-cursor={copy.emailCursor}>
                 {contactInfo.email}
               </a>
-              <button type="button" onClick={handleCopyEmail} className="pill" aria-label={copy.copyAria}>
+              <button type="button" onClick={handleCopyEmail} className="pill" aria-label={copy.copyAria} data-track="email_copy">
                 {copied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
                 {copied ? copy.copied : copy.copy}
               </button>
