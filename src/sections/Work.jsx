@@ -8,7 +8,7 @@ import SectionHeading from "../components/SectionHeading.jsx";
 const ProjectCard = ({ project, text, cursor, index }) => (
     <article className="work-card">
         <div className="work-card-info">
-            <div className="flex items-center justify-between">
+            <div className="work-card-meta">
                 <span className="mono text-accent">/0{index + 1}</span>
                 <span className="mono text-muted">{text.type}</span>
             </div>

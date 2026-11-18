@@ -12,15 +12,22 @@ const Services = () => {
         if (!motionOK()) return;
         const cards = gsap.utils.toArray(".service-card");
 
-        // Each sticky card recedes as the next one slides over it.
+        // Each sticky card recedes as the next one slides over it: it shrinks a little and an
+        // overlay darkens it, both following the scroll from the moment the next card starts to
+        // cover it until that card settles on top.
         cards.slice(0, -1).forEach((card, index) => {
-            gsap.to(card.querySelector(".service-card-inner"), {
-                scale: 0.92,
-                filter: "brightness(0.55)",
-                rotateX: -4,
-                ease: "none",
-                scrollTrigger: { trigger: cards[index + 1], start: "top 65%", end: "top 15%", scrub: true },
-            });
+            const next = cards[index + 1];
+            const scrollTrigger = {
+                trigger: next,
+                start: "top bottom",
+                // Ends where the next card sticks (its CSS `top`).
+                end: () => `top ${parseFloat(getComputedStyle(next).top)}px`,
+                scrub: true,
+                invalidateOnRefresh: true,
+            };
+            gsap.timeline({ scrollTrigger })
+                .to(card.querySelector(".service-card-inner"), { scale: 0.94, ease: "none" }, 0)
+                .to(card.querySelector(".service-card-shade"), { opacity: 0.55, ease: "none" }, 0);
         });
 
         cards.forEach((card) => {
@@ -43,6 +50,7 @@ const Services = () => {
                 {services.map((service, index) => (
                     <div key={index} className="service-card" style={{ "--i": index }}>
                         <article className={`service-card-inner tone-${index % 4}`}>
+                            <span className="service-card-shade" aria-hidden="true" />
                             <div className="service-card-top">
                                 <span className="service-number">0{index + 1}</span>
                                 <div className="flex gap-2">

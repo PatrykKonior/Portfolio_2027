@@ -98,6 +98,7 @@ export const blobFragment = /* glsl */ `
 uniform float uTime;
 uniform float uAccent;
 uniform float uFlood;
+uniform float uDim;
 uniform vec3 uAccentColor;
 
 varying vec3 vNormal;
@@ -129,6 +130,7 @@ void main() {
     color = mix(color, iridescent * (0.55 + 0.45 * diffuse), uFlood * 0.75);
     color += specular * 0.55;
 
-    gl_FragColor = vec4(color, 1.0);
+    // Dims the blob where it sits behind text (on a dark page this reads as fading out).
+    gl_FragColor = vec4(color * uDim, 1.0);
 }
 `;

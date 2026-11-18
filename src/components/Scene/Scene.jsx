@@ -5,7 +5,7 @@ import * as THREE from "three";
 
 import { blobFragment, blobVertex } from "./shaders.js";
 import { sceneState } from "../../lib/sceneState.js";
-import { gsap, useGSAP, motionOK } from "../../lib/motion.js";
+import { gsap, ScrollTrigger, useGSAP, motionOK } from "../../lib/motion.js";
 import { useLanguage } from "../../i18n/index.js";
 import StaticBlob from "./StaticBlob.jsx";
 
@@ -25,12 +25,14 @@ const Blob = ({ detail, still }) => {
         uFrequency: { value: 1.05 },
         uAccent: { value: 0 },
         uFlood: { value: 0 },
+        uDim: { value: 1 },
         uAccentColor: { value: new THREE.Color("#4d7cff") },
     }), []);
 
     useFrame((_, rawDelta) => {
         const delta = Math.min(rawDelta, 0.05);
         const { blob, pointer, velocity, intro, takeover } = sceneState;
+        uniforms.uDim.value = lerp(blob.dim, 1, takeover);
         const speed = Math.min(Math.abs(velocity) * 0.02, 1.4) * (1 - takeover);
         // During a takeover the blob follows the tween tightly instead of easing behind it.
         const follow = takeover > 0.001 ? 14 : 1;
@@ -96,26 +98,71 @@ const Dust = ({ count }) => {
     );
 };
 
-// Where the blob sits for each section, in fractions of the half-viewport.
+// The blob's radius at scale 1, as a fraction of the shorter viewport side (see Blob's `fit`).
+const UNIT_RADIUS = 0.26;
+const toBlobX = (px) => (px / window.innerWidth) * 2 - 1;
+const toBlobY = (px) => 1 - (px / window.innerHeight) * 2;
+const scaleForRadius = (px) => px / (UNIT_RADIUS * Math.min(window.innerWidth, window.innerHeight));
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+// Phones: the hero blob fills the empty band between the navbar and the first line of text.
+const mobileHero = () => {
+    const navBottom = document.querySelector(".nav-inner")?.getBoundingClientRect().bottom ?? 80;
+    // Measured with the page at the top, where the hero stage applies.
+    const textTop = (document.querySelector(".hero-top")?.getBoundingClientRect().top ?? NaN) + window.scrollY;
+    const top = navBottom + 8;
+    const bottom = Number.isFinite(textTop) ? textTop - 16 : window.innerHeight * 0.35;
+    const radius = Math.max((bottom - top) / 2, 30) * 0.82;
+    return { x: 0.32, y: toBlobY((top + bottom) / 2), scale: clamp(scaleForRadius(radius), 0.3, 0.8), distort: 0.22, accent: 0, dim: 1 };
+};
+
+// Both layouts end with the blob centred on the giant name in the footer, wherever that lands.
+const onFooterName = (sizeFactor) => () => {
+    const name = document.querySelector(".footer-giant");
+    if (!name) return { x: 0, y: -0.5, scale: 0.6, distort: 0.28, accent: 0.5, dim: 0.9 };
+    const rect = name.getBoundingClientRect();
+    // Where the name sits once the page is scrolled all the way down.
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const centerY = rect.top + window.scrollY - maxScroll + rect.height / 2;
+    return {
+        x: toBlobX(rect.left + rect.width / 2),
+        y: toBlobY(centerY),
+        scale: clamp(scaleForRadius(rect.height * sizeFactor), 0.3, 0.9),
+        distort: 0.28,
+        accent: 0.5,
+        dim: 0.9,
+    };
+};
+
+// Where the blob sits for each section, in fractions of the half-viewport. `dim` fades it where it
+// would sit behind text. A stage can be a function, re-measured whenever the layout refreshes.
 const stages = {
     desktop: [
-        [null, { x: 0.5, y: -0.02, scale: 1, distort: 0.22, accent: 0 }],
-        ["#about", { x: 0.62, y: -0.4, scale: 0.7, distort: 0.38, accent: 0.35 }],
-        ["#work", { x: 0.72, y: 0.58, scale: 0.32, distort: 0.18, accent: 1 }],
-        ["#services", { x: -0.66, y: -0.1, scale: 0.8, distort: 0.45, accent: 0.2 }],
-        ["#experience", { x: 0.74, y: -0.45, scale: 0.45, distort: 0.3, accent: 0.6 }],
-        ["#contact", { x: 0.55, y: 0.05, scale: 1, distort: 0.32, accent: 1 }],
-        [".footer", { x: 0, y: -0.45, scale: 0.75, distort: 0.28, accent: 0.5 }],
+        [null, { x: 0.5, y: -0.02, scale: 1, distort: 0.22, accent: 0, dim: 1 }],
+        ["#about", { x: 0.62, y: -0.4, scale: 0.7, distort: 0.38, accent: 0.35, dim: 1 }],
+        ["#work", { x: 0.72, y: 0.58, scale: 0.32, distort: 0.18, accent: 1, dim: 1 }],
+        ["#services", { x: -0.66, y: -0.1, scale: 0.8, distort: 0.45, accent: 0.2, dim: 1 }],
+        ["#experience", { x: 0.74, y: -0.45, scale: 0.45, distort: 0.3, accent: 0.6, dim: 1 }],
+        ["#contact", { x: 0.55, y: 0.05, scale: 1, distort: 0.32, accent: 1, dim: 1 }],
+        [".footer", onFooterName(0.62)],
     ],
+    // On phones text runs the full width, so past the hero the blob keeps to the edges and dims.
     mobile: [
-        [null, { x: 0.25, y: 0.35, scale: 0.85, distort: 0.22, accent: 0 }],
-        ["#about", { x: 0.45, y: -0.5, scale: 0.6, distort: 0.35, accent: 0.35 }],
-        ["#work", { x: 0.55, y: 0.6, scale: 0.35, distort: 0.18, accent: 1 }],
-        ["#services", { x: -0.5, y: -0.45, scale: 0.6, distort: 0.4, accent: 0.2 }],
-        ["#experience", { x: 0.5, y: 0.55, scale: 0.45, distort: 0.3, accent: 0.6 }],
-        ["#contact", { x: 0.35, y: -0.45, scale: 0.75, distort: 0.32, accent: 1 }],
-        [".footer", { x: 0, y: -0.5, scale: 0.6, distort: 0.28, accent: 0.5 }],
+        [null, mobileHero],
+        ["#about", { x: 0.95, y: 0.15, scale: 0.6, distort: 0.35, accent: 0.35, dim: 0.4 }],
+        ["#work", { x: 0.85, y: 0.62, scale: 0.35, distort: 0.18, accent: 1, dim: 0.6 }],
+        ["#services", { x: -0.95, y: -0.2, scale: 0.6, distort: 0.4, accent: 0.2, dim: 0.4 }],
+        ["#experience", { x: 0.95, y: -0.3, scale: 0.5, distort: 0.3, accent: 0.6, dim: 0.4 }],
+        ["#contact", { x: 0.95, y: 0.3, scale: 0.6, distort: 0.32, accent: 1, dim: 0.4 }],
+        [".footer", onFooterName(0.72)],
     ],
+};
+
+// Turns a stage into tween values; function stages become function-based values, which GSAP
+// re-reads on every ScrollTrigger refresh (invalidateOnRefresh).
+const stageValues = (stage) => {
+    if (typeof stage !== "function") return stage;
+    return Object.fromEntries(Object.keys(stage()).map((key) => [key, () => stage()[key]]));
 };
 
 const hasWebGL = () => {
@@ -186,15 +233,40 @@ const Scene = () => {
         const mm = gsap.matchMedia();
         mm.add({ desktop: "(min-width: 1024px)", mobile: "(max-width: 1023px)" }, ({ conditions }) => {
             const list = conditions.desktop ? stages.desktop : stages.mobile;
-            gsap.set(sceneState.blob, list[0][1]);
+            const first = list[0][1];
+            gsap.set(sceneState.blob, typeof first === "function" ? first() : first);
             list.slice(1).forEach(([selector, to], index) => {
-                gsap.fromTo(sceneState.blob, { ...list[index][1] }, {
-                    ...to,
+                const last = index === list.length - 2;
+                gsap.fromTo(sceneState.blob, stageValues(list[index][1]), {
+                    ...stageValues(to),
                     ease: "none",
                     immediateRender: false,
-                    scrollTrigger: { trigger: selector, start: "top bottom", end: "top 20%", scrub: true },
+                    // The footer never reaches the top of the screen, so its stage ends at the bottom of the page.
+                    scrollTrigger: { trigger: selector, start: "top bottom", end: last ? "max" : "top 20%", scrub: true, invalidateOnRefresh: true },
                 });
             });
+            // Keep the hero position in step with the layout when nothing has been scrolled yet.
+            const refit = () => window.scrollY < 5 && typeof first === "function" && gsap.set(sceneState.blob, first());
+            ScrollTrigger.addEventListener("refresh", refit);
+
+            // Content that loads later (fonts, the form's bot check) changes the page height without
+            // a resize; re-measure then, so the stages (the footer one above all) stay on target.
+            let timer = 0;
+            let lastHeight = document.documentElement.scrollHeight;
+            const observer = new ResizeObserver(() => {
+                const height = document.documentElement.scrollHeight;
+                if (Math.abs(height - lastHeight) < 2) return;
+                lastHeight = height;
+                clearTimeout(timer);
+                timer = setTimeout(() => ScrollTrigger.refresh(), 200);
+            });
+            observer.observe(document.body);
+
+            return () => {
+                ScrollTrigger.removeEventListener("refresh", refit);
+                observer.disconnect();
+                clearTimeout(timer);
+            };
         });
     }, { dependencies: [lang] });
 

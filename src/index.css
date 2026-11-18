@@ -1266,6 +1266,13 @@ a:hover .roll::after {
     padding-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
+/* Phones: a clear band above the text where the blob sits, so it never covers the copy. */
+@media (max-width: 767px) {
+    .hero-content {
+        padding-top: 15.5rem;
+    }
+}
+
 .hero-top {
     display: flex;
     flex-wrap: wrap;
@@ -1465,7 +1472,7 @@ a:hover .roll::after {
 
 .stat-label {
     font-size: 1rem;
-    white-space: nowrap;
+    line-height: 1.3;
 }
 
 .stat-detail {
@@ -1540,6 +1547,18 @@ a:hover .roll::after {
     flex-direction: column;
     gap: 1.25rem;
     padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Index and project type: the type wraps on its own side instead of running into the index. */
+.work-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.work-card-meta > :last-child {
+    text-align: right;
 }
 
 .work-card-title {
@@ -1748,6 +1767,8 @@ a:hover .roll::after {
 }
 
 .service-card-inner {
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1756,7 +1777,18 @@ a:hover .roll::after {
     padding: clamp(1.5rem, 4vw, 3.5rem);
     border-radius: 2rem;
     transform-origin: center top;
-    will-change: transform, filter;
+    will-change: transform;
+}
+
+/* Darkens a card as the next one slides over it (an overlay fades in, instead of a CSS filter
+   that some browsers repaint with a black flash). */
+.service-card-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #050506;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .tone-0 { background: #151517; color: var(--fg); border: 1px solid var(--line); }

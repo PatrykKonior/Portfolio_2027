@@ -6,5 +6,5 @@ export const sceneState = {
     intro: 0,
     // 0 → 1 while the blob swells to fill the screen during a language switch.
     takeover: 0,
-    blob: { x: 0.45, y: 0, scale: 1, distort: 0.3, accent: 0 },
+    blob: { x: 0.45, y: 0, scale: 1, distort: 0.3, accent: 0, dim: 1 },
 };

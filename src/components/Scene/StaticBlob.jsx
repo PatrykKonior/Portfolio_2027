@@ -28,6 +28,7 @@ const StaticBlob = () => {
             current.y += (target.y - current.y) * follow;
             current.size += (target.size - current.size) * follow;
             image.style.width = `${current.size}px`;
+            image.style.opacity = String(blob.dim + (1 - blob.dim) * takeover);
             image.style.transform = `translate(-50%, -50%) translate(${current.x}px, ${current.y}px)`;
             frame = requestAnimationFrame(render);
         };
