@@ -1255,7 +1255,8 @@ a:hover .roll::after {
     min-height: 100svh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    /* Centred, so tall or wide screens don't leave one big empty band above the headline. */
+    justify-content: center;
 }
 
 .hero-content {
@@ -1264,13 +1265,6 @@ a:hover .roll::after {
     gap: clamp(1.5rem, 3vw, 2.5rem);
     padding-top: 8rem;
     padding-bottom: clamp(2rem, 5vw, 3.5rem);
-}
-
-/* Phones: a clear band above the text where the blob sits, so it never covers the copy. */
-@media (max-width: 767px) {
-    .hero-content {
-        padding-top: 15.5rem;
-    }
 }
 
 .hero-top {

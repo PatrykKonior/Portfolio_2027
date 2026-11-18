@@ -105,15 +105,27 @@ const toBlobY = (px) => 1 - (px / window.innerHeight) * 2;
 const scaleForRadius = (px) => px / (UNIT_RADIUS * Math.min(window.innerWidth, window.innerHeight));
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-// Phones: the hero blob fills the empty band between the navbar and the first line of text.
+// Phones: the hero blob sits in the empty corner to the right of the availability badge and the
+// round "See work" button, below all the text.
 const mobileHero = () => {
-    const navBottom = document.querySelector(".nav-inner")?.getBoundingClientRect().bottom ?? 80;
+    const status = document.querySelector(".hero-status")?.getBoundingClientRect();
+    const button = document.querySelector(".hero .round-button")?.getBoundingClientRect();
+    if (!status || !button) return { x: 0.5, y: -0.6, scale: 0.5, distort: 0.22, accent: 0, dim: 1 };
     // Measured with the page at the top, where the hero stage applies.
-    const textTop = (document.querySelector(".hero-top")?.getBoundingClientRect().top ?? NaN) + window.scrollY;
-    const top = navBottom + 8;
-    const bottom = Number.isFinite(textTop) ? textTop - 16 : window.innerHeight * 0.35;
-    const radius = Math.max((bottom - top) / 2, 30) * 0.82;
-    return { x: 0.32, y: toBlobY((top + bottom) / 2), scale: clamp(scaleForRadius(radius), 0.3, 0.8), distort: 0.22, accent: 0, dim: 1 };
+    const top = status.top + window.scrollY;
+    const bottom = button.bottom + window.scrollY;
+    const badge = document.querySelector(".hero .availability")?.getBoundingClientRect();
+    const left = Math.max(button.right, badge?.right ?? 0) + 8;
+    const right = window.innerWidth;
+    const radius = Math.min((right - left) / 2, (bottom - top) / 2) * 0.95;
+    return {
+        x: toBlobX((left + right) / 2),
+        y: toBlobY((top + bottom) / 2),
+        scale: clamp(scaleForRadius(radius), 0.35, 0.8),
+        distort: 0.22,
+        accent: 0,
+        dim: 1,
+    };
 };
 
 // Both layouts end with the blob centred on the giant name in the footer, wherever that lands.
