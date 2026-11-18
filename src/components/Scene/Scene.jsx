@@ -105,29 +105,6 @@ const toBlobY = (px) => 1 - (px / window.innerHeight) * 2;
 const scaleForRadius = (px) => px / (UNIT_RADIUS * Math.min(window.innerWidth, window.innerHeight));
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-// Phones: the hero blob sits in the empty corner to the right of the availability badge and the
-// round "See work" button, below all the text.
-const mobileHero = () => {
-    const status = document.querySelector(".hero-status")?.getBoundingClientRect();
-    const button = document.querySelector(".hero .round-button")?.getBoundingClientRect();
-    if (!status || !button) return { x: 0.5, y: -0.6, scale: 0.5, distort: 0.22, accent: 0, dim: 1 };
-    // Measured with the page at the top, where the hero stage applies.
-    const top = status.top + window.scrollY;
-    const bottom = button.bottom + window.scrollY;
-    const badge = document.querySelector(".hero .availability")?.getBoundingClientRect();
-    const left = Math.max(button.right, badge?.right ?? 0) + 8;
-    const right = window.innerWidth;
-    const radius = Math.min((right - left) / 2, (bottom - top) / 2) * 0.95;
-    return {
-        x: toBlobX((left + right) / 2),
-        y: toBlobY((top + bottom) / 2),
-        scale: clamp(scaleForRadius(radius), 0.35, 0.8),
-        distort: 0.22,
-        accent: 0,
-        dim: 1,
-    };
-};
-
 // Both layouts end with the blob centred on the giant name in the footer, wherever that lands.
 const onFooterName = (sizeFactor) => () => {
     const name = document.querySelector(".footer-giant");
@@ -158,14 +135,15 @@ const stages = {
         ["#contact", { x: 0.55, y: 0.05, scale: 1, distort: 0.32, accent: 1, dim: 1 }],
         [".footer", onFooterName(0.62)],
     ],
-    // On phones text runs the full width, so past the hero the blob keeps to the edges and dims.
+    // On phones text runs the full width, so the blob still travels between sections but dims
+    // whenever it sits behind text.
     mobile: [
-        [null, mobileHero],
-        ["#about", { x: 0.95, y: 0.15, scale: 0.6, distort: 0.35, accent: 0.35, dim: 0.4 }],
-        ["#work", { x: 0.85, y: 0.62, scale: 0.35, distort: 0.18, accent: 1, dim: 0.6 }],
-        ["#services", { x: -0.95, y: -0.2, scale: 0.6, distort: 0.4, accent: 0.2, dim: 0.4 }],
-        ["#experience", { x: 0.95, y: -0.3, scale: 0.5, distort: 0.3, accent: 0.6, dim: 0.4 }],
-        ["#contact", { x: 0.95, y: 0.3, scale: 0.6, distort: 0.32, accent: 1, dim: 0.4 }],
+        [null, { x: 0.42, y: 0.12, scale: 0.95, distort: 0.22, accent: 0, dim: 0.55 }],
+        ["#about", { x: -0.55, y: -0.3, scale: 0.65, distort: 0.35, accent: 0.35, dim: 0.4 }],
+        ["#work", { x: 0.6, y: 0.55, scale: 0.4, distort: 0.18, accent: 1, dim: 0.7 }],
+        ["#services", { x: -0.5, y: -0.45, scale: 0.65, distort: 0.4, accent: 0.2, dim: 0.45 }],
+        ["#experience", { x: 0.55, y: 0.45, scale: 0.5, distort: 0.3, accent: 0.6, dim: 0.4 }],
+        ["#contact", { x: 0.4, y: -0.45, scale: 0.75, distort: 0.32, accent: 1, dim: 0.45 }],
         [".footer", onFooterName(0.72)],
     ],
 };

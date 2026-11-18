@@ -1267,6 +1267,29 @@ a:hover .roll::after {
     padding-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
+/* Phones: the hero starts right under the navbar, and the badge and the round button share a
+   row, so the whole first screen fits even with the browser's bars showing. */
+@media (max-width: 767px) {
+    .hero {
+        justify-content: flex-start;
+    }
+
+    .hero-content {
+        padding-top: 6.5rem;
+    }
+
+    /* Prefixed with .hero to win over the base .hero-bottom rule further down. */
+    .hero .hero-bottom {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 1.5rem 1rem;
+    }
+
+    .hero .hero-intro {
+        grid-column: 1 / -1;
+    }
+}
+
 .hero-top {
     display: flex;
     flex-wrap: wrap;
