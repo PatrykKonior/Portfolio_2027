@@ -1141,187 +1141,6 @@ a:hover .roll::after {
     font-size: 0.65rem;
 }
 
-/* "Services" dropdown: opens on hover or keyboard focus, same panel as on the service pages. */
-.nav-services {
-    position: relative;
-}
-
-.nav-chevron {
-    align-self: center;
-    transition: transform 0.35s var(--ease-out);
-}
-
-.nav-services:hover .nav-chevron,
-.nav-services:focus-within .nav-chevron {
-    transform: rotate(180deg);
-}
-
-.mega {
-    position: absolute;
-    top: calc(100% + 1.4rem);
-    left: 50%;
-    width: min(64rem, 92vw);
-    display: grid;
-    grid-template-columns: 1fr 1fr 20rem;
-    border: 1px solid rgba(236, 235, 230, 0.14);
-    border-radius: 1.75rem;
-    background: rgba(18, 18, 20, 0.96);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transform: translate(-50%, 0.5rem);
-    transition: opacity 0.35s, transform 0.45s var(--ease-out), visibility 0.35s;
-}
-
-/* Bridges the gap between the link and the panel so the pointer can travel down. */
-.mega::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -1.5rem;
-    height: 1.5rem;
-}
-
-.nav-services:hover .mega,
-.nav-services:focus-within .mega {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, 0);
-}
-
-.mega-list {
-    grid-column: 1 / 3;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-content: start;
-    gap: 0.4rem;
-    padding: 1.75rem 1.75rem 1.25rem;
-}
-
-.mega-list > .mono {
-    grid-column: 1 / -1;
-    margin: 0 0 0.6rem 0.9rem;
-}
-
-.mega-item {
-    display: flex;
-    gap: 0.9rem;
-    padding: 0.9rem;
-    border-radius: 1rem;
-    transition: background 0.25s;
-}
-
-.mega-item:hover {
-    background: #1a1a1e;
-}
-
-.mega-icon {
-    display: grid;
-    place-items: center;
-    flex: none;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(236, 235, 230, 0.18);
-    transition: background 0.25s, border-color 0.25s, color 0.25s;
-}
-
-.mega-item:hover .mega-icon {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--on-accent);
-}
-
-.mega-item strong {
-    display: block;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.mega-item small {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.82rem;
-    line-height: 1.45;
-    color: var(--muted);
-}
-
-.mega-more {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 0.6rem 0.9rem 0;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(236, 235, 230, 0.1);
-    font-size: 0.88rem;
-    color: var(--muted);
-}
-
-.mega-more span {
-    color: var(--fg);
-}
-
-.mega-feature {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.6rem;
-    min-height: 24rem;
-    padding: 1.75rem;
-    border-left: 1px solid rgba(236, 235, 230, 0.1);
-    background: radial-gradient(ellipse at 60% 30%, #1d2440 0%, #0f0f11 70%);
-}
-
-.mega-feature img {
-    position: absolute;
-    top: -0.5rem;
-    left: 50%;
-    width: 17rem;
-    max-width: none;
-    transform: translateX(-50%);
-    transition: transform 0.8s var(--ease-out);
-}
-
-.mega-feature:hover img {
-    transform: translateX(-50%) scale(1.05) rotate(-4deg);
-}
-
-.mega-feature > * {
-    position: relative;
-}
-
-.mega-feature strong {
-    font-size: 1.35rem;
-    font-weight: 500;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-}
-
-.mega-feature small {
-    font-size: 0.88rem;
-    color: var(--muted);
-}
-
-/* Service pages listed under "Services" in the phone menu. */
-.menu-sub {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0.75rem 2.4rem;
-}
-
-.menu-link .menu-sub a {
-    display: block;
-    padding: 0.35rem 0;
-    font-size: 1.1rem;
-    color: var(--muted);
-}
-
 /* "Learn more" on a service card that has its own page. */
 .service-more {
     display: inline-flex;
@@ -2575,4 +2394,561 @@ a:hover .roll::after {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* ---------- Specializations (links to the service pages) ---------- */
+
+.spec-intro {
+    max-width: 34rem;
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+.spec-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.spec-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 17rem;
+    padding: 1.75rem;
+    border: 1px solid var(--line);
+    border-radius: 1.75rem;
+    background: rgba(18, 18, 20, 0.85);
+    backdrop-filter: blur(10px);
+    transition: transform 0.6s var(--ease-out), border-color 0.4s, box-shadow 0.6s var(--ease-out), background 0.4s;
+}
+
+/* The blob in the service's colour waits in the corner and floats in on hover. */
+.spec-blob {
+    position: absolute;
+    right: -9rem;
+    top: -9rem;
+    width: 17rem;
+    max-width: none;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: transform 0.9s var(--ease-out), opacity 0.6s;
+    animation: spec-spin 26s linear infinite;
+    animation-play-state: paused;
+}
+
+@keyframes spec-spin {
+    to { rotate: 360deg; }
+}
+
+.spec-card:hover,
+.spec-card:focus-visible {
+    transform: translateY(-8px);
+    border-color: color-mix(in srgb, var(--tint) 60%, transparent);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--tint) 18%, transparent);
+    background: color-mix(in srgb, var(--tint) 6%, rgba(18, 18, 20, 0.9));
+}
+
+.spec-card:hover .spec-blob,
+.spec-card:focus-visible .spec-blob {
+    opacity: 1;
+    transform: translate(-4.5rem, 3.5rem) scale(1.15);
+    animation-play-state: running;
+}
+
+.spec-index {
+    position: relative;
+    color: var(--muted);
+    transition: color 0.4s;
+}
+
+.spec-card:hover .spec-index {
+    color: var(--tint);
+}
+
+.spec-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.spec-title {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+}
+
+.spec-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.spec-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    transition: color 0.4s;
+}
+
+.spec-cta svg {
+    transition: transform 0.5s var(--ease-out);
+}
+
+.spec-card:hover .spec-cta {
+    color: var(--tint);
+}
+
+.spec-card:hover .spec-cta svg {
+    transform: translateX(5px);
+}
+
+.spec-card-accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.spec-card-accent .spec-index,
+.spec-card-accent .spec-desc {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.spec-card-accent:hover {
+    background: var(--accent);
+    border-color: #fff;
+    box-shadow: 0 24px 60px rgba(77, 124, 255, 0.35);
+}
+
+.spec-card-accent:hover .spec-cta,
+.spec-card-accent:hover .spec-index {
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+    .spec-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .spec-card { min-height: 19rem; }
+}
+
+/* ---------- Service pages ---------- */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.sp-crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding-top: 7.5rem;
+    color: var(--muted);
+}
+
+.sp-crumbs a {
+    transition: color 0.3s;
+}
+
+.sp-crumbs a:hover,
+.sp-crumbs [aria-current] {
+    color: var(--fg);
+}
+
+.sp-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1.5rem, 2.5vw, 2rem);
+    min-height: min(78svh, 46rem);
+    padding-block: 3rem 4rem;
+}
+
+.sp-hero h1 {
+    max-width: 13ch;
+    font-size: clamp(2.9rem, 7.2vw, 7.5rem);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+}
+
+.sp-hero h1 em {
+    color: var(--accent);
+}
+
+.sp-lead {
+    max-width: 38ch;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+    line-height: 1.45;
+    color: var(--muted);
+}
+
+.sp-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sp-hero-actions .round-button span {
+    max-width: 8rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.sp-facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    margin: 0 auto;
+}
+
+.sp-facts > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.6rem 1.75rem;
+    background: rgba(15, 15, 17, 0.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 1.25rem;
+}
+
+.sp-facts dt {
+    color: var(--muted);
+}
+
+.sp-facts dd {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.35;
+}
+
+.sp-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-top: clamp(5rem, 9vw, 8rem);
+}
+
+.sp-label {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+}
+
+.sp-title {
+    max-width: 16ch;
+    font-size: clamp(2.4rem, 5vw, 4.75rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+}
+
+.sp-benefits {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.sp-benefit {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    padding: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 1.5rem;
+    background: rgba(18, 18, 20, 0.85);
+    backdrop-filter: blur(10px);
+    transition: transform 0.6s var(--ease-out), border-color 0.4s;
+}
+
+.sp-benefit:hover {
+    transform: translateY(-6px);
+    border-color: rgba(236, 235, 230, 0.24);
+}
+
+.sp-benefit:nth-child(3) {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.sp-num {
+    font-size: 3.5rem;
+    font-weight: 500;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: var(--muted);
+}
+
+.sp-benefit:nth-child(3) .sp-num,
+.sp-benefit:nth-child(3) p {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.sp-benefit h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+}
+
+.sp-benefit p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+/* Process: a line that draws with the scroll; steps light up as it reaches them. */
+.sp-steps {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.sp-progress {
+    position: absolute;
+    left: 0.3rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: var(--line);
+}
+
+.sp-progress-fill {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(77, 124, 255, 0.2), var(--accent));
+    box-shadow: 0 0 18px rgba(77, 124, 255, 0.8);
+    transform-origin: top;
+}
+
+.sp-steps ol {
+    display: grid;
+    gap: 2.25rem;
+}
+
+.sp-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    margin: -1.25rem;
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    opacity: 0.45;
+    transition: opacity 0.5s, background 0.5s, border-color 0.5s;
+}
+
+.sp-step.done,
+.sp-step.active {
+    opacity: 1;
+}
+
+.sp-step.active {
+    background: rgba(77, 124, 255, 0.1);
+    border-color: rgba(77, 124, 255, 0.4);
+}
+
+.sp-dot {
+    position: absolute;
+    /* Centred on the line: 0.3rem from the list edge, the step itself sits 0.75rem in. */
+    left: calc(-0.45rem - 6px);
+    top: 1.55rem;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    background: var(--bg);
+    transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+}
+
+.sp-step.done .sp-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.sp-step.active .sp-dot {
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 0 5px rgba(77, 124, 255, 0.35), 0 0 22px var(--accent);
+}
+
+.sp-step-label {
+    color: var(--accent);
+}
+
+.sp-step h3 {
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.sp-step p {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+/* Case study: the home page's project card, full width. */
+.sp-case .work-card {
+    width: 100%;
+    height: auto;
+}
+
+/* FAQ */
+.sp-faq-list {
+    border-top: 1px solid var(--line);
+}
+
+.sp-faq-list details {
+    border-bottom: 1px solid var(--line);
+}
+
+.sp-faq-list summary {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.6rem 1rem;
+    margin-inline: -1rem;
+    border-radius: 1rem;
+    list-style: none;
+    cursor: pointer;
+    font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    transition: background 0.4s, padding 0.5s var(--ease-out);
+}
+
+.sp-faq-list summary::-webkit-details-marker {
+    display: none;
+}
+
+.sp-faq-list summary:hover {
+    background: rgba(236, 235, 230, 0.04);
+    padding-left: 1.6rem;
+}
+
+.sp-faq-index {
+    color: var(--muted);
+    transition: color 0.3s;
+}
+
+.sp-faq-list summary:hover .sp-faq-index,
+.sp-faq-list details[open] .sp-faq-index {
+    color: var(--accent);
+}
+
+.sp-faq-icon {
+    position: relative;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid rgba(236, 235, 230, 0.25);
+    border-radius: 999px;
+    transition: transform 0.5s var(--ease-out), background 0.3s, border-color 0.3s;
+}
+
+.sp-faq-icon::before,
+.sp-faq-icon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.8rem;
+    height: 1.5px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition: transform 0.5s var(--ease-out);
+}
+
+.sp-faq-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.sp-faq-list summary:hover .sp-faq-icon {
+    transform: rotate(90deg);
+    border-color: var(--fg);
+}
+
+.sp-faq-list details[open] .sp-faq-icon {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.sp-faq-list details[open] .sp-faq-icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.sp-faq-list details p {
+    max-width: 62ch;
+    padding: 0 0 1.6rem 3.4rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.sp-related {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 5rem;
+}
+
+.sp-related > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.75rem;
+}
+
+.sp-related a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1.75rem;
+    border: 1px solid var(--line);
+    border-radius: 1.25rem;
+    font-size: 1.1rem;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.sp-related a:hover {
+    border-color: rgba(236, 235, 230, 0.24);
+    background: var(--bg-raised);
+}
+
+@media (min-width: 768px) {
+    .sp-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sp-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1100px) {
+    .sp-benefits { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .sp-faq { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; }
+    .sp-faq-head { display: flex; flex-direction: column; gap: 2.5rem; }
+
+    /* Process runs horizontally on wide screens. */
+    .sp-steps { padding-left: 0; padding-top: 2.5rem; }
+    .sp-progress { left: 0; right: 0; top: 0.4rem; bottom: auto; width: auto; height: 2px; }
+    .sp-progress-fill { transform-origin: left; background: linear-gradient(90deg, rgba(77, 124, 255, 0.2), var(--accent)); }
+    .sp-steps ol { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2.5rem; }
+    .sp-dot { left: 1.25rem; top: calc(-0.85rem - 6px); }
 }

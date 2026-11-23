@@ -11,7 +11,8 @@ import Turnstile from "../components/Turnstile.jsx";
 import { ArrowUpRightIcon, CheckIcon, CopyIcon } from "../components/Icons";
 import { trackEvent } from "../lib/consent.js";
 
-const Contact = () => {
+// `initialMessage` pre-fills the message (service pages start it with the service name).
+const Contact = ({ initialMessage = "" }) => {
   const sectionRef = useRef(null);
   const formRef = useRef(null);
   const turnstileRef = useRef(null);
@@ -21,7 +22,7 @@ const Contact = () => {
   const cvUrl = useCvUrl(lang);
   const [status, setStatus] = useState("idle");
   const [copied, setCopied] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: initialMessage, website: "" });
 
   useGSAP(() => {
     if (!motionOK()) return;

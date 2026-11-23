@@ -100,6 +100,7 @@ uniform float uAccent;
 uniform float uFlood;
 uniform float uDim;
 uniform float uPearl;
+uniform vec3 uPearlTint;
 uniform vec3 uAccentColor;
 
 varying vec3 vNormal;
@@ -133,7 +134,7 @@ void main() {
 
     // Pearl: pull the colours toward a pale, slightly cool silver, keeping the brightness.
     float luminance = dot(color, vec3(0.299, 0.587, 0.114));
-    color = mix(color, vec3(luminance) * vec3(1.02, 1.0, 1.08) * 1.1, uPearl);
+    color = mix(color, vec3(luminance) * uPearlTint * 1.1, uPearl);
     // Dims the blob where it sits behind text (on a dark page this reads as fading out).
     gl_FragColor = vec4(color * uDim, 1.0);
 }

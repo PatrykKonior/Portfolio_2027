@@ -3,7 +3,7 @@ import site from "../../site.config.js";
 // Consent is only needed once Google Analytics is configured: without it the site sets no
 // tracking cookies. site.config.js can preview the banner (and in development, ?cookies does);
 // without an ID nothing is ever loaded.
-const preview = site.preview?.cookieBanner || (import.meta.env.DEV && new URLSearchParams(window.location.search).has("cookies"));
+const preview = site.preview?.cookieBanner || (import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("cookies"));
 export const consentEnabled = Boolean(site.gaMeasurementId) || Boolean(preview);
 
 const STORAGE_KEY = "cookie-consent";

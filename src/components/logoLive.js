@@ -22,6 +22,7 @@ export const createLogoLive = (canvas) => {
         uFlood: { value: 0 },
         uDim: { value: 1 },
         uPearl: { value: 0 },
+        uPearlTint: { value: new THREE.Vector3(1.02, 1.0, 1.08) },
         uAccentColor: { value: new THREE.Color("#4d7cff") },
     };
     const mesh = new THREE.Mesh(

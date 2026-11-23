@@ -11,11 +11,12 @@ import Hero from "./sections/Hero.jsx";
 import About from "./sections/About.jsx";
 import Work from "./sections/Work.jsx";
 import Services from "./sections/Services.jsx";
+import Specializations from "./sections/Specializations.jsx";
 import Experience from "./sections/Experience.jsx";
 import Stack from "./sections/Stack.jsx";
 import Contact from "./sections/Contact.jsx";
 import Footer from "./sections/Footer.jsx";
-import { jumpTo, useSmoothScroll } from "./lib/smoothScroll.js";
+import { jumpTo, scrollToTarget, useSmoothScroll } from "./lib/smoothScroll.js";
 import { motionOK, ScrollTrigger } from "./lib/motion.js";
 import { applyLanguage, dictionaries, initialLanguage, LanguageContext } from "./i18n/index.js";
 
@@ -26,7 +27,19 @@ const App = () => {
     const [ready, setReady] = useState(false);
     const [lang, setLang] = useState(initialLanguage);
     const takeoverRef = useRef(null);
+    // Arriving at a section link (e.g. /#contact from a service page): skip the intro and go
+    // straight there once the page is laid out.
+    const [arrivalHash] = useState(() => (window.location.hash.length > 1 ? window.location.hash : ""));
     useSmoothScroll(ready);
+
+    useEffect(() => {
+        if (!ready || !arrivalHash) return;
+        const timer = setTimeout(() => {
+            ScrollTrigger.refresh();
+            scrollToTarget(arrivalHash, { duration: 1.2 });
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [ready, arrivalHash]);
 
     useEffect(() => {
         applyLanguage(lang);
@@ -52,7 +65,7 @@ const App = () => {
 
     return (
         <LanguageContext.Provider value={context}>
-            <Preloader onComplete={() => setReady(true)} />
+            <Preloader onComplete={() => setReady(true)} skip={Boolean(arrivalHash)} />
             <Cursor />
             <div className="grain" aria-hidden="true" />
             <NavBar ready={ready} />
@@ -62,6 +75,7 @@ const App = () => {
                 <About />
                 <Work />
                 <Services />
+                <Specializations />
                 <Experience />
                 <Stack />
                 <Contact />

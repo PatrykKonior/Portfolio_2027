@@ -4,10 +4,22 @@
 //
 // `homeCard` is the index of the matching card in the home page's Services section, if any.
 
+// Blob colours per service: the pearl tint the 3D blob and its stars take on that service's page,
+// and the matching pre-rendered image on its card. RGB multipliers on the blob's luminance.
+export const serviceTints = {
+    cobalt: { rgb: [0.55, 0.75, 1.6], stars: "#9db6ff", image: "/images/blob-cobalt.webp" },
+    violet: { rgb: [1.0, 0.7, 1.6], stars: "#c6a8ff", image: "/images/blob-violet.webp" },
+    amber: { rgb: [1.6, 1.08, 0.55], stars: "#ffd2a0", image: "/images/blob-amber.webp" },
+    teal: { rgb: [0.5, 1.4, 1.3], stars: "#9ff0e2", image: "/images/blob-teal.webp" },
+    pearl: { rgb: [1.02, 1.0, 1.08], stars: "#ffffff", image: "/images/blob-pearl.webp" },
+};
+
 export const servicePages = [
     {
         id: "web-apps",
+        ready: true,
         homeCard: 0,
+        tint: "cobalt",
         icon: "browser",
         path: { pl: "/uslugi/aplikacje-webowe/", en: "/en/services/web-applications/" },
         pl: {
@@ -127,7 +139,58 @@ export const servicePages = [
             relatedLabel: "See also",
         },
     },
+    // Planned pages: shown as cards in the home page's Specializations section (linking to the
+    // contact form until the page exists). Fill in the copy and set `ready: true` to publish one.
+    {
+        id: "crm",
+        ready: false,
+        tint: "violet",
+        icon: "chart",
+        path: { pl: "/uslugi/systemy-crm/", en: "/en/services/crm-systems/" },
+        pl: { menuTitle: "Systemy CRM i panele", menuDesc: "Klienci, zlecenia i raporty w jednym miejscu" },
+        en: { menuTitle: "CRM systems and admin panels", menuDesc: "Clients, orders and reports in one place" },
+    },
+    {
+        id: "e-commerce",
+        ready: false,
+        tint: "amber",
+        icon: "bag",
+        path: { pl: "/uslugi/sklepy-internetowe/", en: "/en/services/e-commerce/" },
+        pl: { menuTitle: "Sklepy i e-commerce", menuDesc: "Sprzedaż online z własnym panelem" },
+        en: { menuTitle: "Online stores and e-commerce", menuDesc: "Selling online with your own admin panel" },
+    },
+    {
+        id: "mobile-desktop",
+        ready: false,
+        tint: "teal",
+        icon: "phone",
+        path: { pl: "/uslugi/aplikacje-mobilne-i-desktopowe/", en: "/en/services/mobile-desktop-apps/" },
+        pl: { menuTitle: "Aplikacje mobilne i desktopowe", menuDesc: "Na telefon i komputer, z jednym backendem" },
+        en: { menuTitle: "Mobile and desktop apps", menuDesc: "For phone and computer, on one backend" },
+    },
+    {
+        id: "websites",
+        ready: false,
+        tint: "pearl",
+        icon: "globe",
+        path: { pl: "/uslugi/strony-internetowe/", en: "/en/services/websites/" },
+        pl: { menuTitle: "Strony internetowe dla firm", menuDesc: "Szybkie, nowoczesne, gotowe pod Google" },
+        en: { menuTitle: "Websites for businesses", menuDesc: "Fast, modern and ready for Google" },
+    },
+    {
+        id: "silesia",
+        ready: false,
+        tint: "cobalt",
+        icon: "pin",
+        accent: true,
+        path: { pl: "/programista-slask/", en: "/en/developer-silesia/" },
+        pl: { menuTitle: "Programista na Śląsku", menuDesc: "Katowice, Chorzów, Gliwice: spotkania na miejscu" },
+        en: { menuTitle: "Developer in Silesia", menuDesc: "Katowice, Chorzów, Gliwice: on-site meetings" },
+    },
 ];
+
+// Pages that exist (built and linked).
+export const readyServicePages = servicePages.filter((page) => page.ready);
 
 // Shared copy for the page chrome (header, breadcrumbs, footer) in both languages.
 export const serviceChrome = {

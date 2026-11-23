@@ -116,6 +116,14 @@ const pl = {
             },
         ],
     },
+    specializations: {
+        label: "Specjalizacje",
+        count: "6 usług · każda ma swoją stronę",
+        title: "W czym mogę <em>pomóc</em> Twojej firmie",
+        intro: "Wybierz, czego potrzebujesz, i zobacz, jak pracuję, z przykładem realizacji i odpowiedziami na częste pytania.",
+        cta: "Zobacz usługę",
+        ask: "Zapytaj o to",
+    },
     experience: {
         label: "Doświadczenie",
         title: "Gdzie <em>pracowałem</em>",

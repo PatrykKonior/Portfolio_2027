@@ -3,8 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 import site from './site.config.js'
-import servicePagesPlugin from './build/servicePages.js'
-import { servicePages } from './src/content/servicePages.js'
+import { readyServicePages } from './src/content/servicePages.js'
 
 // Structured data about me and my business, so search engines can show a proper profile.
 const structuredData = () => ({
@@ -40,7 +39,9 @@ const structuredData = () => ({
 // With no address in site.config.js, the address-dependent tags and the sitemap are skipped.
 const seo = () => ({
     name: 'seo',
-    transformIndexHtml(html) {
+    transformIndexHtml(html, ctx) {
+        // The service page template gets its own tags from build/prerender.mjs.
+        if (ctx.filename.endsWith('service.html')) return html
         const tags = [
             { tag: 'script', attrs: { type: 'application/ld+json' }, children: JSON.stringify(structuredData()), injectTo: 'head' },
         ]
@@ -69,7 +70,7 @@ const seo = () => ({
             .join('\n')
         const entry = (loc, links) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n${links}\n  </url>`
         // Service pages: each language version, linked to its counterpart.
-        const serviceEntries = servicePages.flatMap(({ path }) => {
+        const serviceEntries = readyServicePages.flatMap(({ path }) => {
             const links = [['en', path.en], ['pl', path.pl], ['x-default', path.en]]
                 .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${site.url}${href}"/>`)
                 .join('\n')
@@ -90,6 +91,13 @@ export default defineConfig({
         react(),
         tailwindcss(),
         seo(),
-        servicePagesPlugin(site),
     ],
+    // Two pages: the home page and the template every service page is prerendered into.
+    build: {
+        rollupOptions: {
+            input: { main: 'index.html', service: 'service.html' },
+        },
+    },
+    // The SSR build (service pages) bundles its dependencies, so it runs in plain Node.
+    ssr: { noExternal: true },
 })

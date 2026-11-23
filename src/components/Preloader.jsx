@@ -3,13 +3,14 @@ import { gsap, useGSAP, motionOK } from "../lib/motion.js";
 import { sceneState } from "../lib/sceneState.js";
 import { useLanguage } from "../i18n/index.js";
 
-const Preloader = ({ onComplete }) => {
+// `skip`: no intro (arriving at a section link such as /#contact from a service page).
+const Preloader = ({ onComplete, skip = false }) => {
     const rootRef = useRef(null);
     const countRef = useRef(null);
     const { t } = useLanguage();
 
     useGSAP(() => {
-        if (!motionOK()) {
+        if (!motionOK() || skip) {
             gsap.set(rootRef.current, { display: "none" });
             sceneState.intro = 1;
             onComplete();

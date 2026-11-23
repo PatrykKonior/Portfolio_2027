@@ -4,7 +4,7 @@ import { company, contactInfo } from "../constants";
 import { useLanguage } from "../i18n/index.js";
 import { openPrivacy } from "../lib/privacy.js";
 import { consentEnabled, showCookieSettings } from "../lib/consent.js";
-import { servicePages } from "../content/servicePages.js";
+import { readyServicePages } from "../content/servicePages.js";
 import useLocalTime from "../hooks/useLocalTime.js";
 
 const socials = [
@@ -13,11 +13,12 @@ const socials = [
   { name: "Email", url: `mailto:${contactInfo.email}` },
 ];
 
-const Footer = () => {
+// `linkBase` prefixes the section links, so the service pages can point back to the home page.
+const Footer = ({ linkBase = "" }) => {
   const footerRef = useRef(null);
   const time = useLocalTime();
   const { lang, t } = useLanguage();
-  const navLinks = t.nav.links;
+  const navLinks = t.nav.links.map((item) => ({ ...item, link: `${linkBase}${item.link}` }));
 
   useGSAP(() => {
     if (!motionOK()) return;
@@ -43,7 +44,7 @@ const Footer = () => {
         <div>
           <p className="mono text-muted">{t.footer.services}</p>
           <ul>
-            {servicePages.map((page) => (
+            {readyServicePages.map((page) => (
               <li key={page.id}><a href={page.path[lang]} className="footer-link">{page[lang].menuTitle}</a></li>
             ))}
           </ul>

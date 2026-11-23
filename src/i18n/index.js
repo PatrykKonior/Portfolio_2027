@@ -21,6 +21,8 @@ const typeset = (copy, letters) => {
     return walk(copy);
 };
 
+export const typesetCopy = (copy, lang) => typeset(copy, SHORT_WORDS[lang]);
+
 const en = typeset(enCopy, SHORT_WORDS.en);
 const pl = typeset(plCopy, SHORT_WORDS.pl);
 

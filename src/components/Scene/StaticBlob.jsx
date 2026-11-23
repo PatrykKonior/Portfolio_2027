@@ -3,7 +3,7 @@ import { sceneState } from "../../lib/sceneState.js";
 
 // Pre-rendered stand-in for the WebGL blob on devices without WebGL or too slow for it.
 // It follows the same scroll stages and pointer as the real one, just as a flat image.
-const StaticBlob = () => {
+const StaticBlob = ({ imageSrc = "/images/blob.webp" }) => {
     const ref = useRef(null);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const StaticBlob = () => {
 
     return (
         <div className="scene scene-static" aria-hidden="true">
-            <img ref={ref} src="/images/blob.webp" alt="" className="static-blob" />
+            <img ref={ref} src={imageSrc} alt="" className="static-blob" />
         </div>
     );
 };

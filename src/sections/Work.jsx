@@ -5,7 +5,7 @@ import { useLanguage } from "../i18n/index.js";
 import ArchitectureDiagram from "../components/ArchitectureDiagram.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
 
-const ProjectCard = ({ project, text, cursor, index }) => (
+export const ProjectCard = ({ project, text, cursor, index }) => (
     <article className="work-card">
         <div className="work-card-info">
             <div className="work-card-meta">

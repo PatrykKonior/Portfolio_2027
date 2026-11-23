@@ -109,6 +109,14 @@ const en = {
             },
         ],
     },
+    specializations: {
+        label: "Specializations",
+        count: "6 services · each with its own page",
+        title: "How I can <em>help</em> your business",
+        intro: "Pick what you need and see how I work, with a real project and answers to common questions.",
+        cta: "See the service",
+        ask: "Ask about it",
+    },
     experience: {
         label: "Experience",
         title: "Where I've <em>worked</em>",

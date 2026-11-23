@@ -17,7 +17,8 @@ const TAKEOVER_RADIUS = 4.8;
 // How far the iridescent colours are pulled toward a pale pearl/silver (0 = full colour).
 const PEARL = 0.55;
 
-const Blob = ({ detail, still }) => {
+// `tint` colours the pearl (RGB multipliers on the blob's brightness); service pages each have their own.
+const Blob = ({ detail, still, tint = [1.02, 1.0, 1.08], pearl = PEARL }) => {
     const mesh = useRef(null);
     const viewport = useThree((state) => state.viewport);
 
@@ -28,9 +29,10 @@ const Blob = ({ detail, still }) => {
         uAccent: { value: 0 },
         uFlood: { value: 0 },
         uDim: { value: 1 },
-        uPearl: { value: PEARL },
+        uPearl: { value: pearl },
+        uPearlTint: { value: new THREE.Vector3(...tint) },
         uAccentColor: { value: new THREE.Color("#4d7cff") },
-    }), []);
+    }), [tint, pearl]);
 
     useFrame((_, rawDelta) => {
         const delta = Math.min(rawDelta, 0.05);
@@ -69,7 +71,7 @@ const Blob = ({ detail, still }) => {
     );
 };
 
-const Dust = ({ count }) => {
+const Dust = ({ count, color = "#ecebe6" }) => {
     const points = useRef(null);
 
     const positions = useMemo(() => {
@@ -96,7 +98,7 @@ const Dust = ({ count }) => {
             <bufferGeometry>
                 <bufferAttribute attach="attributes-position" args={[positions, 3]} />
             </bufferGeometry>
-            <pointsMaterial color="#ecebe6" size={0.018} sizeAttenuation transparent opacity={0.55} depthWrite={false} />
+            <pointsMaterial color={color} size={0.018} sizeAttenuation transparent opacity={0.55} depthWrite={false} />
         </points>
     );
 };
@@ -153,6 +155,7 @@ const stages = {
         ["#about", { x: 0.62, y: -0.4, scale: 0.7, distort: 0.38, accent: 0.35, dim: 1 }],
         ["#work", { x: 0.72, y: 0.58, scale: 0.32, distort: 0.18, accent: 1, dim: 1 }],
         ["#services", { x: -0.66, y: -0.1, scale: 0.8, distort: 0.45, accent: 0.2, dim: 1 }],
+        ["#specializations", { x: 0.72, y: 0.55, scale: 0.4, distort: 0.35, accent: 0.8, dim: 1 }],
         ["#experience", { x: 0.74, y: -0.45, scale: 0.45, distort: 0.3, accent: 0.6, dim: 1 }],
         ["#contact", { x: 0.55, y: 0.05, scale: 1, distort: 0.32, accent: 1, dim: 1 }],
         [".footer", onFooterName(0.62)],
@@ -164,6 +167,7 @@ const stages = {
         ["#about", { x: -0.55, y: -0.3, scale: 0.65, distort: 0.35, accent: 0.35, dim: 0.4 }],
         ["#work", { x: 0.6, y: 0.55, scale: 0.4, distort: 0.18, accent: 1, dim: 0.7 }],
         ["#services", { x: -0.5, y: -0.45, scale: 0.65, distort: 0.4, accent: 0.2, dim: 0.45 }],
+        ["#specializations", { x: -0.6, y: 0.5, scale: 0.45, distort: 0.35, accent: 0.8, dim: 0.5 }],
         ["#experience", { x: 0.55, y: 0.45, scale: 0.5, distort: 0.3, accent: 0.6, dim: 0.4 }],
         ["#contact", { x: 0.4, y: -0.45, scale: 0.75, distort: 0.32, accent: 1, dim: 0.45 }],
         [".footer", onFooterName(0.72)],
@@ -225,7 +229,31 @@ const initialQuality = () => {
     return "high";
 };
 
-const Scene = () => {
+// Service pages: the blob travels through their sections and ends on the name in the footer.
+stages.service = {
+    desktop: [
+        [null, { x: 0.52, y: 0.05, scale: 1, distort: 0.24, accent: 0.2, dim: 1 }],
+        ["#sp-benefits", { x: 0.72, y: 0.62, scale: 0.42, distort: 0.36, accent: 0.5, dim: 1 }],
+        ["#sp-process", { x: -0.7, y: 0.5, scale: 0.5, distort: 0.3, accent: 0.4, dim: 1 }],
+        ["#case", { x: 0.82, y: -0.6, scale: 0.4, distort: 0.2, accent: 1, dim: 1 }],
+        ["#sp-faq", { x: -0.62, y: -0.35, scale: 0.6, distort: 0.4, accent: 0.3, dim: 1 }],
+        ["#contact", { x: -0.05, y: 0.1, scale: 1.15, distort: 0.48, accent: 1, dim: 1 }],
+        [".footer", onFooterName(0.62)],
+    ],
+    mobile: [
+        [null, { x: 0.45, y: 0.5, scale: 0.75, distort: 0.24, accent: 0.2, dim: 0.75 }],
+        ["#sp-benefits", { x: -0.6, y: 0.4, scale: 0.6, distort: 0.36, accent: 0.5, dim: 0.4 }],
+        ["#sp-process", { x: 0.6, y: -0.4, scale: 0.55, distort: 0.3, accent: 0.4, dim: 0.4 }],
+        ["#case", { x: -0.55, y: 0.55, scale: 0.45, distort: 0.2, accent: 1, dim: 0.6 }],
+        ["#sp-faq", { x: 0.55, y: -0.45, scale: 0.6, distort: 0.4, accent: 0.3, dim: 0.4 }],
+        ["#contact", { x: 0.4, y: 0.45, scale: 0.85, distort: 0.48, accent: 1, dim: 0.55 }],
+        [".footer", onFooterName(0.72)],
+    ],
+};
+stages.service.tablet = stages.service.mobile;
+
+// `path`: "home" or "service"; `tint`: blob and star colours for a service page.
+const Scene = ({ path = "home", tint }) => {
     const isDesktop = useMemo(() => window.matchMedia("(min-width: 1024px)").matches, []);
     const still = useMemo(() => !motionOK(), []);
     const probing = useMemo(() => !new URLSearchParams(window.location.search).has("full"), []);
@@ -256,7 +284,8 @@ const Scene = () => {
             mobile: "(max-width: 1023px), (max-aspect-ratio: 999/1000)",
             tablet: "(min-width: 768px)",
         }, ({ conditions }) => {
-            const list = conditions.desktop ? stages.desktop : conditions.tablet ? stages.tablet : stages.mobile;
+            const set = path === "service" ? stages.service : stages;
+            const list = conditions.desktop ? set.desktop : conditions.tablet ? set.tablet : set.mobile;
             const first = list[0][1];
             gsap.set(sceneState.blob, typeof first === "function" ? first() : first);
             list.slice(1).forEach(([selector, to], index) => {
@@ -294,7 +323,7 @@ const Scene = () => {
         });
     }, { dependencies: [lang] });
 
-    if (quality === "static") return <StaticBlob />;
+    if (quality === "static") return <StaticBlob imageSrc={tint?.image} />;
 
     return (
         <div className="scene" aria-hidden="true">
@@ -303,8 +332,8 @@ const Scene = () => {
                 camera={{ position: [0, 0, 6], fov: 35 }}
                 gl={{ antialias: true, powerPreference: "high-performance" }}
             >
-                <Blob detail={lite ? 32 : isDesktop ? 96 : 40} still={still} />
-                <Dust count={lite ? 400 : isDesktop ? 1400 : 500} />
+                <Blob detail={lite ? 32 : isDesktop ? 96 : 40} still={still} tint={tint?.rgb} pearl={tint ? 0.7 : undefined} />
+                <Dust count={lite ? 400 : isDesktop ? 1400 : 500} color={tint?.stars} />
                 {probing && quality !== "static" && <FrameRateProbe key={quality} onMeasured={handleFrameRate} />}
             </Canvas>
         </div>

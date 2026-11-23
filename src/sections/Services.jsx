@@ -3,13 +3,13 @@ import { gsap, useGSAP, motionOK } from "../lib/motion.js";
 import { services } from "../constants/index.js";
 import { useLanguage } from "../i18n/index.js";
 import SectionHeading from "../components/SectionHeading.jsx";
-import { servicePages } from "../content/servicePages.js";
+import { readyServicePages } from "../content/servicePages.js";
 
 const Services = () => {
     const ref = useRef(null);
     const { lang, t } = useLanguage();
     // Cards with their own service page get a "Learn more" link.
-    const pageFor = (index) => servicePages.find((page) => page.homeCard === index);
+    const pageFor = (index) => readyServicePages.find((page) => page.homeCard === index);
 
     useGSAP(() => {
         if (!motionOK()) return;
