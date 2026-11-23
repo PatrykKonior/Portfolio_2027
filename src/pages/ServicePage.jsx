@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react";
 import { gsap, ScrollTrigger, SplitText, useGSAP, motionOK } from "../lib/motion.js";
 import { typesetCopy, useLanguage } from "../i18n/index.js";
 import { projects } from "../constants/index.js";
-import { readyServicePages, serviceChrome } from "../content/servicePages.js";
+import { readyServicePages, servicePages, serviceChrome } from "../content/servicePages.js";
 import { ProjectCard } from "../sections/Work.jsx";
 import Magnetic from "../components/Magnetic.jsx";
 
@@ -19,7 +19,9 @@ const ServicePage = ({ page }) => {
     const { lang, t } = useLanguage();
     const c = useMemo(() => typesetCopy(page[lang], lang), [page, lang]);
     const ui = serviceChrome[lang];
-    const caseProject = projects[0];
+    const caseIndex = page.caseIndex ?? 0;
+    const caseProject = projects[caseIndex];
+    const number = String(servicePages.indexOf(page) + 1).padStart(2, "0");
     const others = readyServicePages.filter((other) => other.id !== page.id);
 
     useGSAP(() => {
@@ -99,7 +101,7 @@ const ServicePage = ({ page }) => {
             </nav>
 
             <section className="sp-hero container-x">
-                <p className="mono sp-hero-reveal"><span className="text-accent">(0{page.homeCard + 1})</span>&nbsp; {c.eyebrow}</p>
+                <p className="mono sp-hero-reveal"><span className="text-accent">({number})</span>&nbsp; {c.eyebrow}</p>
                 <h1 dangerouslySetInnerHTML={{ __html: c.title }} />
                 <div className="sp-hero-line" aria-hidden="true" />
                 {/* Like the home hero: the lead on the left, the actions on the right. */}
@@ -160,7 +162,7 @@ const ServicePage = ({ page }) => {
             <section id="case" className="sp-section sp-case container-x" aria-labelledby="sp-case-title">
                 <Label index="C">{c.caseLabel}</Label>
                 <h2 id="sp-case-title" className="visually-hidden">{c.caseStudy.title}</h2>
-                <ProjectCard project={caseProject} text={t.work.projects[0]} cursor={t.work.cursor} index={0} />
+                <ProjectCard project={caseProject} text={t.work.projects[caseIndex]} cursor={t.work.cursor} index={caseIndex} />
             </section>
 
             <section id="sp-faq" className="sp-section sp-faq container-x" aria-labelledby="sp-faq-title">
