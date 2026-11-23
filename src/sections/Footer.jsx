@@ -4,6 +4,7 @@ import { company, contactInfo } from "../constants";
 import { useLanguage } from "../i18n/index.js";
 import { openPrivacy } from "../lib/privacy.js";
 import { consentEnabled, showCookieSettings } from "../lib/consent.js";
+import { servicePages } from "../content/servicePages.js";
 import useLocalTime from "../hooks/useLocalTime.js";
 
 const socials = [
@@ -15,7 +16,7 @@ const socials = [
 const Footer = () => {
   const footerRef = useRef(null);
   const time = useLocalTime();
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const navLinks = t.nav.links;
 
   useGSAP(() => {
@@ -36,6 +37,14 @@ const Footer = () => {
           <ul>
             {[...navLinks, { name: t.nav.contact, link: "#contact" }].map(({ name, link }) => (
               <li key={link}><a href={link} className="footer-link">{name}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="mono text-muted">{t.footer.services}</p>
+          <ul>
+            {servicePages.map((page) => (
+              <li key={page.id}><a href={page.path[lang]} className="footer-link">{page[lang].menuTitle}</a></li>
             ))}
           </ul>
         </div>

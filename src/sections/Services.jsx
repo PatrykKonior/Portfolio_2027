@@ -3,10 +3,13 @@ import { gsap, useGSAP, motionOK } from "../lib/motion.js";
 import { services } from "../constants/index.js";
 import { useLanguage } from "../i18n/index.js";
 import SectionHeading from "../components/SectionHeading.jsx";
+import { servicePages } from "../content/servicePages.js";
 
 const Services = () => {
     const ref = useRef(null);
-    const { t } = useLanguage();
+    const { lang, t } = useLanguage();
+    // Cards with their own service page get a "Learn more" link.
+    const pageFor = (index) => servicePages.find((page) => page.homeCard === index);
 
     useGSAP(() => {
         if (!motionOK()) return;
@@ -65,6 +68,12 @@ const Services = () => {
                                 <ul className="service-points">
                                     {t.services.items[index].points.map((point) => <li key={point}>{point}</li>)}
                                 </ul>
+                                {pageFor(index) && (
+                                    <a className="service-more" href={pageFor(index).path[lang]}>
+                                        {t.services.more}
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                                    </a>
+                                )}
                             </div>
                         </article>
                     </div>

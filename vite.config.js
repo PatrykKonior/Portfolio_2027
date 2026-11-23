@@ -3,6 +3,8 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 import site from './site.config.js'
+import servicePagesPlugin from './build/servicePages.js'
+import { servicePages } from './src/content/servicePages.js'
 
 // Structured data about me and my business, so search engines can show a proper profile.
 const structuredData = () => ({
@@ -65,9 +67,15 @@ const seo = () => ({
         const alternates = [['en', pages[0]], ['pl', pages[1]], ['x-default', pages[0]]]
             .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
             .join('\n')
-        const urls = pages
-            .map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n${alternates}\n  </url>`)
-            .join('\n')
+        const entry = (loc, links) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n${links}\n  </url>`
+        // Service pages: each language version, linked to its counterpart.
+        const serviceEntries = servicePages.flatMap(({ path }) => {
+            const links = [['en', path.en], ['pl', path.pl], ['x-default', path.en]]
+                .map(([lang, href]) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${site.url}${href}"/>`)
+                .join('\n')
+            return [entry(`${site.url}${path.pl}`, links), entry(`${site.url}${path.en}`, links)]
+        })
+        const urls = [...pages.map((loc) => entry(loc, alternates)), ...serviceEntries].join('\n')
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls}
@@ -82,5 +90,6 @@ export default defineConfig({
         react(),
         tailwindcss(),
         seo(),
+        servicePagesPlugin(site),
     ],
 })

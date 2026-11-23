@@ -5,6 +5,8 @@ import { useLanguage } from "../i18n/index.js";
 import useLocalTime from "../hooks/useLocalTime.js";
 import Magnetic from "./Magnetic.jsx";
 import LanguageSwitch from "./LanguageSwitch.jsx";
+import ServicesMenu from "./ServicesMenu.jsx";
+import { servicePages } from "../content/servicePages.js";
 
 const RollText = ({ children }) => (
     <span className="roll" data-text={children}>
@@ -17,7 +19,7 @@ const NavBar = ({ ready }) => {
     const menuRef = useRef(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const time = useLocalTime();
-    const { t } = useLanguage();
+    const { lang, t } = useLanguage();
     const navLinks = t.nav.links;
 
     // Hide while scrolling down, reveal on the way up.
@@ -116,7 +118,18 @@ const NavBar = ({ ready }) => {
                 </a>
 
                 <nav className="nav-links" aria-label="Main">
-                    {navLinks.map(({ name, link }, index) => (
+                    {navLinks.map(({ name, link }, index) => link === "#services" ? (
+                        // "Services" opens a dropdown with the service pages; the link itself
+                        // still jumps to the section.
+                        <div key={link} className="nav-item nav-services">
+                            <a href={link} className="nav-link" aria-haspopup="true">
+                                <span className="mono text-muted">0{index + 1}</span>
+                                <RollText>{name}</RollText>
+                                <svg className="nav-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                            </a>
+                            <ServicesMenu lang={lang} />
+                        </div>
+                    ) : (
                         <a key={link} href={link} className="nav-item nav-link">
                             <span className="mono text-muted">0{index + 1}</span>
                             <RollText>{name}</RollText>
@@ -164,6 +177,15 @@ const NavBar = ({ ready }) => {
                                     {name}
                                 </span>
                             </a>
+                            {link === "#services" && (
+                                <ul className="menu-sub">
+                                    {servicePages.map((page) => (
+                                        <li key={page.id}>
+                                            <a href={page.path[lang]} tabIndex={menuOpen ? 0 : -1}>{page[lang].menuTitle} <span aria-hidden="true">↗</span></a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </li>
                     ))}
                 </ul>

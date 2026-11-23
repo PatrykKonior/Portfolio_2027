@@ -92,6 +92,7 @@ const pl = {
     services: {
         label: "Usługi",
         title: "Co mogę dla Ciebie <em>zbudować</em>",
+        more: "Dowiedz się więcej",
         items: [
             {
                 title: "Aplikacje webowe",
@@ -192,6 +193,7 @@ const pl = {
     },
     footer: {
         navigation: "Nawigacja",
+        services: "Usługi",
         socials: "Social media",
         localTime: "Czas lokalny",
         backToTop: "Do góry ↑",

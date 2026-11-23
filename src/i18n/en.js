@@ -85,6 +85,7 @@ const en = {
     services: {
         label: "Services",
         title: "What I can <em>build</em> for you",
+        more: "Learn more",
         items: [
             {
                 title: "Web Applications",
@@ -185,6 +186,7 @@ const en = {
     },
     footer: {
         navigation: "Navigation",
+        services: "Services",
         socials: "Socials",
         localTime: "Local time",
         backToTop: "Back to top ↑",

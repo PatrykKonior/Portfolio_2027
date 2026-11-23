@@ -1141,6 +1141,209 @@ a:hover .roll::after {
     font-size: 0.65rem;
 }
 
+/* "Services" dropdown: opens on hover or keyboard focus, same panel as on the service pages. */
+.nav-services {
+    position: relative;
+}
+
+.nav-chevron {
+    align-self: center;
+    transition: transform 0.35s var(--ease-out);
+}
+
+.nav-services:hover .nav-chevron,
+.nav-services:focus-within .nav-chevron {
+    transform: rotate(180deg);
+}
+
+.mega {
+    position: absolute;
+    top: calc(100% + 1.4rem);
+    left: 50%;
+    width: min(64rem, 92vw);
+    display: grid;
+    grid-template-columns: 1fr 1fr 20rem;
+    border: 1px solid rgba(236, 235, 230, 0.14);
+    border-radius: 1.75rem;
+    background: rgba(18, 18, 20, 0.96);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 0.5rem);
+    transition: opacity 0.35s, transform 0.45s var(--ease-out), visibility 0.35s;
+}
+
+/* Bridges the gap between the link and the panel so the pointer can travel down. */
+.mega::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1.5rem;
+    height: 1.5rem;
+}
+
+.nav-services:hover .mega,
+.nav-services:focus-within .mega {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+.mega-list {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    gap: 0.4rem;
+    padding: 1.75rem 1.75rem 1.25rem;
+}
+
+.mega-list > .mono {
+    grid-column: 1 / -1;
+    margin: 0 0 0.6rem 0.9rem;
+}
+
+.mega-item {
+    display: flex;
+    gap: 0.9rem;
+    padding: 0.9rem;
+    border-radius: 1rem;
+    transition: background 0.25s;
+}
+
+.mega-item:hover {
+    background: #1a1a1e;
+}
+
+.mega-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(236, 235, 230, 0.18);
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.mega-item:hover .mega-icon {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.mega-item strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.mega-item small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--muted);
+}
+
+.mega-more {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.6rem 0.9rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(236, 235, 230, 0.1);
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.mega-more span {
+    color: var(--fg);
+}
+
+.mega-feature {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    min-height: 24rem;
+    padding: 1.75rem;
+    border-left: 1px solid rgba(236, 235, 230, 0.1);
+    background: radial-gradient(ellipse at 60% 30%, #1d2440 0%, #0f0f11 70%);
+}
+
+.mega-feature img {
+    position: absolute;
+    top: -0.5rem;
+    left: 50%;
+    width: 17rem;
+    max-width: none;
+    transform: translateX(-50%);
+    transition: transform 0.8s var(--ease-out);
+}
+
+.mega-feature:hover img {
+    transform: translateX(-50%) scale(1.05) rotate(-4deg);
+}
+
+.mega-feature > * {
+    position: relative;
+}
+
+.mega-feature strong {
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.mega-feature small {
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+/* Service pages listed under "Services" in the phone menu. */
+.menu-sub {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0.75rem 2.4rem;
+}
+
+.menu-link .menu-sub a {
+    display: block;
+    padding: 0.35rem 0;
+    font-size: 1.1rem;
+    color: var(--muted);
+}
+
+/* "Learn more" on a service card that has its own page. */
+.service-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-self: start;
+    margin-top: 0.5rem;
+    padding: 0.8rem 1.3rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+.service-more svg {
+    transition: transform 0.4s var(--ease-out);
+}
+
+.service-more:hover svg {
+    transform: translateX(4px);
+}
+
 .nav-actions {
     display: flex;
     align-items: center;
@@ -2358,7 +2561,7 @@ a:hover .roll::after {
 
 @media (min-width: 768px) {
     .footer-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }
 

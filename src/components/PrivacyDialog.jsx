@@ -69,6 +69,8 @@ const PrivacyDialog = () => {
     useEffect(() => {
         const show = () => setOpen(true);
         window.addEventListener("privacy:open", show);
+        // Links from the service pages open the policy with /#privacy.
+        if (window.location.hash === "#privacy") show();
         return () => window.removeEventListener("privacy:open", show);
     }, []);
 
