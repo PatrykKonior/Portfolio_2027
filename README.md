@@ -8,7 +8,7 @@ A dark, cinematic one-pager in English and Polish, built around a single WebGL s
 
 ## Highlights
 
-- **One continuous WebGL scene.** A custom GLSL blob (simplex-noise displacement, iridescent fresnel shading, bloom) moves, scales and recolours per section, and reacts to the pointer and to scroll speed.
+- **One continuous WebGL scene.** A custom GLSL blob (simplex-noise displacement, pearl-toned iridescent fresnel shading) moves, scales and recolours per section, and reacts to the pointer and to scroll speed.
 - **Bilingual, EN / PL.** Switching language makes the blob swell until it floods the screen, swaps the copy underneath and shrinks back, while labels decode with a scramble effect. The language comes from `?lang=`, the last choice or the browser.
 - **Scroll choreography with GSAP.** A preloader, SplitText headline reveals, scroll-lit About copy, a pinned horizontal project gallery, stacking service cards, an experience accordion and a velocity-reactive tech marquee, on top of Lenis smooth scrolling.
 - **Details.** A custom cursor, magnetic buttons, film grain, a live local clock and an animated *Download CV* button.
