@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 
 import { blobFragment, blobVertex } from "./shaders.js";
@@ -307,11 +306,6 @@ const Scene = () => {
                 <Blob detail={lite ? 32 : isDesktop ? 96 : 40} still={still} />
                 <Dust count={lite ? 400 : isDesktop ? 1400 : 500} />
                 {probing && quality !== "static" && <FrameRateProbe key={quality} onMeasured={handleFrameRate} />}
-                {isDesktop && !lite && (
-                    <EffectComposer multisampling={0}>
-                        <Bloom intensity={0.55} luminanceThreshold={0.55} luminanceSmoothing={0.3} mipmapBlur />
-                    </EffectComposer>
-                )}
             </Canvas>
         </div>
     );
