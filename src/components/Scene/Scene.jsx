@@ -127,7 +127,7 @@ const onFooterName = (sizeFactor) => () => {
 // would sit behind text. A stage can be a function, re-measured whenever the layout refreshes.
 const stages = {
     desktop: [
-        [null, { x: 0.5, y: -0.02, scale: 1, distort: 0.22, accent: 0, dim: 1 }],
+        [null, { x: 0.5, y: 0.08, scale: 1, distort: 0.22, accent: 0, dim: 1 }],
         ["#about", { x: 0.62, y: -0.4, scale: 0.7, distort: 0.38, accent: 0.35, dim: 1 }],
         ["#work", { x: 0.72, y: 0.58, scale: 0.32, distort: 0.18, accent: 1, dim: 1 }],
         ["#services", { x: -0.66, y: -0.1, scale: 0.8, distort: 0.45, accent: 0.2, dim: 1 }],
@@ -147,6 +147,14 @@ const stages = {
         [".footer", onFooterName(0.72)],
     ],
 };
+// Portrait tablets: the phone path, except that "About" is already on screen at load (the hero is
+// shorter than the screen), so its stage starts close by and the blob rests in the free space
+// between the badge and the round button.
+stages.tablet = [
+    [null, { x: 0.3, y: 0.12, scale: 0.5, distort: 0.22, accent: 0, dim: 0.85 }],
+    ["#about", { x: 0.3, y: -0.08, scale: 0.55, distort: 0.35, accent: 0.35, dim: 0.4 }],
+    ...stages.mobile.slice(2),
+];
 
 // Turns a stage into tween values; function stages become function-based values, which GSAP
 // re-reads on every ScrollTrigger refresh (invalidateOnRefresh).
@@ -221,8 +229,12 @@ const Scene = () => {
     // Created after the sections mount, so the pinned Work section is already measured.
     useGSAP(() => {
         const mm = gsap.matchMedia();
-        mm.add({ desktop: "(min-width: 1024px)", mobile: "(max-width: 1023px)" }, ({ conditions }) => {
-            const list = conditions.desktop ? stages.desktop : stages.mobile;
+        mm.add({
+            desktop: "(min-width: 1024px) and (min-aspect-ratio: 1/1)",
+            mobile: "(max-width: 1023px), (max-aspect-ratio: 999/1000)",
+            tablet: "(min-width: 768px)",
+        }, ({ conditions }) => {
+            const list = conditions.desktop ? stages.desktop : conditions.tablet ? stages.tablet : stages.mobile;
             const first = list[0][1];
             gsap.set(sceneState.blob, typeof first === "function" ? first() : first);
             list.slice(1).forEach(([selector, to], index) => {

@@ -42,7 +42,7 @@ const Work = () => {
         const mm = gsap.matchMedia();
 
         // Desktop: pin the section and scroll the cards sideways.
-        mm.add("(min-width: 1024px)", () => {
+        mm.add("(min-width: 1024px) and (min-aspect-ratio: 1/1)", () => {
             const track = trackRef.current;
             const distance = () => track.scrollWidth - window.innerWidth;
 
@@ -87,7 +87,7 @@ const Work = () => {
             });
         });
 
-        mm.add("(max-width: 1023px)", () => {
+        mm.add("(max-width: 1023px), (max-aspect-ratio: 999/1000)", () => {
             gsap.utils.toArray(".work-card").forEach((card) => {
                 gsap.from(card, { y: 80, opacity: 0, duration: 1.2, scrollTrigger: { trigger: card, start: "top 85%" } });
             });

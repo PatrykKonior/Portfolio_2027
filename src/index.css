@@ -70,7 +70,7 @@ img {
 }
 
 .section-space {
-    padding-block: clamp(6rem, 14vw, 12rem);
+    padding-block: clamp(4.5rem, 9vw, 8rem);
 }
 
 .mono {
@@ -1250,13 +1250,21 @@ a:hover .roll::after {
 
 /* ---------- Hero ---------- */
 
+/* The hero starts right under the navbar. It fills the screen, but no more than ~56rem, so tall
+   screens (portrait tablets) don't open a big gap before the next section. */
 .hero {
     position: relative;
-    min-height: 100svh;
+    min-height: min(100svh, 56rem);
     display: flex;
     flex-direction: column;
-    /* Centred, so tall or wide screens don't leave one big empty band above the headline. */
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+/* Portrait tablets: the hero is only as tall as its content, so "About" follows right after. */
+@media (min-width: 768px) and (max-aspect-ratio: 999/1000) {
+    .hero {
+        min-height: 0;
+    }
 }
 
 .hero-content {
@@ -1270,10 +1278,6 @@ a:hover .roll::after {
 /* Phones: the hero starts right under the navbar, and the badge and the round button share a
    row, so the whole first screen fits even with the browser's bars showing. */
 @media (max-width: 767px) {
-    .hero {
-        justify-content: flex-start;
-    }
-
     .hero-content {
         padding-top: 6.5rem;
     }
@@ -1533,7 +1537,7 @@ a:hover .roll::after {
     display: flex;
     flex-direction: column;
     gap: clamp(2rem, 4vw, 3rem);
-    padding-block: clamp(6rem, 10vw, 8rem) 3rem;
+    padding-block: clamp(4.5rem, 8vw, 6rem) 3rem;
 }
 
 .work-track {
@@ -1655,7 +1659,8 @@ a:hover .roll::after {
     transform-origin: left;
 }
 
-@media (min-width: 1024px) {
+/* Wide, landscape screens: the pinned horizontal gallery. Portrait tablets get the stacked cards. */
+@media (min-width: 1024px) and (min-aspect-ratio: 1/1) {
     .work-pin {
         height: 100vh;
         justify-content: center;
@@ -1668,15 +1673,16 @@ a:hover .roll::after {
         gap: 1.5rem;
     }
 
+    /* At least this tall, and taller when the text needs it, so links are never cut off. */
     .work-card {
         width: min(80vw, 72rem);
-        height: min(60vh, 34rem);
+        min-height: min(60vh, 34rem);
         grid-template-columns: 1fr 1.05fr;
     }
 
     .work-more {
         width: min(32vw, 26rem);
-        height: min(60vh, 34rem);
+        min-height: min(60vh, 34rem);
     }
 
     .work-progress {
