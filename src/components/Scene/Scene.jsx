@@ -15,6 +15,9 @@ const { damp, lerp } = THREE.MathUtils;
 // enough (with the flattened surface) that the camera at z = 6 never ends up inside it.
 const TAKEOVER_RADIUS = 4.8;
 
+// How far the iridescent colours are pulled toward a pale pearl/silver (0 = full colour).
+const PEARL = 0.55;
+
 const Blob = ({ detail, still }) => {
     const mesh = useRef(null);
     const viewport = useThree((state) => state.viewport);
@@ -26,6 +29,7 @@ const Blob = ({ detail, still }) => {
         uAccent: { value: 0 },
         uFlood: { value: 0 },
         uDim: { value: 1 },
+        uPearl: { value: PEARL },
         uAccentColor: { value: new THREE.Color("#4d7cff") },
     }), []);
 
@@ -105,6 +109,25 @@ const toBlobY = (px) => 1 - (px / window.innerHeight) * 2;
 const scaleForRadius = (px) => px / (UNIT_RADIUS * Math.min(window.innerWidth, window.innerHeight));
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
+// Phones: the hero text sits at the bottom of the screen, so the blob takes the free space above
+// it. If the screen is too short to leave room there, it sits beside the headline, dimmed.
+const mobileHero = () => {
+    const navBottom = document.querySelector(".nav-inner")?.getBoundingClientRect().bottom ?? 80;
+    // Measured with the page at the top, where this stage applies.
+    const textTop = (document.querySelector(".hero-top")?.getBoundingClientRect().top ?? NaN) + window.scrollY;
+    const room = textTop - navBottom - 24;
+    if (!Number.isFinite(room) || room < 140) return { x: 0.42, y: 0.12, scale: 0.95, distort: 0.22, accent: 0, dim: 0.55 };
+    const radius = Math.min(room / 2, window.innerWidth * 0.3);
+    return {
+        x: 0.25,
+        y: toBlobY(navBottom + 12 + room / 2),
+        scale: clamp(scaleForRadius(radius), 0.5, 1),
+        distort: 0.22,
+        accent: 0,
+        dim: 1,
+    };
+};
+
 // Both layouts end with the blob centred on the giant name in the footer, wherever that lands.
 const onFooterName = (sizeFactor) => () => {
     const name = document.querySelector(".footer-giant");
@@ -127,7 +150,7 @@ const onFooterName = (sizeFactor) => () => {
 // would sit behind text. A stage can be a function, re-measured whenever the layout refreshes.
 const stages = {
     desktop: [
-        [null, { x: 0.5, y: 0.08, scale: 1, distort: 0.22, accent: 0, dim: 1 }],
+        [null, { x: 0.5, y: -0.02, scale: 1, distort: 0.22, accent: 0, dim: 1 }],
         ["#about", { x: 0.62, y: -0.4, scale: 0.7, distort: 0.38, accent: 0.35, dim: 1 }],
         ["#work", { x: 0.72, y: 0.58, scale: 0.32, distort: 0.18, accent: 1, dim: 1 }],
         ["#services", { x: -0.66, y: -0.1, scale: 0.8, distort: 0.45, accent: 0.2, dim: 1 }],
@@ -138,7 +161,7 @@ const stages = {
     // On phones text runs the full width, so the blob still travels between sections but dims
     // whenever it sits behind text.
     mobile: [
-        [null, { x: 0.42, y: 0.12, scale: 0.95, distort: 0.22, accent: 0, dim: 0.55 }],
+        [null, mobileHero],
         ["#about", { x: -0.55, y: -0.3, scale: 0.65, distort: 0.35, accent: 0.35, dim: 0.4 }],
         ["#work", { x: 0.6, y: 0.55, scale: 0.4, distort: 0.18, accent: 1, dim: 0.7 }],
         ["#services", { x: -0.5, y: -0.45, scale: 0.65, distort: 0.4, accent: 0.2, dim: 0.45 }],

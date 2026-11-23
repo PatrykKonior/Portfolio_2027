@@ -1250,20 +1250,20 @@ a:hover .roll::after {
 
 /* ---------- Hero ---------- */
 
-/* The hero starts right under the navbar. It fills the screen, but no more than ~56rem, so tall
-   screens (portrait tablets) don't open a big gap before the next section. */
 .hero {
     position: relative;
-    min-height: min(100svh, 56rem);
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
 }
 
-/* Portrait tablets: the hero is only as tall as its content, so "About" follows right after. */
+/* Portrait tablets: the hero starts under the navbar and is only as tall as its content, so tall
+   screens don't open big gaps above it or before "About". */
 @media (min-width: 768px) and (max-aspect-ratio: 999/1000) {
     .hero {
         min-height: 0;
+        justify-content: flex-start;
     }
 }
 
