@@ -887,6 +887,9 @@ a:hover .roll::after {
 }
 
 .cursor-ring span {
+    padding-inline: 0.4rem;
+    text-align: center;
+    line-height: 1.25;
     font-family: var(--font-mono);
     font-size: 0.7rem;
     text-transform: uppercase;

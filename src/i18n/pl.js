@@ -14,6 +14,7 @@ const pl = {
             { name: "Projekty", link: "#work" },
             { name: "Doświadczenie", link: "#experience" },
             { name: "Usługi", link: "#services" },
+            { name: "Specjalizacje", link: "#specializations" },
         ],
         contact: "Kontakt",
         cta: "Porozmawiajmy",
@@ -121,8 +122,8 @@ const pl = {
         count: "6 usług · każda ma swoją stronę",
         title: "W czym mogę <em>pomóc</em> Twojej firmie",
         intro: "Wybierz, czego potrzebujesz, i zobacz, jak pracuję, z przykładem realizacji i odpowiedziami na częste pytania.",
-        cta: "Zobacz usługę",
-        ask: "Zapytaj o to",
+        cta: "Dowiedz się więcej",
+        cursor: "Zobacz",
     },
     experience: {
         label: "Doświadczenie",

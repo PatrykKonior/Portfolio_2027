@@ -14,6 +14,7 @@ const en = {
             { name: "Work", link: "#work" },
             { name: "Experience", link: "#experience" },
             { name: "Services", link: "#services" },
+            { name: "Specializations", link: "#specializations" },
         ],
         contact: "Contact",
         cta: "Let's talk",
@@ -114,8 +115,8 @@ const en = {
         count: "6 services · each with its own page",
         title: "How I can <em>help</em> your business",
         intro: "Pick what you need and see how I work, with a real project and answers to common questions.",
-        cta: "See the service",
-        ask: "Ask about it",
+        cta: "Learn more",
+        cursor: "View",
     },
     experience: {
         label: "Experience",

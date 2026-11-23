@@ -165,7 +165,18 @@ const ServicePage = ({ page }) => {
                 </div>
                 <div className="sp-faq-list">
                     {c.faq.map((item, index) => (
-                        <details key={item.q} open={index === 0}>
+                        <details
+                            key={item.q}
+                            name="sp-faq"
+                            open={index === 0}
+                            // One answer open at a time (also for browsers without exclusive <details name>).
+                            onToggle={(event) => {
+                                if (!event.currentTarget.open) return;
+                                event.currentTarget.parentElement.querySelectorAll("details[open]").forEach((other) => {
+                                    if (other !== event.currentTarget) other.open = false;
+                                });
+                            }}
+                        >
                             <summary>
                                 <span className="mono sp-faq-index">0{index + 1}</span>
                                 <span className="sp-faq-q">{item.q}</span>

@@ -5,7 +5,7 @@ import { servicePages, serviceTints } from "../content/servicePages.js";
 import SectionHeading from "../components/SectionHeading.jsx";
 
 // Cards for every service page, each in its service's blob colour. A card whose page isn't
-// published yet links to the contact form instead.
+// published yet links to the contact form for now.
 const Specializations = () => {
     const ref = useRef(null);
     const { lang, t } = useLanguage();
@@ -35,7 +35,7 @@ const Specializations = () => {
                             href={page.ready ? page.path[lang] : "#contact"}
                             className={`spec-card ${page.accent ? "spec-card-accent" : ""}`}
                             style={{ "--tint": tint.stars }}
-                            data-cursor={page.ready ? copy.cta : copy.ask}
+                            data-cursor={copy.cursor}
                             data-cursor-contrast={page.accent ? "" : undefined}
                         >
                             {!page.accent && <img src={tint.image} alt="" className="spec-blob" loading="lazy" width="640" height="584" />}
@@ -44,7 +44,7 @@ const Specializations = () => {
                                 <span className="spec-title">{page[lang].menuTitle}</span>
                                 <span className="spec-desc">{page[lang].menuDesc}</span>
                                 <span className="spec-cta">
-                                    {page.ready ? copy.cta : copy.ask}
+                                    {copy.cta}
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                                 </span>
                             </span>
