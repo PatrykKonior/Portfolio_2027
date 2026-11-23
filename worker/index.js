@@ -115,7 +115,7 @@ const isMirror = (hostname) =>
 const PL = {
     description: "Patryk Konior, full-stack developer z Polski (B2B). Aplikacje webowe, mobilne i desktopowe, API czasu rzeczywistego i wdrożenia w Elixir & Phoenix, Node.js, .NET, React i Svelte.",
     ogDescription: "Aplikacje webowe, mobilne i desktopowe, API czasu rzeczywistego i wdrożenia w Elixir & Phoenix, Node.js, .NET, React i Svelte. Dostępny do projektów B2B.",
-    image: `${SITE}/og-image-pl.jpg?v=4`,
+    image: `${SITE}/og-image-pl.jpg?v=5`,
     url: `${SITE}/?lang=pl`,
 };
 
