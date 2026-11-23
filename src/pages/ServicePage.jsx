@@ -34,6 +34,7 @@ const ServicePage = ({ page }) => {
             onSplit: (split) => gsap.from(split.words, { yPercent: 115, rotate: 4, duration: 1.5, stagger: 0.06, delay: 0.2 }),
         });
         gsap.from(".sp-hero-reveal", { y: 40, opacity: 0, duration: 1.3, stagger: 0.1, delay: 0.6 });
+        gsap.from(".sp-hero-line", { scaleX: 0, duration: 1.8, ease: "expo.inOut", delay: 0.3 });
 
         gsap.utils.toArray(".sp-title").forEach((title) => {
             SplitText.create(title, {
@@ -100,15 +101,19 @@ const ServicePage = ({ page }) => {
             <section className="sp-hero container-x">
                 <p className="mono sp-hero-reveal"><span className="text-accent">(0{page.homeCard + 1})</span>&nbsp; {c.eyebrow}</p>
                 <h1 dangerouslySetInnerHTML={{ __html: c.title }} />
-                <p className="sp-lead sp-hero-reveal">{c.lead}</p>
-                <div className="sp-hero-actions sp-hero-reveal">
-                    <Magnetic strength={0.45}>
-                        <a href="#contact" className="round-button round-button-accent" data-cursor-contrast>
-                            <span>{c.ctaPrimary}</span>
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
-                        </a>
-                    </Magnetic>
-                    <a href="#case" className="pill">{c.ctaSecondary}</a>
+                <div className="sp-hero-line" aria-hidden="true" />
+                {/* Like the home hero: the lead on the left, the actions on the right. */}
+                <div className="sp-hero-bottom">
+                    <p className="sp-lead sp-hero-reveal">{c.lead}</p>
+                    <div className="sp-hero-actions sp-hero-reveal">
+                        <a href="#case" className="pill">{c.ctaSecondary}</a>
+                        <Magnetic strength={0.45}>
+                            <a href="#contact" className="round-button round-button-accent" data-cursor-contrast>
+                                <span>{c.ctaPrimary}</span>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
+                            </a>
+                        </Magnetic>
+                    </div>
                 </div>
             </section>
 
