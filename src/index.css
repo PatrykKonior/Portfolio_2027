@@ -313,10 +313,11 @@ a:hover .roll::after {
     color: #fff;
 }
 
+/* No clipping mask: letters rise in with a fade and blur, so descenders (the "g") and the
+   italic slant are never cut by a hard edge. */
 .takeover-word {
     display: flex;
-    overflow: hidden;
-    padding: 0.05em 0.1em 0.18em;
+    padding: 0.1em 0.2em 0.3em;
     font-family: var(--font-serif);
     font-style: italic;
     font-size: clamp(5rem, 19vw, 18rem);

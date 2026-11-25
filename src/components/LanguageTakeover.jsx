@@ -40,11 +40,11 @@ const LanguageTakeover = forwardRef((_, ref) => {
 
             timeline
                 .fromTo(".takeover-char",
-                    { yPercent: 110, rotate: 6, filter: "blur(8px)" },
-                    { yPercent: 0, rotate: 0, filter: "blur(0px)", duration: 1, stagger: 0.045, ease: "expo.out" }, 0.7)
+                    { yPercent: 45, rotate: 6, opacity: 0, filter: "blur(10px)" },
+                    { yPercent: 0, rotate: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.045, ease: "expo.out" }, 0.7)
                 .fromTo(".takeover-meta", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, 0.85)
                 .add(swap, 1.3)
-                .to(".takeover-char", { yPercent: -110, filter: "blur(8px)", duration: 0.55, stagger: 0.03, ease: "expo.in" }, 1.85)
+                .to(".takeover-char", { yPercent: -40, opacity: 0, filter: "blur(10px)", duration: 0.55, stagger: 0.03, ease: "expo.in" }, 1.85)
                 .to(".takeover-meta", { opacity: 0, duration: 0.3 }, 1.85);
 
             if (scene) {
