@@ -18,7 +18,11 @@ const TAKEOVER_RADIUS = 4.8;
 const PEARL = 0.55;
 
 // `tint` colours the pearl (RGB multipliers on the blob's brightness); service pages each have their own.
-const Blob = ({ detail, still, tint = [1.02, 1.0, 1.08], pearl = PEARL }) => {
+// A constant, so the uniforms below are not rebuilt on every render (a language switch re-renders
+// the scene, and fresh uniforms would leave the material frozen on the old ones).
+const DEFAULT_TINT = [1.02, 1.0, 1.08];
+
+const Blob = ({ detail, still, tint = DEFAULT_TINT, pearl = PEARL }) => {
     const mesh = useRef(null);
     const viewport = useThree((state) => state.viewport);
 
