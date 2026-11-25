@@ -2763,6 +2763,10 @@ a:hover .roll::after {
     border-top: 1px solid var(--line);
 }
 
+.sp-title em {
+    color: var(--accent);
+}
+
 .sp-title {
     max-width: 22ch;
     font-size: clamp(2.4rem, 5vw, 4.75rem);
