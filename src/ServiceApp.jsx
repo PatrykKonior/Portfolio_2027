@@ -46,7 +46,7 @@ const ServiceApp = ({ page, lang, ssr = false }) => {
             <NavBar ready={mounted} linkBase={ui.homeHref} />
             <main>
                 <ServicePage page={page} />
-                <Contact initialMessage={ssr ? "" : `${page[lang].menuTitle}: `} />
+                <Contact initialMessage={ssr || page.contactPrefill === false ? "" : `${page[lang].menuTitle}: `} />
             </main>
             <Footer linkBase={ui.homeHref} />
             {!ssr && mounted && (

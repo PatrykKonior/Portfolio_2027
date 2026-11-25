@@ -657,15 +657,121 @@ export const servicePages = [
     },
     {
         id: "silesia",
-        ready: false,
+        ready: true,
         tint: "cobalt",
         icon: "pin",
         accent: true,
+        // Not a service, so the contact form starts empty.
+        contactPrefill: false,
         path: { pl: "/programista-slask/", en: "/en/developer-silesia/" },
-        pl: { menuTitle: "Programista na Śląsku", menuDesc: "Katowice, Chorzów, Gliwice: spotkania na miejscu" },
-        en: { menuTitle: "Developer in Silesia", menuDesc: "Katowice, Chorzów, Gliwice: on-site meetings" },
+        pl: {
+            menuTitle: "Programista na Śląsku",
+            menuDesc: "Katowice, Chorzów, Gliwice: spotkania na miejscu",
+            metaTitle: "Programista Śląsk: Katowice, Chorzów, Gliwice | Patryk Konior",
+            metaDescription: "Programista full-stack z Chorzowa. Aplikacje webowe, systemy CRM, sklepy i strony dla firm z Katowic, Gliwic i całego Śląska. Spotkania na miejscu, B2B.",
+            breadcrumb: "Programista na Śląsku",
+            eyebrow: "Lokalnie · Śląsk",
+            title: "Programista <em>na Śląsku</em> dla Twojej firmy.",
+            lead: "Jestem programistą full-stack z Chorzowa. Firmom z Katowic, Gliwic, Zabrza, Bytomia i całego Śląska buduję aplikacje webowe, systemy CRM, sklepy i strony, a na pierwszą rozmowę mogę przyjechać do Twojego biura.",
+            ctaPrimary: "Umówmy się na spotkanie",
+            ctaSecondary: "Zobacz realizację",
+            facts: [
+                { label: "Siedziba", value: "Chorzów, województwo śląskie" },
+                { label: "Spotkania na miejscu", value: "Katowice, Chorzów, Gliwice, Zabrze, Bytom, Sosnowiec, Tychy" },
+                { label: "Poza Śląskiem", value: "Cała Polska i zagranica, zdalnie" },
+            ],
+            benefitsLabel: "Dlaczego lokalnie",
+            benefitsTitle: "Programista <em>blisko Ciebie</em>",
+            benefits: [
+                { title: "Spotkania na miejscu", text: "Pierwszą rozmowę, warsztat z zespołem czy prezentację wersji możemy zrobić w Twoim biurze, a nie tylko na wideo." },
+                { title: "Jedna osoba", text: "Rozmawiasz bezpośrednio z programistą, który projektuje i buduje system, bez pośredników i przekazywania wiadomości." },
+                { title: "Pełen zakres", text: "Aplikacje webowe, CRM, sklepy, aplikacje mobilne i strony, od analizy po wdrożenie i dalszy rozwój." },
+                { title: "Zdalnie, gdy trzeba", text: "Między spotkaniami pracujemy zdalnie: wideo, wspólne repozytorium i podglądy postępów co etap." },
+            ],
+            processLabel: "Jak pracujemy",
+            processTitle: "Od spotkania <em>do wdrożenia</em>",
+            stepLabel: "Krok",
+            process: [
+                { title: "Spotkanie", text: "Przyjeżdżam do firmy albo rozmawiamy online. Poznaję potrzeby i to, co dziś nie działa." },
+                { title: "Zakres i wycena", text: "Spisuję funkcje, etapy i koszt, zanim cokolwiek zbuduję." },
+                { title: "Projekt", text: "Projekt ekranów do przeklikania i omówienia, także na miejscu." },
+                { title: "Budowa etapami", text: "Co etap działająca wersja, którą możemy przejrzeć razem." },
+                { title: "Wdrożenie", text: "Uruchomienie, szkolenie zespołu w Twoim biurze i dalszy rozwój." },
+            ],
+            caseLabel: "Realizacja",
+            faqLabel: "Pytania",
+            faqTitle: "Częste <em>pytania</em>",
+            faq: [
+                { q: "Gdzie możemy się spotkać?", a: "W Twoim biurze w Katowicach, Chorzowie, Gliwicach, Zabrzu, Bytomiu, Sosnowcu, Tychach i innych miastach Śląska, albo online, jeśli tak jest wygodniej." },
+                { q: "Czy pracujesz z firmami spoza Śląska?", a: "Tak. Z firmami z całej Polski i z zagranicy pracuję zdalnie. Spotkania na miejscu proponuję na terenie Śląska." },
+                { q: "Co możesz dla nas zbudować?", a: "Aplikacje webowe na zamówienie, systemy CRM i panele administracyjne, sklepy internetowe, aplikacje mobilne i desktopowe oraz strony internetowe dla firm." },
+                { q: "Czy pracujesz na fakturę?", a: "Tak. Prowadzę działalność gospodarczą i współpracuję w modelu B2B, na fakturę VAT." },
+                { q: "Ile kosztuje współpraca?", a: "To zależy od zakresu. Po pierwszej rozmowie przygotowuję wycenę podzieloną na etapy, żeby można było zacząć od najważniejszej części." },
+            ],
+            ctaEyebrow: "Twoja firma jest na Śląsku?",
+            ctaTitle: "Zbudujmy <em>coś</em> razem.",
+            ctaButton: "Napisz do mnie",
+            relatedLabel: "Zobacz też",
+        },
+        en: {
+            menuTitle: "Developer in Silesia",
+            menuDesc: "Katowice, Chorzów, Gliwice: on-site meetings",
+            metaTitle: "Software developer in Silesia: Katowice, Chorzów, Gliwice | Patryk Konior",
+            metaDescription: "A full-stack developer based in Chorzów, Poland. Web apps, CRMs, online stores and websites for companies in Katowice, Gliwice and across Silesia. On-site meetings, B2B.",
+            breadcrumb: "Developer in Silesia",
+            eyebrow: "Local · Silesia, Poland",
+            title: "A developer <em>in Silesia</em> for your business.",
+            lead: "I'm a full-stack developer based in Chorzów. For companies in Katowice, Gliwice, Zabrze, Bytom and across Silesia I build web apps, CRMs, online stores and websites, and I can come to your office for the first meeting.",
+            ctaPrimary: "Let's meet",
+            ctaSecondary: "See a case study",
+            facts: [
+                { label: "Based in", value: "Chorzów, Silesia, Poland" },
+                { label: "On-site meetings", value: "Katowice, Chorzów, Gliwice, Zabrze, Bytom, Sosnowiec, Tychy" },
+                { label: "Beyond Silesia", value: "All of Poland and abroad, remotely" },
+            ],
+            benefitsLabel: "Why local",
+            benefitsTitle: "A developer <em>close by</em>",
+            benefits: [
+                { title: "On-site meetings", text: "The first conversation, a workshop with your team or a demo can happen in your office, not only on video." },
+                { title: "One person", text: "You talk directly to the developer who designs and builds the system, with no middlemen." },
+                { title: "Full range", text: "Web apps, CRMs, online stores, mobile apps and websites, from analysis to launch and beyond." },
+                { title: "Remote when needed", text: "Between meetings we work remotely: video calls, a shared repository and previews after every stage." },
+            ],
+            processLabel: "How we work",
+            processTitle: "From meeting <em>to launch</em>",
+            stepLabel: "Step",
+            process: [
+                { title: "Meeting", text: "I come to your company or we talk online, to learn what you need and what isn't working today." },
+                { title: "Scope and quote", text: "Features, stages and cost on paper before anything is built." },
+                { title: "Design", text: "Clickable screens to go through together, also in person." },
+                { title: "Built in stages", text: "A working version after every stage, which we can review together." },
+                { title: "Launch", text: "Go-live, team training in your office and further development." },
+            ],
+            caseLabel: "Case study",
+            faqLabel: "Questions",
+            faqTitle: "Frequently asked <em>questions</em>",
+            faq: [
+                { q: "Where can we meet?", a: "At your office in Katowice, Chorzów, Gliwice, Zabrze, Bytom, Sosnowiec, Tychy and elsewhere in Silesia, or online if that's easier." },
+                { q: "Do you work with companies outside Silesia?", a: "Yes. I work remotely with companies across Poland and abroad. On-site meetings are within Silesia." },
+                { q: "What can you build for us?", a: "Custom web applications, CRM systems and admin panels, online stores, mobile and desktop apps, and business websites." },
+                { q: "Do you invoice as a company?", a: "Yes. I run a registered business in Poland and work B2B, with VAT invoices." },
+                { q: "How much does it cost?", a: "It depends on the scope. After the first call I put together a quote split into stages, so we can start with the part that matters most." },
+            ],
+            ctaEyebrow: "Is your company in Silesia?",
+            ctaTitle: "Let's build <em>something</em> together.",
+            ctaButton: "Write to me",
+            relatedLabel: "See also",
+        },
     },
 ];
+
+// The Silesia page shows the same commercial system as the CRM page.
+{
+    const crm = servicePages.find((page) => page.id === "crm");
+    const silesia = servicePages.find((page) => page.id === "silesia");
+    silesia.caseProject = crm.caseProject;
+    for (const lang of ["pl", "en"]) silesia[lang].caseStudy = crm[lang].caseStudy;
+}
 
 // Pages that exist (built and linked).
 export const readyServicePages = servicePages.filter((page) => page.ready);
