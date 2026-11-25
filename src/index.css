@@ -2597,12 +2597,60 @@ a:hover .roll::after {
     white-space: nowrap;
 }
 
+/* Back to the home page, then the breadcrumbs. */
+.sp-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+    padding-top: 7rem;
+}
+
+.sp-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.95rem;
+}
+
+.sp-back-icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgba(236, 235, 230, 0.25);
+    border-radius: 999px;
+    transition: background 0.4s, border-color 0.4s, color 0.4s, box-shadow 0.5s var(--ease-out);
+}
+
+.sp-back-icon svg {
+    transition: transform 0.5s var(--ease-out);
+}
+
+.sp-back:hover .sp-back-icon,
+.sp-back:focus-visible .sp-back-icon {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+    box-shadow: 0 10px 30px rgba(77, 124, 255, 0.35);
+}
+
+.sp-back:hover .sp-back-icon svg {
+    transform: translateX(-3px);
+}
+
 .sp-crumbs {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    padding-top: 7.5rem;
     color: var(--muted);
+}
+
+@media (min-width: 768px) {
+    .sp-crumbs {
+        padding-left: 1.75rem;
+        border-left: 1px solid rgba(236, 235, 230, 0.15);
+    }
 }
 
 .sp-crumbs a {
@@ -2716,7 +2764,7 @@ a:hover .roll::after {
 }
 
 .sp-title {
-    max-width: 16ch;
+    max-width: 22ch;
     font-size: clamp(2.4rem, 5vw, 4.75rem);
     font-weight: 500;
     line-height: 0.95;

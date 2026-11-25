@@ -97,11 +97,19 @@ const ServicePage = ({ page }) => {
 
     return (
         <div ref={ref} className="sp">
-            <nav className="sp-crumbs mono container-x" aria-label={lang === "pl" ? "Ścieżka" : "Breadcrumb"}>
+            <div className="sp-topbar container-x">
+                <a href={`${ui.homeHref}#top`} className="sp-back">
+                    <span className="sp-back-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+                    </span>
+                    {ui.backHome}
+                </a>
+            <nav className="sp-crumbs mono" aria-label={lang === "pl" ? "Ścieżka" : "Breadcrumb"}>
                 <a href={ui.homeHref}>{ui.home}</a><span aria-hidden="true">/</span>
                 <a href={`${ui.homeHref}#specializations`}>{ui.services}</a><span aria-hidden="true">/</span>
                 <span aria-current="page">{c.breadcrumb}</span>
             </nav>
+            </div>
 
             <section className="sp-hero container-x">
                 <p className="mono sp-hero-reveal"><span className="text-accent">({number})</span>&nbsp; {c.eyebrow}</p>

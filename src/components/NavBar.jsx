@@ -96,7 +96,7 @@ const NavBar = ({ ready, linkBase = "" }) => {
         <header ref={headerRef} className="navbar">
             <div className="nav-inner">
                 <a
-                    href="#top"
+                    href={linkBase ? `${linkBase}#top` : "#top"}
                     className="nav-item nav-logo"
                     onClick={closeMenu}
                     onPointerEnter={() => wakeLogo(true)}
