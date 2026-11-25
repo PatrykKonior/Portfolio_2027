@@ -148,7 +148,7 @@ export const servicePages = [
         icon: "chart",
         // A commercial system described without naming the client or the product.
         caseProject: {
-            tags: ["Elixir", "Phoenix LiveView", "Svelte", "PostgreSQL", "Oban", "Docker", "S3", "Tailwind CSS"],
+            tags: ["Elixir", "Phoenix LiveView", "Svelte", "TypeScript", "PostgreSQL", "Oban", "Docker", "Amazon S3", "Tailwind CSS"],
             links: [],
         },
         path: { pl: "/uslugi/systemy-crm/", en: "/en/services/crm-systems/" },
@@ -190,16 +190,15 @@ export const servicePages = [
             caseStudy: {
                 title: "System operacyjny i CRM dla firmy produkcyjnej",
                 type: "CRM · Zamówienia · Produkcja · E-commerce",
-                note: "Projekt komercyjny · kod niepubliczny",
-                desc: "Jeden system dla firmy produkcyjnej realizującej zamówienia B2B, który rozwijam jako full-stack developer, od bazy danych po interfejs. Łączy sklep i katalog produktów z kalkulatorami cen, zamówienia, oferty i proformy, kalendarz produkcji, wysyłki z etykietami i protokołami w PDF, CRM klientów i kontrahentów oraz panel klienta z logowaniem przez link w mailu. Działa w czterech językach, a ciężkie zadania wykonuje w tle.",
+                desc: "Jeden system dla firmy produkcyjnej realizującej zamówienia B2B, który rozwijam jako full-stack developer, od bazy danych po interfejs. Łączy sklep i katalog produktów z kalkulatorami cen, zamówienia, oferty i proformy, kalendarz produkcji, wysyłki z etykietami i protokołami w PDF, CRM klientów i kontrahentów oraz panel klienta z logowaniem przez link w mailu. Działa w czterech językach, a czasochłonne operacje, takie jak generowanie dokumentów, przetwarza asynchronicznie w kolejkach zadań.",
                 links: [],
                 architecture: {
                     clients: [
                         { name: "Panel operacyjny", detail: "Phoenix LiveView", icon: "/images/tech/phoenix.svg" },
-                        { name: "Sklep i panel klienta", detail: "LiveView · Svelte", icon: "/images/tech/svelte.svg" },
+                        { name: "Sklep i panel klienta", detail: "LiveView · Svelte · TypeScript", icon: "/images/tech/svelte.svg" },
                     ],
-                    server: { name: "Elixir / Phoenix", detail: "Zadania w tle · PDF · e-mail", icon: "/images/tech/elixir.svg" },
-                    database: { name: "PostgreSQL", detail: "Pliki w S3", icon: "/images/tech/postgresql.svg" },
+                    server: { name: "Elixir / Phoenix", detail: "Kolejki zadań · Generowanie PDF · E-mail", icon: "/images/tech/elixir.svg" },
+                    database: { name: "PostgreSQL", detail: "Magazyn plików Amazon S3", icon: "/images/tech/postgresql.svg" },
                 },
             },
             faqLabel: "Pytania",
@@ -254,16 +253,15 @@ export const servicePages = [
             caseStudy: {
                 title: "Operations and CRM system for a manufacturer",
                 type: "CRM · Orders · Production · E-commerce",
-                note: "Commercial project · private code",
-                desc: "One system for a manufacturer handling B2B orders, which I develop as a full-stack developer, from the database to the interface. It brings together a storefront and product catalogue with price calculators, orders, quotes and pro forma invoices, a production calendar, shipping with PDF labels and dispatch reports, a CRM for clients and partners, and a client portal with sign-in by email link. It runs in four languages and handles heavy work in background jobs.",
+                desc: "One system for a manufacturer handling B2B orders, which I develop as a full-stack developer, from the database to the interface. It brings together a storefront and product catalogue with price calculators, orders, quotes and pro forma invoices, a production calendar, shipping with PDF labels and dispatch reports, a CRM for clients and partners, and a client portal with sign-in by email link. It runs in four languages and processes time-consuming operations, such as document generation, asynchronously in job queues.",
                 links: [],
                 architecture: {
                     clients: [
                         { name: "Operations panel", detail: "Phoenix LiveView", icon: "/images/tech/phoenix.svg" },
-                        { name: "Store and client portal", detail: "LiveView · Svelte", icon: "/images/tech/svelte.svg" },
+                        { name: "Store and client portal", detail: "LiveView · Svelte · TypeScript", icon: "/images/tech/svelte.svg" },
                     ],
-                    server: { name: "Elixir / Phoenix", detail: "Background jobs · PDF · email", icon: "/images/tech/elixir.svg" },
-                    database: { name: "PostgreSQL", detail: "Files on S3", icon: "/images/tech/postgresql.svg" },
+                    server: { name: "Elixir / Phoenix", detail: "Job queues · PDF generation · Email", icon: "/images/tech/elixir.svg" },
+                    database: { name: "PostgreSQL", detail: "Amazon S3 file storage", icon: "/images/tech/postgresql.svg" },
                 },
             },
             faqLabel: "Questions",
