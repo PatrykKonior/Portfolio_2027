@@ -19,8 +19,11 @@ const ServicePage = ({ page }) => {
     const { lang, t } = useLanguage();
     const c = useMemo(() => typesetCopy(page[lang], lang), [page, lang]);
     const ui = serviceChrome[lang];
+    // The case study: one of the home page's projects, or one described on the page itself.
     const caseIndex = page.caseIndex ?? 0;
-    const caseProject = projects[caseIndex];
+    const ownCase = Boolean(page.caseProject);
+    const caseProject = ownCase ? { ...page.caseProject, architecture: c.caseStudy.architecture } : projects[caseIndex];
+    const caseText = ownCase ? c.caseStudy : t.work.projects[caseIndex];
     const number = String(servicePages.indexOf(page) + 1).padStart(2, "0");
     const others = readyServicePages.filter((other) => other.id !== page.id);
 
@@ -162,7 +165,7 @@ const ServicePage = ({ page }) => {
             <section id="case" className="sp-section sp-case container-x" aria-labelledby="sp-case-title">
                 <Label index="C">{c.caseLabel}</Label>
                 <h2 id="sp-case-title" className="visually-hidden">{c.caseStudy.title}</h2>
-                <ProjectCard project={caseProject} text={t.work.projects[caseIndex]} cursor={t.work.cursor} index={caseIndex} />
+                <ProjectCard project={caseProject} text={caseText} cursor={t.work.cursor} index={ownCase ? 0 : caseIndex} />
             </section>
 
             <section id="sp-faq" className="sp-section sp-faq container-x" aria-labelledby="sp-faq-title">

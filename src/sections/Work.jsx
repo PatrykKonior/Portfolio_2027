@@ -18,6 +18,8 @@ export const ProjectCard = ({ project, text, cursor, index }) => (
                 {project.tags.map((tag) => <li key={tag} className="chip">{tag}</li>)}
             </ul>
             <div className="work-card-links">
+                {/* Commercial projects have no public code: a note instead of links. */}
+                {project.links.length === 0 && text.note && <span className="mono text-muted">{text.note}</span>}
                 {project.links.map((link, linkIndex) => (
                     <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="pill" data-cursor={cursor}>
                         {text.links[linkIndex]} <span aria-hidden="true">↗</span>

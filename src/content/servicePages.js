@@ -146,7 +146,11 @@ export const servicePages = [
         ready: true,
         tint: "violet",
         icon: "chart",
-        caseIndex: 1,
+        // A commercial system described without naming the client or the product.
+        caseProject: {
+            tags: ["Elixir", "Phoenix LiveView", "Svelte", "PostgreSQL", "Oban", "Docker", "S3", "Tailwind CSS"],
+            links: [],
+        },
         path: { pl: "/uslugi/systemy-crm/", en: "/en/services/crm-systems/" },
         pl: {
             menuTitle: "Systemy CRM i panele",
@@ -162,7 +166,7 @@ export const servicePages = [
             facts: [
                 { label: "Dla kogo", value: "Firmy, które gubią się w arkuszach i kilku narzędziach" },
                 { label: "Współpraca", value: "B2B, zdalnie lub na miejscu na Śląsku" },
-                { label: "Technologie", value: "React · .NET · Node.js · PostgreSQL · SQL Server" },
+                { label: "Technologie", value: "Elixir · Phoenix LiveView · Svelte · React · .NET" },
             ],
             benefitsLabel: "Co dostajesz",
             benefitsTitle: "Cała firma <em>w jednym panelu</em>",
@@ -183,7 +187,21 @@ export const servicePages = [
                 { title: "Start i wsparcie", text: "Przeniesienie danych, szkolenie zespołu i dalszy rozwój." },
             ],
             caseLabel: "Realizacja",
-            caseStudy: { title: "Panel zarządzania pizzerią i strona sprzedażowa" },
+            caseStudy: {
+                title: "System operacyjny i CRM dla firmy produkcyjnej",
+                type: "CRM · Zamówienia · Produkcja · E-commerce",
+                note: "Projekt komercyjny · kod niepubliczny",
+                desc: "Jeden system dla firmy produkcyjnej realizującej zamówienia B2B, który rozwijam jako full-stack developer, od bazy danych po interfejs. Łączy sklep i katalog produktów z kalkulatorami cen, zamówienia, oferty i proformy, kalendarz produkcji, wysyłki z etykietami i protokołami w PDF, CRM klientów i kontrahentów oraz panel klienta z logowaniem przez link w mailu. Działa w czterech językach, a ciężkie zadania wykonuje w tle.",
+                links: [],
+                architecture: {
+                    clients: [
+                        { name: "Panel operacyjny", detail: "Phoenix LiveView", icon: "/images/tech/phoenix.svg" },
+                        { name: "Sklep i panel klienta", detail: "LiveView · Svelte", icon: "/images/tech/svelte.svg" },
+                    ],
+                    server: { name: "Elixir / Phoenix", detail: "Zadania w tle · PDF · e-mail", icon: "/images/tech/elixir.svg" },
+                    database: { name: "PostgreSQL", detail: "Pliki w S3", icon: "/images/tech/postgresql.svg" },
+                },
+            },
             faqLabel: "Pytania",
             faqTitle: "Częste <em>pytania</em>",
             faq: [
@@ -212,7 +230,7 @@ export const servicePages = [
             facts: [
                 { label: "Who it's for", value: "Companies lost in spreadsheets and scattered tools" },
                 { label: "Working together", value: "B2B, remote, or on-site in Silesia, Poland" },
-                { label: "Tech", value: "React · .NET · Node.js · PostgreSQL · SQL Server" },
+                { label: "Tech", value: "Elixir · Phoenix LiveView · Svelte · React · .NET" },
             ],
             benefitsLabel: "What you get",
             benefitsTitle: "Your whole business <em>in one panel</em>",
@@ -233,7 +251,21 @@ export const servicePages = [
                 { title: "Launch and support", text: "Data migration, team onboarding and further development." },
             ],
             caseLabel: "Case study",
-            caseStudy: { title: "Pizzeria management panel and storefront" },
+            caseStudy: {
+                title: "Operations and CRM system for a manufacturer",
+                type: "CRM · Orders · Production · E-commerce",
+                note: "Commercial project · private code",
+                desc: "One system for a manufacturer handling B2B orders, which I develop as a full-stack developer, from the database to the interface. It brings together a storefront and product catalogue with price calculators, orders, quotes and pro forma invoices, a production calendar, shipping with PDF labels and dispatch reports, a CRM for clients and partners, and a client portal with sign-in by email link. It runs in four languages and handles heavy work in background jobs.",
+                links: [],
+                architecture: {
+                    clients: [
+                        { name: "Operations panel", detail: "Phoenix LiveView", icon: "/images/tech/phoenix.svg" },
+                        { name: "Store and client portal", detail: "LiveView · Svelte", icon: "/images/tech/svelte.svg" },
+                    ],
+                    server: { name: "Elixir / Phoenix", detail: "Background jobs · PDF · email", icon: "/images/tech/elixir.svg" },
+                    database: { name: "PostgreSQL", detail: "Files on S3", icon: "/images/tech/postgresql.svg" },
+                },
+            },
             faqLabel: "Questions",
             faqTitle: "Frequently asked <em>questions</em>",
             faq: [
