@@ -2,7 +2,6 @@
 // them from the home page (navbar "Services" menu, service cards, footer). Add a page here and it
 // gets its own URL in both languages, a sitemap entry and a place in the menu.
 //
-// `homeCard` is the index of the matching card in the home page's Services section, if any.
 
 // Blob colours per service: the pearl tint the 3D blob and its stars take on that service's page,
 // and the matching pre-rendered image on its card. RGB multipliers on the blob's luminance.
@@ -18,7 +17,6 @@ export const servicePages = [
     {
         id: "web-apps",
         ready: true,
-        homeCard: 0,
         tint: "cobalt",
         icon: "browser",
         path: { pl: "/uslugi/aplikacje-webowe/", en: "/en/services/web-applications/" },
@@ -177,7 +175,7 @@ export const servicePages = [
                 { title: "Integracje i automatyzacje", text: "Faktury, płatności, poczta i powiadomienia działają same, bez przepisywania danych między programami." },
             ],
             processLabel: "Jak pracujemy",
-            processTitle: "Od chaosu <em>do porządku</em>",
+            processTitle: "Od analizy <em>do wdrożenia</em>",
             stepLabel: "Krok",
             process: [
                 { title: "Rozmowa", text: "Sprawdzam, jak dziś płyną informacje w firmie i gdzie się gubią." },
@@ -240,7 +238,7 @@ export const servicePages = [
                 { title: "Integrations and automation", text: "Invoices, payments, email and notifications run on their own, no copying data between tools." },
             ],
             processLabel: "How we work",
-            processTitle: "From chaos <em>to order</em>",
+            processTitle: "From analysis <em>to launch</em>",
             stepLabel: "Step",
             process: [
                 { title: "Conversation", text: "I map how information flows through the company today and where it gets lost." },

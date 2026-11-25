@@ -13,8 +13,8 @@ const en = {
         links: [
             { name: "Work", link: "#work" },
             { name: "Experience", link: "#experience" },
-            { name: "Services", link: "#services" },
-            { name: "Specializations", link: "#specializations" },
+            { name: "Expertise", link: "#services" },
+            { name: "Services", link: "#specializations" },
         ],
         contact: "Contact",
         cta: "Let's talk",
@@ -84,14 +84,13 @@ const en = {
         terms: {},
     },
     services: {
-        label: "Services",
-        title: "What I can <em>build</em> for you",
-        more: "Learn more",
+        label: "Expertise",
+        title: "Technical <em>expertise</em>",
         items: [
             {
-                title: "Web Applications",
-                desc: "Custom web apps, CRMs and internal tools built with React, Svelte or Phoenix LiveView, from the first Figma sketch to production.",
-                points: ["Figma to production", "CRMs & internal tools", "Responsive, accessible UI"],
+                title: "Front End & Interfaces",
+                desc: "Fast, responsive and accessible interfaces in React, Svelte or Phoenix LiveView, from the Figma design to production code.",
+                points: ["Figma to code", "Responsive & accessible", "Motion & polished details"],
             },
             {
                 title: "Backend & Real-time APIs",
@@ -111,7 +110,7 @@ const en = {
         ],
     },
     specializations: {
-        label: "Specializations",
+        label: "Services",
         count: "6 services · each with its own page",
         title: "How I can <em>help</em> your business",
         intro: "Pick what you need and see how I work, with a real project and answers to common questions.",

@@ -18,9 +18,26 @@ const Specializations = () => {
             opacity: 0,
             duration: 1.2,
             stagger: 0.08,
+            clearProps: "transform,opacity",
             scrollTrigger: { trigger: ".spec-grid", start: "top 80%" },
         });
     }, { scope: ref });
+
+    // Feeds the pointer position to the card's light, border glow and blob (CSS variables).
+    const track = (event) => {
+        const card = event.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        card.style.setProperty("--mx", `${x * 100}%`);
+        card.style.setProperty("--my", `${y * 100}%`);
+        card.style.setProperty("--px", (x - 0.5) * 2);
+        card.style.setProperty("--py", (y - 0.5) * 2);
+    };
+    const reset = (event) => {
+        event.currentTarget.style.setProperty("--px", 0);
+        event.currentTarget.style.setProperty("--py", 0);
+    };
 
     return (
         <section id="specializations" ref={ref} className="specializations container-x section-space">
@@ -37,6 +54,8 @@ const Specializations = () => {
                             style={{ "--tint": tint.stars }}
                             data-cursor={copy.cursor}
                             data-cursor-contrast={page.accent ? "" : undefined}
+                            onPointerMove={track}
+                            onPointerLeave={reset}
                         >
                             {!page.accent && <img src={tint.image} alt="" className="spec-blob" loading="lazy" width="640" height="584" />}
                             <span className="mono spec-index">0{index + 1}</span>

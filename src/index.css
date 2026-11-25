@@ -1145,28 +1145,6 @@ a:hover .roll::after {
     font-size: 0.65rem;
 }
 
-/* "Learn more" on a service card that has its own page. */
-.service-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    justify-self: start;
-    margin-top: 0.5rem;
-    padding: 0.8rem 1.3rem;
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    transition: background 0.3s, color 0.3s;
-}
-
-.service-more svg {
-    transition: transform 0.4s var(--ease-out);
-}
-
-.service-more:hover svg {
-    transform: translateX(4px);
-}
-
 .nav-actions {
     display: flex;
     align-items: center;
@@ -2418,7 +2396,12 @@ a:hover .roll::after {
 }
 
 .spec-card {
+    --mx: 50%;
+    --my: 50%;
+    --px: 0;
+    --py: 0;
     position: relative;
+    isolation: isolate;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -2429,19 +2412,50 @@ a:hover .roll::after {
     border-radius: 1.75rem;
     background: rgba(18, 18, 20, 0.85);
     backdrop-filter: blur(10px);
-    transition: transform 0.6s var(--ease-out), border-color 0.4s, box-shadow 0.6s var(--ease-out), background 0.4s;
+    /* `translate` and `filter`, not transform/opacity: those belong to the scroll-in animation. */
+    transition: translate 0.7s var(--ease-out), border-color 0.4s, box-shadow 0.7s var(--ease-out), filter 0.5s;
 }
 
-/* The blob in the service's colour waits in the corner and floats in on hover. */
+/* A soft light in the service's colour that follows the pointer. */
+.spec-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(28rem circle at var(--mx) var(--my), color-mix(in srgb, var(--tint) 22%, transparent), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/* The border lights up near the pointer. */
+.spec-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: radial-gradient(18rem circle at var(--mx) var(--my), var(--tint), transparent 55%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+/* The blob in the service's colour waits in the corner, then floats into the card and follows
+   the pointer a little. */
 .spec-blob {
     position: absolute;
+    z-index: -1;
     right: -9rem;
     top: -9rem;
     width: 17rem;
     max-width: none;
     opacity: 0.4;
     pointer-events: none;
-    transition: transform 0.9s var(--ease-out), opacity 0.6s;
+    transform: translate(calc(var(--px) * 1rem), calc(var(--py) * 1rem));
+    transition: transform 1.1s var(--ease-out), opacity 0.7s, width 1.1s var(--ease-out);
     animation: spec-spin 26s linear infinite;
     animation-play-state: paused;
 }
@@ -2450,18 +2464,29 @@ a:hover .roll::after {
     to { rotate: 360deg; }
 }
 
+.spec-grid:hover .spec-card:not(:hover) {
+    filter: brightness(0.6) saturate(0.8);
+}
+
 .spec-card:hover,
 .spec-card:focus-visible {
-    transform: translateY(-8px);
-    border-color: color-mix(in srgb, var(--tint) 60%, transparent);
-    box-shadow: 0 24px 60px color-mix(in srgb, var(--tint) 18%, transparent);
-    background: color-mix(in srgb, var(--tint) 6%, rgba(18, 18, 20, 0.9));
+    translate: 0 -10px;
+    border-color: transparent;
+    box-shadow: 0 30px 80px color-mix(in srgb, var(--tint) 20%, transparent);
+}
+
+.spec-card:hover::before,
+.spec-card:hover::after,
+.spec-card:focus-visible::before,
+.spec-card:focus-visible::after {
+    opacity: 1;
 }
 
 .spec-card:hover .spec-blob,
 .spec-card:focus-visible .spec-blob {
     opacity: 1;
-    transform: translate(-4.5rem, 3.5rem) scale(1.15);
+    width: 21rem;
+    transform: translate(calc(-6rem + var(--px) * 1.5rem), calc(6rem + var(--py) * 1.5rem));
     animation-play-state: running;
 }
 
@@ -2480,6 +2505,11 @@ a:hover .roll::after {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+    transition: transform 0.7s var(--ease-out);
+}
+
+.spec-card:hover .spec-body {
+    transform: translateY(-4px);
 }
 
 .spec-title {
@@ -2490,6 +2520,7 @@ a:hover .roll::after {
 }
 
 .spec-desc {
+    max-width: 24ch;
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--muted);
@@ -2498,22 +2529,30 @@ a:hover .roll::after {
 .spec-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.4rem;
+    gap: 0.7rem;
+    margin-top: 0.6rem;
     font-size: 0.95rem;
     transition: color 0.4s;
 }
 
+/* The arrow sits in a small circle that fills with the service's colour. */
 .spec-cta svg {
-    transition: transform 0.5s var(--ease-out);
+    box-sizing: content-box;
+    padding: 0.45rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    transition: transform 0.6s var(--ease-out), background 0.4s, border-color 0.4s, color 0.4s;
 }
 
 .spec-card:hover .spec-cta {
-    color: var(--tint);
+    color: var(--fg);
 }
 
 .spec-card:hover .spec-cta svg {
-    transform: translateX(5px);
+    transform: translateX(6px) rotate(-45deg);
+    background: var(--tint);
+    border-color: var(--tint);
+    color: var(--bg);
 }
 
 .spec-card-accent {

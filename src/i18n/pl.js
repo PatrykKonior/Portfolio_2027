@@ -13,8 +13,8 @@ const pl = {
         links: [
             { name: "Projekty", link: "#work" },
             { name: "Doświadczenie", link: "#experience" },
-            { name: "Usługi", link: "#services" },
-            { name: "Specjalizacje", link: "#specializations" },
+            { name: "Kompetencje", link: "#services" },
+            { name: "Usługi", link: "#specializations" },
         ],
         contact: "Kontakt",
         cta: "Porozmawiajmy",
@@ -91,14 +91,13 @@ const pl = {
         },
     },
     services: {
-        label: "Usługi",
-        title: "Co mogę dla Ciebie <em>zbudować</em>",
-        more: "Dowiedz się więcej",
+        label: "Kompetencje",
+        title: "Kompetencje <em>techniczne</em>",
         items: [
             {
-                title: "Aplikacje webowe",
-                desc: "Aplikacje webowe, CRM-y i narzędzia wewnętrzne w React, Svelte lub Phoenix LiveView, od pierwszego szkicu w Figmie po wdrożenie produkcyjne.",
-                points: ["Od Figmy do produkcji", "CRM-y i narzędzia wewnętrzne", "Responsywny, dostępny interfejs"],
+                title: "Frontend i interfejsy",
+                desc: "Szybkie, responsywne i dostępne interfejsy w React, Svelte lub Phoenix LiveView, od projektu w Figmie po gotowy kod.",
+                points: ["Od Figmy do kodu", "Responsywność i dostępność", "Animacje i dopracowane detale"],
             },
             {
                 title: "Backend i API czasu rzeczywistego",
@@ -118,7 +117,7 @@ const pl = {
         ],
     },
     specializations: {
-        label: "Specjalizacje",
+        label: "Usługi",
         count: "6 usług · każda ma swoją stronę",
         title: "W czym mogę <em>pomóc</em> Twojej firmie",
         intro: "Wybierz, czego potrzebujesz, i zobacz, jak pracuję, z przykładem realizacji i odpowiedziami na częste pytania.",
