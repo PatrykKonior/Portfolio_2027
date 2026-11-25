@@ -211,7 +211,7 @@ const ServicePage = ({ page }) => {
                     <p className="mono text-muted">{c.relatedLabel}</p>
                     <div>
                         {others.map((other) => (
-                            <a key={other.id} href={other.path[lang]}>{other[lang].menuTitle} <Arrow d="M7 17L17 7M8 7h9v9" size={18} /></a>
+                            <a key={other.id} href={other.path[lang]}><span>{typesetCopy(other[lang].menuTitle, lang)}</span> <Arrow d="M7 17L17 7M8 7h9v9" size={18} /></a>
                         ))}
                     </div>
                 </section>

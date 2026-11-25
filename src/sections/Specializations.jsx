@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { gsap, useGSAP, motionOK } from "../lib/motion.js";
-import { useLanguage } from "../i18n/index.js";
+import { typesetCopy, useLanguage } from "../i18n/index.js";
 import { servicePages, serviceTints } from "../content/servicePages.js";
 import SectionHeading from "../components/SectionHeading.jsx";
 
@@ -60,8 +60,8 @@ const Specializations = () => {
                             {!page.accent && <img src={tint.image} alt="" className="spec-blob" loading="lazy" width="640" height="584" />}
                             <span className="mono spec-index">0{index + 1}</span>
                             <span className="spec-body">
-                                <span className="spec-title">{page[lang].menuTitle}</span>
-                                <span className="spec-desc">{page[lang].menuDesc}</span>
+                                <span className="spec-title">{typesetCopy(page[lang].menuTitle, lang)}</span>
+                                <span className="spec-desc">{typesetCopy(page[lang].menuDesc, lang)}</span>
                                 <span className="spec-cta">
                                     {copy.cta}
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>

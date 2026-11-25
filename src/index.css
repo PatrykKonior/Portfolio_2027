@@ -2513,6 +2513,7 @@ a:hover .roll::after {
 }
 
 .spec-title {
+    text-wrap: balance;
     font-size: clamp(1.5rem, 2.2vw, 1.9rem);
     font-weight: 500;
     line-height: 1.05;
@@ -3031,6 +3032,14 @@ a:hover .roll::after {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     gap: 0.75rem;
+}
+
+.sp-related a span {
+    text-wrap: balance;
+}
+
+.sp-related a svg {
+    flex: none;
 }
 
 .sp-related a {

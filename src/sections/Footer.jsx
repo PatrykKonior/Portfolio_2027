@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP, motionOK } from "../lib/motion.js";
 import { company, contactInfo } from "../constants";
-import { useLanguage } from "../i18n/index.js";
+import { typesetCopy, useLanguage } from "../i18n/index.js";
 import { openPrivacy } from "../lib/privacy.js";
 import { consentEnabled, showCookieSettings } from "../lib/consent.js";
 import { readyServicePages } from "../content/servicePages.js";
@@ -45,7 +45,7 @@ const Footer = ({ linkBase = "" }) => {
           <p className="mono text-muted">{t.footer.services}</p>
           <ul>
             {readyServicePages.map((page) => (
-              <li key={page.id}><a href={page.path[lang]} className="footer-link">{page[lang].menuTitle}</a></li>
+              <li key={page.id}><a href={page.path[lang]} className="footer-link">{typesetCopy(page[lang].menuTitle, lang)}</a></li>
             ))}
           </ul>
         </div>
