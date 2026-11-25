@@ -323,11 +323,16 @@ a:hover .roll::after {
     font-size: clamp(5rem, 19vw, 18rem);
     line-height: 1;
     letter-spacing: -0.03em;
-    text-shadow: 0 10px 60px rgba(10, 10, 11, 0.45);
 }
 
+/* Each letter's box is padded to hold the descender (the "g") and the italic overhang, because
+   iOS Safari clips an animated element to its box. No per-letter shadow or blur: Safari draws
+   those as visible rectangles. */
 .takeover-char {
     display: inline-block;
+    padding: 0.12em 0.06em 0.32em;
+    margin: -0.12em -0.06em -0.32em;
+    will-change: transform, opacity;
 }
 
 .takeover-meta {
