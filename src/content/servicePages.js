@@ -441,7 +441,7 @@ export const servicePages = [
             benefitsLabel: "Co dostajesz",
             benefitsTitle: "Jeden system, <em>każde urządzenie</em>",
             benefits: [
-                { title: "iOS i Android z jednego kodu", text: "Aplikacja mobilna w React Native działa na obu systemach, więc płacisz za jedną aplikację, a nie dwie." },
+                { title: "iOS i Android", text: "Jedna aplikacja w React Native, jeden kod na oba systemy. Płacisz za jedną aplikację, a nie dwie." },
                 { title: "Aplikacja desktopowa", text: "Program na Windows dla stanowisk, które potrzebują szybkiej pracy na dużym ekranie, drukarek czy skanerów." },
                 { title: "Wspólne API i dane", text: "Telefon, komputer i przeglądarka korzystają z jednego REST API. Zmiana w jednym miejscu jest od razu widoczna wszędzie." },
                 { title: "Utrzymanie i aktualizacje", text: "Wydania w sklepach z aplikacjami, aktualizacje i dalszy rozwój. Zostaję przy projekcie po starcie." },
@@ -491,7 +491,7 @@ export const servicePages = [
             benefitsLabel: "What you get",
             benefitsTitle: "One system, <em>every device</em>",
             benefits: [
-                { title: "iOS and Android from one codebase", text: "A React Native app runs on both platforms, so you pay for one app, not two." },
+                { title: "iOS and Android", text: "One React Native app, one codebase for both platforms. You pay for one app, not two." },
                 { title: "Desktop app", text: "A Windows app for workstations that need fast work on a big screen, printers or scanners." },
                 { title: "Shared API and data", text: "Phone, desktop and browser use one REST API. A change in one place shows up everywhere at once." },
                 { title: "Maintenance and updates", text: "App store releases, updates and further development. I stay on after launch." },
