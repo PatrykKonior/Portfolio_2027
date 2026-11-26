@@ -20,7 +20,7 @@ const head = (page, lang) => {
     const ui = serviceChrome[lang];
     const other = lang === "pl" ? "en" : "pl";
     const url = `${site.url}${page.path[lang]}`;
-    const image = `${site.url}/og-image-${lang}.jpg?v=6`;
+    const image = `${site.url}/og-image-${lang}.jpg?v=7`;
     const jsonLd = {
         "@context": "https://schema.org",
         "@graph": [
