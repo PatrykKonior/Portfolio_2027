@@ -11,6 +11,7 @@ A dark, cinematic one-pager in English and Polish, built around a single WebGL s
 - **One continuous WebGL scene.** A custom GLSL blob (simplex-noise displacement, pearl-toned iridescent fresnel shading) moves, scales and recolours per section, and reacts to the pointer and to scroll speed.
 - **Bilingual, EN / PL.** Switching language makes the blob swell until it floods the screen, swaps the copy underneath and shrinks back, while labels decode with a scramble effect. The language comes from `?lang=`, the last choice or the browser.
 - **Scroll choreography with GSAP.** A preloader, SplitText headline reveals, scroll-lit About copy, a pinned horizontal project gallery, stacking service cards, an experience accordion and a velocity-reactive tech marquee, on top of Lenis smooth scrolling.
+- **Service pages.** Six pages (web apps, CRM, e-commerce, mobile & desktop, websites, developer in Silesia) in both languages, each with its own blob colour, a process line that draws with the scroll, a case study and an FAQ. They run on the same app as the home page and are prerendered to HTML at build time (`vite build --ssr` + `build/prerender.mjs`) with their own meta tags and Service / FAQ / Breadcrumb structured data. Their copy lives in `src/content/servicePages.js`.
 - **Details.** A custom cursor, magnetic buttons, film grain, a live local clock and an animated *Download CV* button.
 - **Built to hold up.** The 3D steps down on its own on slow devices (lighter scene, then a pre-rendered image), stops moving with `prefers-reduced-motion`, and loads in its own chunk so the page paints first.
 - **Ready for production.** Full SEO (meta and social tags, JSON-LD for the person and the business, hreflang, sitemap, robots.txt), a privacy policy, a GDPR note on the contact form, a custom cookie banner with Google Analytics Consent Mode v2, and fonts served locally.
@@ -18,8 +19,10 @@ A dark, cinematic one-pager in English and Polish, built around a single WebGL s
 | | |
 |---|---|
 | ![About](docs/screenshots/02-about.jpg) | ![Selected work](docs/screenshots/03-work.jpg) |
-| ![Services](docs/screenshots/04-services.jpg) | ![Experience](docs/screenshots/05-experience.jpg) |
-| ![Contact](docs/screenshots/06-contact.jpg) | ![Footer](docs/screenshots/07-footer.jpg) |
+| ![Expertise](docs/screenshots/04-services.jpg) | ![Services](docs/screenshots/10-specializations.jpg) |
+| ![Service page](docs/screenshots/11-service-page.jpg) | ![Service page: process](docs/screenshots/12-service-process.jpg) |
+| ![Experience](docs/screenshots/05-experience.jpg) | ![Contact](docs/screenshots/06-contact.jpg) |
+| ![Footer](docs/screenshots/07-footer.jpg) | |
 
 <p>
   <img src="docs/screenshots/08-mobile-hero.jpg" alt="Mobile hero" width="260" />
